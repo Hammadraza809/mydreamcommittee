@@ -1,0 +1,57 @@
+.text{
+    background-color: rgb(235, 232, 232);
+}
+.heading{
+    text-align: center;
+    padding: 20px 0px 20px 0px;
+    font-family: cursive;
+    text-shadow: 2px 2px grey;
+}
+.content{
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    text-align: center;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+.committees{
+    display: flex;
+    margin: 0 auto;
+    text-align: center;
+}
+.first-row{
+    display: flex;
+    margin: 0 auto;
+    text-align: center;
+    margin: 10px 0px;
+}
+.committe{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #FFFFFF;
+    text-transform: uppercase;
+    margin: 5px 5px;
+    box-shadow: 5px 5px 5px grey;
+    border-radius: 10px;
+}
+.committe:hover{
+    box-shadow: 10px 10px 10px grey;
+}
+.committe>img{
+    margin: 0 auto;
+    width: 280px;
+}
+.committe-text{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #FFFFFF;
+    text-transform: uppercase;
+    margin: 5px 5px;
+    box-shadow: 5px 5px 5px grey;
+    border-radius: 10px;
+}
+.coming-soon{
+    font-family: cursive;
+    padding-top: 120px;
+    padding-bottom: 120px;
+}
+.btn{
+    padding: 10px 0px;
+}

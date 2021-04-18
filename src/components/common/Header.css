@@ -1,0 +1,9 @@
+.navItem, .navItem.title{
+    margin: 10px 20px;
+    font-size: large;
+    font-weight: 500;
+}
+.navItem:hover, .navItem1:hover{
+    background-color: rgb(252, 143, 0);
+    border-radius: 5px;
+}
