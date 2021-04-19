@@ -1,0 +1,27 @@
+.footer{
+    background-color: rgb(48, 48, 48);
+    color: white;
+    padding: 20px 0px;
+}
+.follow, .committeeList{
+    margin: 10px 0px;
+}
+a{
+    color: white;
+}
+a:hover{
+    color: rgb(252, 143, 0);
+    list-style: none;
+    text-decoration: none;
+}
+ul{
+    padding-left: 20px;
+    margin: 0;
+}
+.copyright{
+    padding: 10px 0px;
+    color: white;
+    background-color: rgb(252, 143, 0);
+    font-size: smaller;
+    font-weight: 400;
+}

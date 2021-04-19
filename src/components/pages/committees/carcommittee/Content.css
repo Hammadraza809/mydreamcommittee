@@ -1,0 +1,20 @@
+.text{
+    background-color: rgb(235, 232, 232);
+}
+.headingg{
+    text-align: center;
+    padding: 40px 0px 0px 0px;
+    font-family: cursive;
+    text-shadow: 2px 2px grey;
+}
+.contentt{
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    text-align: justify;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    padding: 40px 0px 100px 0px;
+}
+.staytunned{
+    text-align: center;
+    font-size: larger;
+}

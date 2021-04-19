@@ -1,0 +1,12 @@
+.form-wrapper{
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form-element{
+   width: 100%;
+}
+.login-form-element{
+    width: 50%;
+}

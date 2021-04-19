@@ -7,7 +7,7 @@ import bike from '../../../assets/images/bike.png';
 import gold from '../../../assets/images/gold.png';
 import house from '../../../assets/images/house.png';
 import tractor from '../../../assets/images/tractor.png';
-import RgstrBtn from '../../common/Button';
+import RgstrBtn from '../../common/RgstrBtn';
 
 
 class Main extends Component {

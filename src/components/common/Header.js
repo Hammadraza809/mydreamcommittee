@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../../assets/images/logo.png';
 import "./Header.css";
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container } from 'react-bootstrap';
-import RegstrButton from '../common/Button'
 
 class Header extends Component {
     render() {
@@ -26,7 +25,6 @@ class Header extends Component {
                             <NavDropdown.Item className="navItem1" href="/housecommittee" disabled>Dream House Committee (Coming Soon)</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link className="navItem" href="/contact">Contact Us</Nav.Link>
-                        <RegstrButton />
                     </Nav>
                     
                 </Navbar.Collapse>
