@@ -8,7 +8,7 @@ class Header extends Component {
     render() {
         return (
             <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-                <Navbar.Brand href="#home">
+                <Navbar.Brand href="/">
                     <img style={{ width: "120px", height: "60px", margin: "0 0 0 40px" }} src={logo} />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
