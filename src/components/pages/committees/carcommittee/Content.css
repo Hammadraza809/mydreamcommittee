@@ -18,3 +18,12 @@
     text-align: center;
     font-size: larger;
 }
+
+.rgstr>.btnRgstr{
+    margin: 0 auto;
+}
+.btnRgstr{
+    margin: 0;
+    width:50%
+}
+

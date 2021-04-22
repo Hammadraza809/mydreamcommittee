@@ -1,12 +1,23 @@
-.form-wrapper{
-    height: 100vh; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.registerFrom{
+    background-color: rgb(235, 232, 232);
 }
-.form-element{
-   width: 100%;
+.heading{
+    text-align: center;
+    padding: 20px 0px 20px 0px;
+    font-family: cursive;
+    text-shadow: 2px 2px grey;
 }
-.login-form-element{
-    width: 50%;
+.rForm{
+    margin: 0;
+    padding: 10px;
+    overflow: auto;
+}
+.firstRow{
+    margin: 5px;
+    border: 2px solid black;
+    padding: 0;
+}
+.btnRow{
+    margin: 0;
+    float: right;
 }

@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import "./Content.css";
 import Slider1 from '../../../../assets/images/slider1.jpg';
 import youtube from '../../../../assets/images/youtube.png';
+import Button from '@material-ui/core/Button';
 
 class Main extends Component {
     render() {
@@ -20,18 +21,18 @@ class Main extends Component {
                             <Col>
                                 Stay Tuned with us <br />Dream Car Luckydraw will be held on <b>15th of April 2021</b> live on our youtube channel.<br />
                                 <a style={{
-                                        textDecoration: "none",
-                                        color: "black"
-                                    }}
-                                    href="https://www.youtube.com/c/TV88OFFICIAL" 
+                                    textDecoration: "none",
+                                    color: "black"
+                                }}
+                                    href="https://www.youtube.com/c/TV88OFFICIAL"
                                     target="_blank">
-                                        <img style={{ 
-                                                width: "60px", 
-                                                height: "40px", 
-                                                margin: "10px" 
-                                            }} 
-                                            src={youtube} 
-                                        />
+                                    <img style={{
+                                        width: "60px",
+                                        height: "40px",
+                                        margin: "10px"
+                                    }}
+                                        src={youtube}
+                                    />
                                         Subscribe to our youtube channel TV88 OFFICIAL
                                 </a>
                                 <br /><br />
@@ -70,8 +71,23 @@ class Main extends Component {
                                 <br />
                                 <b>Draw Schedule</b><br />
                                 The draw for the dream car will be held once from 1st to 5th of every month and every person will get his own car each month through a lucky draw. The draw is held at Dream Car Committee Website.<br />
+                                <br />
                             </Col>
                         </Row>
+                        <div className="rgstr">
+                            <Row className="btnRgstr">
+                                <Button
+                                    href="\register"
+                                    style={{
+                                        backgroundColor: "rgb(252, 143, 0)",
+                                        color: "white",
+                                        padding: "10px 15px",
+                                        width: "100%"
+                                    }}
+                                    variant="contained"
+                                >Register Now</Button>
+                            </Row>
+                        </div>
                     </Container>
                 </div>
             </div>
