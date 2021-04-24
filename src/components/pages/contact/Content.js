@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container } from 'react-bootstrap';
 import "./Content.css";
@@ -18,6 +18,17 @@ const useStyles = makeStyles((theme) => ({
 
 function Main() {
     const classes = useStyles();
+    const [name, setName] = useState("");
+
+    const handleChange = (e) => {
+        console.log(e.target.value);
+    }
+
+    const handleSubmit = (e) => {
+        // e.preventDefault();
+        console.log(setName(e.target.setName))
+    }
+
     return (
         <div className="text">
             <div className="cheadingg">
@@ -32,6 +43,7 @@ function Main() {
                             name="name"
                             placeholder="Enter Name"
                             variant="outlined"
+                            onChange={handleChange}
                         /><br /><br />
                         <label>Email:</label><br />
                         <TextField
@@ -39,6 +51,8 @@ function Main() {
                             name="email"
                             placeholder="Enter Email"
                             variant="outlined"
+                            onChange={handleChange}
+
                         /><br /><br />
                         <label>Message/Questions/Comments:</label><br />
                         <TextField
@@ -48,6 +62,8 @@ function Main() {
                             name="msg"
                             placeholder="Enter Message/Questions/Comments"
                             variant="outlined"
+                            onChange={handleChange}
+
                         /><br /><br />
                         <SendBtn
                             style={{
@@ -56,6 +72,7 @@ function Main() {
                                 padding: "10px 15px"
                             }}
                             variant="contained"
+                            onClick={handleSubmit}
                         >
                             Send
                         </SendBtn>

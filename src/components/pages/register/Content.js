@@ -54,111 +54,114 @@ function Main() {
           <h1>Registration Form</h1>
         </div>
         <div className="rForm">
-            <Row className="firstRow">
-              <Col xs={12} sm={12} md={6} lg={6} className="col" className={classes.root}>
-                <label>Name:</label><br />
-                <TextField
-                  type="text"
-                  name="name"
-                  placeholder="Enter Name"
-                  variant="outlined"
-                  size="small"
-                />
-              </Col>
-              <Col xs={12} sm={12} md={6} lg={6} className="col" className={classes.root}>
-                <label>CNIC:</label><br />
-                <TextField
-                  type="text"
-                  name="cnic"
-                  placeholder="Enter CNIC"
-                  variant="outlined"
-                  size="small"
-                />
-              </Col>
-            </Row>
-            <Row className="firstRow">
-              <Col xs={12} sm={12} md={6} lg={6} className="col" className={classes.root}>
-                <label>Father Name:</label><br />
-                <TextField
-                  type="text"
-                  name="fName"
-                  placeholder="Enter Father Name"
-                  variant="outlined"
-                  size="small"
-                />
-              </Col>
-              <Col xs={12} sm={12} md={6} lg={6} className="col" className={classes.root}>
-                <label>Mobile No:</label><br />
-                <TextField
-                  type="text"
-                  name="mobileNo"
-                  placeholder="Enter Mobile No"
-                  variant="outlined"
-                  size="small"
-                />
-              </Col>
-            </Row>
-            <Row className="firstRow">
-              <Col xs={12} sm={12} md={6} lg={6} className="col" className={classes.root}>
-                <label>Address:</label><br />
-                <TextField
-                  type="text"
-                  name="address"
-                  placeholder="Enter Address"
-                  variant="outlined"
-                  size="small"
-                />
-              </Col>
-              <Col xs={12} sm={12} md={6} lg={6} className="col" className={classes.root}>
-                <label>City Name:</label><br />
-                <TextField
-                  type="text"
-                  name="cityName"
-                  placeholder="Enter City Name"
-                  variant="outlined"
-                  size="small"
-                />
-              </Col>
-            </Row>
-            <Row className="firstRow">
-              <Col xs={12} sm={12} md={6} lg={6} className="col" className={classes.root}>
-                <label>Committee:</label><br />
-                <TextField
-                  select
-                  name="committees"
-                  variant="outlined"
-                  size="small"
-                  helperText="Please select any one desired committee"
-                  onChange={handleChange}
-                >
-                  {committees.map((option) => (
-                    <MenuItem key={option.value} value ={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Col>
-              <Col xs={12} sm={12} md={6} lg={6} className="col" className={classes.root}>
-                <label>City Name:</label><br />
-                <TextField
-                  type="text"
-                  name="cityName"
-                  placeholder="Enter City Name"
-                  variant="outlined"
-                  size="small"
-                />
-              </Col>
-            </Row>
-            <Row className="btnRow">
-              <Button
-                style={{
-                  color: "white",
-                  backgroundColor: "rgb(252, 143, 0)",
-                  padding: "10px 20px"
+          <Row className="firstRow">
+            <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+              <label>Name:</label><br />
+              <TextField
+                type="text"
+                name="name"
+                placeholder="Enter Name"
+                variant="outlined"
+                size="small"
+              />
+            </Col>
+            <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+              <label>CNIC:</label><br />
+              <TextField
+                type="text"
+                name="cnic"
+                placeholder="Enter CNIC"
+                variant="outlined"
+                size="small"
+              />
+            </Col>
+          </Row>
+          <Row className="firstRow">
+            <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+              <label>Father Name:</label><br />
+              <TextField
+                type="text"
+                name="fName"
+                placeholder="Enter Father Name"
+                variant="outlined"
+                size="small"
+              />
+            </Col>
+            <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+              <label>Mobile No:</label><br />
+              <TextField
+                type="text"
+                name="mobileNo"
+                placeholder="Enter Mobile No"
+                variant="outlined"
+                size="small"
+              />
+            </Col>
+          </Row>
+          <Row className="firstRow">
+            <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+              <label>Address:</label><br />
+              <TextField
+                type="text"
+                name="address"
+                placeholder="Enter Address"
+                variant="outlined"
+                size="small"
+              />
+            </Col>
+            <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+              <label>City Name:</label><br />
+              <TextField
+                type="text"
+                name="cityName"
+                placeholder="Enter City Name"
+                variant="outlined"
+                size="small"
+              />
+            </Col>
+          </Row>
+          <Row className="firstRow">
+            <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+              <label>Committee:</label><br />
+              <TextField
+                select
+                name="committees"
+                variant="outlined"
+                size="small"
+                // helperText="Please select any one desired committee"
+                // onChange={handleChange}
+                SelectProps={{
+                  native: true,
                 }}
-                variant="contained"
-              >Register</Button>
-            </Row>
+              >
+                {committees.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </Col>
+            <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+              <label>Picture of the deposite slip:</label><br />
+              <Button
+                // variant="contained"
+                // size="small"
+                // Component="label"
+              >
+                <input type="file" />
+              </Button>
+            </Col>
+          </Row>
+          <Row className="btnRow">
+            <Button
+              style={{
+                color: "white",
+                backgroundColor: "rgb(252, 143, 0)",
+                padding: "10px 20px"
+              }}
+              variant="contained"
+            >Register</Button>
+          </Row>
         </div>
       </Container>
     </div>
