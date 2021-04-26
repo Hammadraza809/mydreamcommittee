@@ -18,15 +18,20 @@ const useStyles = makeStyles((theme) => ({
 
 function Main() {
     const classes = useStyles();
-    const [name, setName] = useState("");
-
-    const handleChange = (e) => {
-        console.log(e.target.value);
-    }
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [msg, setMsg] = useState('');
 
     const handleSubmit = (e) => {
-        // e.preventDefault();
-        console.log(setName(e.target.setName))
+        e.preventDefault();
+        if(name === ''){
+            console.log('name empty')
+        } else {
+        console.log(name,email,msg)
+        }
+        setName('');
+        setEmail('');
+        setMsg('');
     }
 
     return (
@@ -39,31 +44,32 @@ function Main() {
                     <form className={classes.root}>
                         <label>Name:</label><br />
                         <TextField
+                            value={name}
                             type="text"
                             name="name"
                             placeholder="Enter Name"
                             variant="outlined"
-                            onChange={handleChange}
+                            onChange={(e) => setName(e.target.value)}
                         /><br /><br />
                         <label>Email:</label><br />
                         <TextField
+                           value={email}
                             type="email"
                             name="email"
                             placeholder="Enter Email"
                             variant="outlined"
-                            onChange={handleChange}
-
+                            onChange={(e) => setEmail(e.target.value)}
                         /><br /><br />
                         <label>Message/Questions/Comments:</label><br />
                         <TextField
+                            value={msg}
                             multiline
                             rows={10}
                             type="text"
                             name="msg"
                             placeholder="Enter Message/Questions/Comments"
                             variant="outlined"
-                            onChange={handleChange}
-
+                            onChange={(e) => setMsg(e.target.value)}
                         /><br /><br />
                         <SendBtn
                             style={{
