@@ -18,21 +18,31 @@ const useStyles = makeStyles((theme) => ({
 
 function Main() {
     const classes = useStyles();
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [msg, setMsg] = useState('');
+    const [contact, setContact] = useState({
+        fullName: '',
+        email: '',
+        msg: '',
+    });
+    const [submitted, setSubmitted] = useState(false);
+
+    const handleChange = (e) => {
+        setContact((values) => ({
+            ...values, [e.target.name]: e.target.value,
+        }));
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(name === ''){
-            console.log('name empty')
-        } else {
-        console.log(name,email,msg)
-        }
-        setName('');
-        setEmail('');
-        setMsg('');
+        
+        console.log(contact)
+        setSubmitted(true);
+        setContact({
+            fullName : '',
+            email : '',
+            msg : ''
+        })
     }
+
 
     return (
         <div className="text">
@@ -44,33 +54,36 @@ function Main() {
                     <form className={classes.root}>
                         <label>Name:</label><br />
                         <TextField
-                            value={name}
+                            name="fullName"
+                            value={contact.fullName}
                             type="text"
-                            name="name"
                             placeholder="Enter Name"
                             variant="outlined"
-                            onChange={(e) => setName(e.target.value)}
-                        /><br /><br />
+                            onChange={handleChange}
+                        />
+                        <br /><br />
                         <label>Email:</label><br />
                         <TextField
-                           value={email}
-                            type="email"
                             name="email"
+                            value={contact.email}
+                            type="email"
                             placeholder="Enter Email"
                             variant="outlined"
-                            onChange={(e) => setEmail(e.target.value)}
-                        /><br /><br />
+                            onChange={handleChange}
+                        />
+                        <br /><br />
                         <label>Message/Questions/Comments:</label><br />
                         <TextField
-                            value={msg}
+                            name="msg"
+                            value={contact.msg}
                             multiline
                             rows={10}
                             type="text"
-                            name="msg"
                             placeholder="Enter Message/Questions/Comments"
                             variant="outlined"
-                            onChange={(e) => setMsg(e.target.value)}
-                        /><br /><br />
+                            onChange={handleChange}
+                        />
+                        <br /><br />
                         <SendBtn
                             style={{
                                 backgroundColor: "rgb(252, 143, 0)",
