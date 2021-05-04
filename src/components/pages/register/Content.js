@@ -128,8 +128,6 @@ function Main() {
                 name="committees"
                 variant="outlined"
                 size="small"
-                // helperText="Please select any one desired committee"
-                // onChange={handleChange}
                 SelectProps={{
                   native: true,
                 }}
@@ -143,11 +141,7 @@ function Main() {
             </Col>
             <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
               <label>Picture of the deposite slip:</label><br />
-              <Button
-                // variant="contained"
-                // size="small"
-                // Component="label"
-              >
+              <Button>
                 <input type="file" />
               </Button>
             </Col>
