@@ -5,7 +5,7 @@ import "./Content.css";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import SendBtn from '@material-ui/core/Button';
-import { ErrorMessage, Formik, Form } from 'formik'
+import { Formik, Form, useField } from 'formik'
 import * as Yup from 'yup'
 
 const useStyles = makeStyles((theme) => ({
@@ -18,77 +18,29 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const MyTextField = ({ rows, multiline, placeholder, ...props }) => {
+    const [field, meta] = useField(props);
+    const errorText = meta.error && meta.touched ? meta.error : "";
+    return (
+        <TextField
+            rows={rows}
+            multiline={multiline}
+            placeholder={placeholder}
+            {...field}
+            helperText={errorText}
+            variant="outlined"
+            error={!!errorText}
+        />
+    )
+}
+const validationSchema = Yup.object({
+    fullName: Yup.string().required('Full name is requird.'),
+    email: Yup.string().email('Please enter valid email').required('Email is required'),
+    msg: Yup.string().required('Please Enter message/comments/suggestions'),
+});
+
 function Main() {
     const classes = useStyles();
-
-    const validate = Yup.object({
-        fullName: Yup.string().required('Full name is requird.'),
-        email: Yup.string().email('please enter valid email').required('Email is required'),
-        msg: Yup.string().required('Please Enter message/comments/suggestions'),
-    });
-
-    // const initialState = {
-    //     fullName: '',
-    //     email: '',
-    //     msg: '',
-    //     fullNameError: '',
-    //     emailError: '',
-    //     msgError: ''
-    // }
-
-    // const [contact, setContact] = useState({
-    //     fullName: '',
-    //     email: '',
-    //     msg: '',
-    //     fullNameError: '',
-    //     emailError: '',
-    //     msgError: ''
-    //     // initialState
-    // });
-
-    // const handleChange = (e) => {
-    //     setContact((values) => ({
-    //         ...values, [e.target.name]: e.target.value,
-    //     }));
-    // }
-
-    // const validate = () => {
-    //     let fullNameError = '';
-    //     let emailError = '';
-    //     let msgError = '';
-
-    //     if (!contact.fullName) {
-    //         fullNameError = 'Name connot be blank';
-    //     }
-
-    //     if (!contact.email || !contact.email.includes('@')) {
-    //         emailError = 'Invalid email';
-    //     }
-
-    //     if (emailError || fullNameError) {
-    //         setContact({ emailError, fullNameError });
-    //         return false;
-    //     }
-    //     fullNameError = '';
-    //     return true;
-    // }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // const isValid = validate();
-        // if (isValid) {
-        // console.log(contact);
-        // setContact({
-        //     fullName: '',
-        //     email: '',
-        //     msg: '',
-        //     fullNameError: '',
-        //     emailError: '',
-        //     msgError: ''
-        // })
-        // }
-    }
-
 
     return (
         <div className="text">
@@ -101,52 +53,41 @@ function Main() {
                         initialValues={{
                             fullName: '',
                             email: '',
-                            msg: '',
+                            msg: ''
                         }}
-                        validationSchema={validate}
-                        onSubmit={(data) => {
+                        validationSchema={validationSchema}
+                        onSubmit={(data, { setSubmitting }) => {
+                            setSubmitting(true);
+                            //make async call
                             console.log(data);
+                            setSubmitting(false);
+                            
                         }}
                     >
-                        {formik => (
+                        {({ values, errors, isSubmitting, }) => (
                             <Form className={classes.root}>
-                                <label>Name:</label><br />
-                                <TextField
+                                <label>Full Name:</label><br />
+                                <MyTextField
+                                    placeholder="Full Name"
                                     name="fullName"
-                                    // value={contact.fullName}
-                                    type="text"
-                                    placeholder="Enter Name"
-                                    variant="outlined"
-                                // onChange={handleChange}
+                                    type="input"
                                 />
-                                {/* <ErrorMessage /> */}
-                                {/* <span style={{ color: 'red' }} >{contact.fullNameError}</span> */}
                                 <br /><br />
                                 <label>Email:</label><br />
-                                <TextField
+                                <MyTextField
+                                    placeholder="Email"
                                     name="email"
-                                    // value={contact.email}
-                                    type="email"
-                                    placeholder="Enter Email"
-                                    variant="outlined"
-                                // onChange={handleChange}
+                                    type="input"
                                 />
-                                {/* <ErrorMessage /> */}
-                                {/* <span style={{ color: 'red' }} >{contact.emailError}</span> */}
                                 <br /><br />
-                                <label>Message/Questions/Comments:</label><br />
-                                <TextField
+                                <label>Message/Comments/Questions:</label><br />
+                                <MyTextField
+                                    placeholder="Message/Comments/Questions"
                                     name="msg"
-                                    // value={contact.msg}
+                                    type="input"
                                     multiline
                                     rows={10}
-                                    type="text"
-                                    placeholder="Enter Message/Questions/Comments"
-                                    variant="outlined"
-                                // onChange={handleChange}
                                 />
-                                {/* <ErrorMessage /> */}
-                                {/* <span style={{ color: 'red' }} >{contact.msgError}</span> */}
                                 <br /><br />
                                 <SendBtn
                                     style={{
@@ -155,7 +96,8 @@ function Main() {
                                         padding: "10px 15px"
                                     }}
                                     variant="contained"
-                                    onClick={handleSubmit}
+                                    type="submit"
+                                    disabled={isSubmitting}
                                 >
                                     Send
                                 </SendBtn>
