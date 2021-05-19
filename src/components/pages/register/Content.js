@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button'
 import Select from '@material-ui/core/Select';
+import Checkbox from '@material-ui/core/Checkbox';
 import { Formik, Form, useField, Field } from 'formik'
 import * as Yup from 'yup'
 
@@ -34,15 +35,18 @@ const MyTextField = ({ type, rows, multiline, placeholder, ...props }) => {
     />
   )
 }
-const validationSchema = Yup.object({
+const validationSchema = Yup.object().shape({
   fullName: Yup.string().required('Full name is requird.'),
   cnic: Yup.string().required('CNIC Number is required.'),
-  fatherName: Yup.string().required('Father Name is required,'),
+  email: Yup.string().email('Please enter a valid email').required('Email address is required,'),
   mobileNo: Yup.string().required('Mobile No is required.'),
   address: Yup.string().required('House address is required.'),
   cityName: Yup.string().required('City Name is required.'),
-  committee: Yup.string().required('Please Select anyone committee'),
-  photo: Yup.string().required('This field is required'),
+  committee: Yup.string().required('Please select anyone committee'),
+  photo: Yup.mixed().required('Please upload picture of bank deposite slip')
+  .test("type","Image should be jpeg format", (value) => {
+    return value && value[0].type === "image/jpeg";
+  }),
 });
 
 const committees = [
@@ -51,6 +55,9 @@ const committees = [
   },
   {
     value: 'car', key: 'Dream Car Committee'
+  },
+  {
+    value: 'suv', key: 'Dream SUV Committee'
   },
   {
     value: 'mobile', key: 'Dream Mobile Committee'
@@ -67,6 +74,7 @@ const committees = [
   {
     value: 'house', key: 'Dream House Committee'
   },
+
 ]
 
 function Main() {
@@ -83,12 +91,13 @@ function Main() {
             initialValues={{
               fullName: '',
               cnic: '',
-              fatherName: '',
+              email: '',
               mobileNo: '',
               address: '',
               cityName: '',
               committee: '',
               photo: '',
+              terms: false,
             }}
             validationSchema={validationSchema}
             onSubmit={(data, { setSubmitting }) => {
@@ -121,10 +130,10 @@ function Main() {
                 </Row>
                 <Row className="firstRow">
                   <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
-                    <label>Father Name:</label><br />
+                    <label>Email:</label><br />
                     <MyTextField
-                      placeholder="Father Name"
-                      name="fatherName"
+                      placeholder="Email"
+                      name="email"
 
                     />
                   </Col>
@@ -159,12 +168,12 @@ function Main() {
                   <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
                     <label>Committees:</label><br />
                     <Field
-                      name='committee'
+                      name="committee"
                       as={Select}
                       variant='outlined'
-                      size='small'
-                      helperText='Please select anyone committee'
+                      // helpertext='Please select anyone committee'
                       native
+                      type="Select"
                     >
                       {committees.map(option => {
                         return (
@@ -172,6 +181,7 @@ function Main() {
                         )
                       })}
                     </Field>
+                    {/* {errors.committee} */}
                   </Col>
                   <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
                     <label>Upload picture of deposite slip:</label><br />
@@ -181,6 +191,18 @@ function Main() {
                     />
                   </Col>
                 </Row>
+                {/* <Row className="firstRow">
+                  <Col>
+                    <lable>
+                      <Field
+                        as={Checkbox}
+                        name="terms"
+                        type="checkbox"
+                      />
+                    I accept terms and condition.
+                    </lable>
+                  </Col>
+                </Row> */}
                 <Row className="btnRow">
                   <Button
                     style={{
@@ -201,17 +223,6 @@ function Main() {
         </div>
       </Container>
     </div>
-
-    //           <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
-    //             <label>Picture of the deposite slip:</label><br />
-    //             <Button>
-    //               <input type="file" />
-    //             </Button>
-    //           </Col>
-    //         </Row>
-    //       </div>
-    //     </Container>
-    //   </div>
   );
 }
 export default Main;
