@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import './Content.css';
@@ -9,6 +9,7 @@ import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Formik, Form, useField, Field } from 'formik'
 import * as Yup from 'yup'
+import { StepContent } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,41 +45,50 @@ const validationSchema = Yup.object().shape({
   cityName: Yup.string().required('City Name is required.'),
   committee: Yup.string().required('Please select anyone committee'),
   photo: Yup.mixed().required('Please upload picture of bank deposite slip')
-  .test("type","Image should be jpeg format", (value) => {
-    return value && value[0].type === "image/jpeg";
-  }),
+    .test("type", "Image should be jpeg format", (value) => {
+      return value && value[0].type === "image/jpeg";
+    }),
 });
 
-const committees = [
-  {
-    key: 'Select committee', value: ''
-  },
-  {
-    value: 'car', key: 'Dream Car Committee'
-  },
-  {
-    value: 'suv', key: 'Dream SUV Committee'
-  },
-  {
-    value: 'mobile', key: 'Dream Mobile Committee'
-  },
-  {
-    value: 'bike', key: 'Dream Bike Committee'
-  },
-  {
-    value: 'gold', key: 'Dream Gold Committee'
-  },
-  {
-    value: 'tractor', key: 'Dream Tractor Committee'
-  },
-  {
-    value: 'house', key: 'Dream House Committee'
-  },
+// const committees = [
+//   {
+//     key: 'Select committee', value: ''
+//   },
+//   {
+//     value: 'car', key: 'Dream Car Committee'
+//   },
+//   {
+//     value: 'suv', key: 'Dream SUV Committee'
+//   },
+//   {
+//     value: 'mobile', key: 'Dream Mobile Committee'
+//   },
+//   {
+//     value: 'bike', key: 'Dream Bike Committee'
+//   },
+//   {
+//     value: 'gold', key: 'Dream Gold Committee'
+//   },
+//   {
+//     value: 'tractor', key: 'Dream Tractor Committee'
+//   },
+//   {
+//     value: 'house', key: 'Dream House Committee'
+//   },
 
-]
+// ]
 
 function Main() {
   const classes = useStyles();
+  const [committee, setCommittee] = useState([]);
+
+  useEffect(() => {
+    fetch(`https://mydreamcommittee.com/v1/committees`)
+    .then(results => results.json())
+    .then(data => {
+      setCommittee(data)
+    });
+  }, []);
 
   return (
     <div className="registerFrom">
@@ -95,7 +105,7 @@ function Main() {
               mobileNo: '',
               address: '',
               cityName: '',
-              committee: '',
+              // committee: '',
               photo: '',
               terms: false,
             }}
@@ -105,7 +115,6 @@ function Main() {
               //make async call
               console.log(data);
               setSubmitting(false);
-
             }}
           >
             {({ values, errors, isSubmitting, }) => (
@@ -175,9 +184,9 @@ function Main() {
                       native
                       type="Select"
                     >
-                      {committees.map(option => {
+                      {committee.map(item => {
                         return (
-                          <option key={option.value} value={option.value}>{option.key}</option>
+                          <option key={item.value}>{item.label}</option>
                         )
                       })}
                     </Field>
