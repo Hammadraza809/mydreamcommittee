@@ -80,14 +80,14 @@ const validationSchema = Yup.object().shape({
 
 function Main() {
   const classes = useStyles();
-  const [committee, setCommittee] = useState([]);
+  const [committee, setCommittee] = useState([{ label: "Please select committee", value: "" }]);
 
   useEffect(() => {
-    fetch(`https://mydreamcommittee.com/v1/committees`)
-    .then(results => results.json())
-    .then(data => {
-      setCommittee(data)
-    });
+    fetch('https://mydreamcommittee.com/v1/committees')
+      .then(results => results.json())
+      .then(data => {
+        setCommittee(data.results)
+      })
   }, []);
 
   return (
@@ -186,7 +186,7 @@ function Main() {
                     >
                       {committee.map(item => {
                         return (
-                          <option key={item.value}>{item.label}</option>
+                          <option key={item.value} value={item.value}>{item.label}</option>
                         )
                       })}
                     </Field>
