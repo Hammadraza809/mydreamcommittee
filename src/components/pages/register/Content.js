@@ -7,9 +7,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button'
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Formik, Form, useField, Field } from 'formik'
-import * as Yup from 'yup'
-import { StepContent } from "@material-ui/core";
+import { Formik, Form, useField, Field } from 'formik';
+import * as Yup from 'yup';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +35,7 @@ const MyTextField = ({ type, rows, multiline, placeholder, ...props }) => {
     />
   )
 }
-const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object({
   fullName: Yup.string().required('Full name is requird.'),
   cnic: Yup.string().required('CNIC Number is required.'),
   email: Yup.string().email('Please enter a valid email').required('Email address is required,'),
@@ -45,49 +44,22 @@ const validationSchema = Yup.object().shape({
   cityName: Yup.string().required('City Name is required.'),
   committee: Yup.string().required('Please select anyone committee'),
   photo: Yup.mixed().required('Please upload picture of bank deposite slip')
-    .test("type", "Image should be jpeg format", (value) => {
-      return value && value[0].type === "image/jpeg";
+    .test("type", "Image should be jpg/jpeg/png format", (value) => {
+      return value && value[0].type === "image/jpg";
     }),
 });
 
-// const committees = [
-//   {
-//     key: 'Select committee', value: ''
-//   },
-//   {
-//     value: 'car', key: 'Dream Car Committee'
-//   },
-//   {
-//     value: 'suv', key: 'Dream SUV Committee'
-//   },
-//   {
-//     value: 'mobile', key: 'Dream Mobile Committee'
-//   },
-//   {
-//     value: 'bike', key: 'Dream Bike Committee'
-//   },
-//   {
-//     value: 'gold', key: 'Dream Gold Committee'
-//   },
-//   {
-//     value: 'tractor', key: 'Dream Tractor Committee'
-//   },
-//   {
-//     value: 'house', key: 'Dream House Committee'
-//   },
-
-// ]
-
 function Main() {
   const classes = useStyles();
-  const [committee, setCommittee] = useState([{ label: "Please select committee", value: "" }]);
+  const [committee, setCommittee] = useState([{ label:"Please Select committee", value:"" }]);
 
   useEffect(() => {
-    fetch('https://mydreamcommittee.com/v1/committees')
-      .then(results => results.json())
-      .then(data => {
-        setCommittee(data.results)
-      })
+    async function getData() {
+      const res = await fetch('https://mydreamcommittee.com/v1/committees');
+      const body = await res.json();
+      setCommittee(body.data.committees);
+    }
+    getData()
   }, []);
 
   return (
@@ -105,9 +77,8 @@ function Main() {
               mobileNo: '',
               address: '',
               cityName: '',
-              // committee: '',
               photo: '',
-              terms: false,
+              // terms: false,
             }}
             validationSchema={validationSchema}
             onSubmit={(data, { setSubmitting }) => {
@@ -180,7 +151,6 @@ function Main() {
                       name="committee"
                       as={Select}
                       variant='outlined'
-                      // helpertext='Please select anyone committee'
                       native
                       type="Select"
                     >
