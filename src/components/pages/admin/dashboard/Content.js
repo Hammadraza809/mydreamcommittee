@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -10,7 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { GroupAdd, Group, Shuffle, ExitToApp } from '@material-ui/icons'
+import { GroupAdd, Group, Shuffle, ExitToApp } from '@material-ui/icons';
 
 const drawerWidth = 240;
 
@@ -37,8 +37,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ClippedDrawer() {
+export default function ClippedDrawer(props) {
+    console.log(props);
     const classes = useStyles();
+    const [fragment, setFragment] = useState("Requests")
+
+    // const loadFragment = () => {
+    //     switch (fragment) {
+
+    //     }
+    // }
 
     return (
         <div className={classes.root}>
@@ -60,7 +68,7 @@ export default function ClippedDrawer() {
                 <Toolbar />
                 <div className={classes.drawerContainer}>
                     <List>
-                        <ListItem button>
+                        <ListItem button onClick={() => props.props.push('/requests')}>
                             <ListItemIcon>
                                 <GroupAdd />
                             </ListItemIcon>
@@ -96,7 +104,7 @@ export default function ClippedDrawer() {
                 </div>
             </Drawer>
             <main className={classes.content}>
-                {/* <Toolbar />
+                <Toolbar />
                 <Typography paragraph>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                     ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
@@ -119,7 +127,7 @@ export default function ClippedDrawer() {
                     tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
                     nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
                     accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-                </Typography> */}
+                </Typography>
             </main>
         </div>
     );

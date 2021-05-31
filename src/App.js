@@ -7,6 +7,7 @@ import Contact from './components/pages/contact/Index';
 import RegisterForm from './components/pages/register/Index';
 import Admin from './components/pages/admin/login/Index';
 import AdminDashboard from './components/pages/admin/dashboard/Index';
+import Requests from './components/pages/admin/pages/Requests';
 
 import CarCommittee from './components/pages/committees/carcommittee/Index';
 
@@ -19,6 +20,7 @@ function App() {
       <Route exact path="/register" component={RegisterForm}/>
       <Route exact path="/admin" component={Admin}/>
       <Route exact path="/dashboard" component={AdminDashboard}/>
+      <Route exact path='/requests' component={Requests}/>
 
       <Route exact path="/carcommittee" component={CarCommittee}/>
     </Router>
