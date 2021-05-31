@@ -5,6 +5,8 @@ import Home from './components/pages/home/Index';
 import About from './components/pages/about/Index';
 import Contact from './components/pages/contact/Index';
 import RegisterForm from './components/pages/register/Index';
+import Admin from './components/pages/admin/login/Index';
+import AdminDashboard from './components/pages/admin/dashboard/Index';
 
 import CarCommittee from './components/pages/committees/carcommittee/Index';
 
@@ -15,6 +17,8 @@ function App() {
       <Route exact path="/about" component={About}/>
       <Route exact path="/contact" component={Contact}/>
       <Route exact path="/register" component={RegisterForm}/>
+      <Route exact path="/admin" component={Admin}/>
+      <Route exact path="/dashboard" component={AdminDashboard}/>
 
       <Route exact path="/carcommittee" component={CarCommittee}/>
     </Router>

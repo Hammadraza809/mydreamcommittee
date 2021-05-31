@@ -44,14 +44,16 @@ const validationSchema = Yup.object({
   cityName: Yup.string().required('City Name is required.'),
   committee: Yup.string().required('Please select anyone committee'),
   photo: Yup.mixed().required('Please upload picture of bank deposite slip')
-    .test("type", "Image should be jpg/jpeg/png format", (value) => {
-      return value && value[0].type === "image/jpg";
+    .test("size", "Image should be  format", (value) => {
+      console.log(value)
+      return value && value[0].size <= 500000;
+     
     }),
 });
 
 function Main() {
   const classes = useStyles();
-  const [committee, setCommittee] = useState([{ label:"Please Select committee", value:"" }]);
+  const [committee, setCommittee] = useState([{ label:"Please Select committee", value:"c" }]);
 
   useEffect(() => {
     async function getData() {
@@ -140,7 +142,8 @@ function Main() {
                     <MyTextField
                       placeholder="City Name"
                       name="cityName"
-
+                      as={TextField}
+                      variant='outlined'
                     />
                   </Col>
                 </Row>
