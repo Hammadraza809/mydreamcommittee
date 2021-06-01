@@ -53,7 +53,7 @@ const validationSchema = Yup.object({
 
 function Main() {
   const classes = useStyles();
-  const [committee, setCommittee] = useState([{ label:"Please Select committee", value:"c" }]);
+  const [committee, setCommittee] = useState([{ label:"Please Select committee", value:"" }]);
 
   useEffect(() => {
     async function getData() {

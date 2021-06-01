@@ -11,6 +11,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { GroupAdd, Group, Shuffle, ExitToApp } from '@material-ui/icons';
+import Requests from '../pages/Requests';
+import Members from '../pages/Members';
 
 const drawerWidth = 240;
 
@@ -38,15 +40,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ClippedDrawer(props) {
-    console.log(props);
     const classes = useStyles();
     const [fragment, setFragment] = useState("Requests")
 
-    // const loadFragment = () => {
-    //     switch (fragment) {
-
-    //     }
-    // }
+    const loadFragment = () => {
+        switch (fragment) {
+            case "Requests":
+                return <Requests/>
+            case "Members":
+                return <Members/>
+            default:
+                break;
+        }
+    }
 
     return (
         <div className={classes.root}>
@@ -68,7 +74,7 @@ export default function ClippedDrawer(props) {
                 <Toolbar />
                 <div className={classes.drawerContainer}>
                     <List>
-                        <ListItem button onClick={() => props.props.push('/requests')}>
+                        <ListItem button onClick={e => setFragment("Requests")}>
                             <ListItemIcon>
                                 <GroupAdd />
                             </ListItemIcon>
@@ -76,7 +82,7 @@ export default function ClippedDrawer(props) {
                         </ListItem>
                     </List>
                     <List>
-                        <ListItem button>
+                        <ListItem button onClick={e => setFragment("Members")}>
                             <ListItemIcon>
                                 <Group />
                             </ListItemIcon>
@@ -84,7 +90,7 @@ export default function ClippedDrawer(props) {
                         </ListItem>
                     </List>
                     <List>
-                        <ListItem button>
+                        <ListItem button onClick={() => props.props.push('/draw')}>
                             <ListItemIcon>
                                 <Shuffle />
                             </ListItemIcon>
@@ -93,7 +99,9 @@ export default function ClippedDrawer(props) {
                     </List>
                     <Divider />
                     <List>
-                        <ListItem button>
+                        <ListItem button onClick={() => {
+                            console.log("Logout")
+                        }}>
                             <ListItemIcon>
                                 <ExitToApp />
                             </ListItemIcon>
@@ -105,29 +113,7 @@ export default function ClippedDrawer(props) {
             </Drawer>
             <main className={classes.content}>
                 <Toolbar />
-                <Typography paragraph>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-                    facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-                    gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-                    donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                    adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-                    Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-                    imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-                    arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-                    donec massa sapien faucibus et molestie ac.
-                </Typography>
-                <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                    facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                    tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                    consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-                    vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-                    hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-                    tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-                    nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-                </Typography>
+                {loadFragment()}
             </main>
         </div>
     );
