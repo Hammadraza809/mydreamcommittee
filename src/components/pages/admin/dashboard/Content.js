@@ -10,9 +10,11 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { GroupAdd, Group, Shuffle, ExitToApp } from '@material-ui/icons';
+import { GroupAdd, Group, Shuffle, ExitToApp, EmojiPeople, Add } from '@material-ui/icons';
 import Requests from '../pages/Requests';
 import Members from '../pages/Members';
+import Winners from '../pages/Winners';
+import AddCommittee from '../pages/AddCommittee';
 
 const drawerWidth = 240;
 
@@ -49,6 +51,10 @@ export default function ClippedDrawer(props) {
                 return <Requests/>
             case "Members":
                 return <Members/>
+            case "Winners":
+                return <Winners/>
+            case "Add_committee":
+                return <AddCommittee/>
             default:
                 break;
         }
@@ -87,6 +93,22 @@ export default function ClippedDrawer(props) {
                                 <Group />
                             </ListItemIcon>
                             <ListItemText primary="All Members" />
+                        </ListItem>
+                    </List>
+                    <List>
+                        <ListItem button onClick={e => setFragment("Winners")}>
+                            <ListItemIcon>
+                                <EmojiPeople />
+                            </ListItemIcon>
+                            <ListItemText primary="Winners" />
+                        </ListItem>
+                    </List>
+                    <List>
+                        <ListItem button onClick={e => setFragment("Add_committee")}>
+                            <ListItemIcon>
+                                <Add />
+                            </ListItemIcon>
+                            <ListItemText primary="Add Committes" />
                         </ListItem>
                     </List>
                     <List>

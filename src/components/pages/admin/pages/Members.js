@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Members.css';
 import { Row, Col } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Select, TextField } from '@material-ui/core';
+import { Button, Select, Table, TableCell, TableBody, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
 
         },
     },
+    table: {
+        minWidth: 650,
+    }
 }));
 
 const validationSchema = Yup.object({
@@ -23,12 +26,22 @@ const validationSchema = Yup.object({
 function Members() {
     const classes = useStyles();
     const [committee, setCommittee] = useState([{ label: "Please Select committee", value: "" }]);
+    const [members, setMembers] = useState([]);
 
     useEffect(() => {
         async function getData() {
             const res = await fetch('https://mydreamcommittee.com/v1/committees');
             const body = await res.json();
             setCommittee(body.data.committees);
+        }
+        getData()
+    }, []);
+
+    useEffect(() => {
+        async function getData() {
+            const res = await fetch(`https://mydreamcommittee.com/v1/committee/car`);
+            const body = await res.json();
+            setMembers(body.data.users);
         }
         getData()
     }, []);
@@ -43,8 +56,7 @@ function Members() {
                     validationSchema={validationSchema}
                     onSubmit={(data, { setSubmitting }) => {
                         setSubmitting(true)
-                        
-                        
+                        // getMembers(data)
                     }}
                 >
                     {({ errors, isSubmitting, values, handleChange }) => (
@@ -55,7 +67,6 @@ function Members() {
                                     <Field
                                         as={Select}
                                         name="committee"
-                                        select
                                         variant='outlined'
                                         native
                                     >
@@ -65,7 +76,7 @@ function Members() {
                                             )
                                         })}
                                     </Field>
-                                    
+
                                 </Col>
                                 <Col className={classes.root}>
                                     <Button
@@ -88,7 +99,40 @@ function Members() {
                 </Formik>
             </div>
             <div className="results">
-                <h1>This is results</h1>
+                <div className="rTable">
+                    <TableContainer>
+                        <Table className={classes.table} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>S.No</TableCell>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell>CNIC</TableCell>
+                                    <TableCell>Email</TableCell>
+                                    <TableCell>Mobile No</TableCell>
+                                    <TableCell>Address</TableCell>
+                                    <TableCell>City</TableCell>
+                                    <TableCell>Committee</TableCell>
+                                    <TableCell>Membership Id</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {members.map((member) => (
+                                    <TableRow key={member.id}>
+                                        <TableCell>{member.id}</TableCell>
+                                        <TableCell>{member.name}</TableCell>
+                                        <TableCell>{member.cnic}</TableCell>
+                                        <TableCell>{member.email}</TableCell>
+                                        <TableCell>{member.mobileno}</TableCell>
+                                        <TableCell>{member.address}</TableCell>
+                                        <TableCell>{member.city}</TableCell>
+                                        <TableCell>{member.committee}</TableCell>
+                                        <TableCell>{member.membershipId}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
             </div>
         </div>
     )
