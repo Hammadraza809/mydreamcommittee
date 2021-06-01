@@ -89,7 +89,7 @@ function AddCommittee() {
                                     disabled={isSubmitting}
                                 >
                                     Add
-                            </Button>
+                                </Button>
                             </Row>
                         </Form>
                     )}
