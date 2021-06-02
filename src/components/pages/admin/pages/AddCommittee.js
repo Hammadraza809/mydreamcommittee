@@ -75,7 +75,6 @@ function AddCommittee() {
                         setSubmitting(true)
                         addCommittee(data);
                         setSubmitting(false);
-                        
                     }}
                 >
                     {({ errors, handleChange, values, isSubmitting, touched }) => (
