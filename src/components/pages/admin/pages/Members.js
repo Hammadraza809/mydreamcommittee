@@ -39,12 +39,25 @@ function Members() {
 
     useEffect(() => {
         async function getData() {
-            const res = await fetch(`https://mydreamcommittee.com/v1/committee/car`);
+            const res = await fetch(`https://mydreamcommittee.com/v1/users`);
             const body = await res.json();
             setMembers(body.data.users);
         }
         getData()
     }, []);
+
+    const getMembers = data => {
+        fetch(`https://mydreamcommittee.com/v1/committee/${data}`, {
+        method : 'GET',
+        headers: {
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+        },
+    })
+    .then(res => res.json())
+    .then(result => setMembers(result.data.users))
+    .catch(err => console.log(err));
+    }
 
     return (
         <div className="main">
@@ -56,7 +69,7 @@ function Members() {
                     validationSchema={validationSchema}
                     onSubmit={(data, { setSubmitting }) => {
                         setSubmitting(true)
-                        // getMembers(data)
+                        getMembers(data.committee);
                     }}
                 >
                     {({ errors, isSubmitting, values, handleChange }) => (
