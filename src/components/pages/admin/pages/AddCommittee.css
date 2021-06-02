@@ -1,5 +1,9 @@
 .btnRoww{
     margin-right: 2px;
-    border: 2px solid red;
     float: right;
+}
+.headingCommittee{
+    margin-bottom: 0px;
+    margin-top: 40px;
+    display: block;
 }

@@ -45,7 +45,6 @@ const validationSchema = Yup.object({
   committee: Yup.string().required('Please select anyone committee'),
   photo: Yup.mixed().required('Please upload picture of bank deposite slip')
     .test("size", "Image should be  format", (value) => {
-      console.log(value)
       return value && value[0].size <= 500000;
      
     }),
@@ -57,9 +56,9 @@ function Main() {
 
   useEffect(() => {
     async function getData() {
-      const res = await fetch('https://mydreamcommittee.com/v1/committees');
+      const res = await fetch('https://mydreamcommittee.com/v1/committees/active');
       const body = await res.json();
-      setCommittee(body.data.committees);
+      console.log(setCommittee(body.data.Committees))
     }
     getData()
   }, []);

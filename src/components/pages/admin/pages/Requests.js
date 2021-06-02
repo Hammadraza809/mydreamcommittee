@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableCell, TableBody, TableContainer, TableHead, TableRow, Paper, makeStyles } from '@material-ui/core';
+import ApprovedBtn from './common/ApprovedBtn';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -22,11 +23,14 @@ function Requests() {
 
     return (
         <div>
+            <div>
+                <h1><u>Incoming Requests</u></h1>
+                <hr/>
+            </div>
             <TableContainer>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
-                        <TableRow>
-                            <TableCell>S.No</TableCell>
+                        <TableRow>                          
                             <TableCell>Name</TableCell>
                             <TableCell>CNIC</TableCell>
                             <TableCell>Email</TableCell>
@@ -35,13 +39,12 @@ function Requests() {
                             <TableCell>City</TableCell>
                             <TableCell>Committee</TableCell>
                             <TableCell>Status</TableCell>
-                            <TableCell>Button</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {requests && requests.map((request) => (
                             <TableRow key={request.id}>
-                                <TableCell>{request.id}</TableCell>
                                 <TableCell>{request.name}</TableCell>
                                 <TableCell>{request.cnic}</TableCell>
                                 <TableCell>{request.email}</TableCell>
@@ -50,7 +53,7 @@ function Requests() {
                                 <TableCell>{request.city}</TableCell>
                                 <TableCell>{request.committee}</TableCell>
                                 <TableCell>{request.status}</TableCell>
-                                <TableCell>Button</TableCell>
+                                <TableCell>{<ApprovedBtn props={request.id}/>}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

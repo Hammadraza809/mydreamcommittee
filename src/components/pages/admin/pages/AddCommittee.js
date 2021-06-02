@@ -21,6 +21,24 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const addCommittee = data =>{
+    fetch(`https://mydreamcommittee.com/v1/committees`, {
+        method : 'POST',
+        headers: {
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+        },
+        body: JSON.stringify({
+            label:data.label,
+            value:data.value,
+            status:'active'
+        })
+    })
+    .then(res => res.json())
+    .then(result => console.log(result))
+    .catch(err => console.log(err));
+}
+
 const validationSchema = Yup.object({
     label: Yup.string().required('Name is required.'),
     value: Yup.string().required('Value is required.'),
@@ -39,6 +57,8 @@ function AddCommittee() {
         getData()
     }, []);
 
+
+
     return (
         <div>
             <div>
@@ -51,11 +71,14 @@ function AddCommittee() {
                         value: '',
                     }}
                     validationSchema={validationSchema}
-                    onSubmit={(data, { isSubmitting }) => {
-                        console.log(data);
+                    onSubmit={(data, { setSubmitting }) => {
+                        setSubmitting(true)
+                        addCommittee(data);
+                        setSubmitting(false);
+                        
                     }}
                 >
-                    {({ errors, handleChange, values, isSubmitting }) => (
+                    {({ errors, handleChange, values, isSubmitting, touched }) => (
                         <Form>
                             <Row>
                                 <Col className={classes.root}>
@@ -66,6 +89,7 @@ function AddCommittee() {
                                         placeholder='Dream Car Committee'
                                         variant='outlined'
                                     />
+                                    {errors.label}
                                 </Col>
                                 <Col className={classes.root}>
                                     <label>Enter Committee Value:</label>
@@ -75,14 +99,17 @@ function AddCommittee() {
                                         placeholder='car'
                                         variant='outlined'
                                     />
+                                    {errors.value}
                                 </Col>
                             </Row>
-                            <Row className="btnRoww">
+                            <Row className="btnRoww" >
                                 <Button
+                                    className="btn"
                                     style={{
                                         color: "white",
                                         backgroundColor: "rgb(252, 143, 0)",
-                                        padding: "10px 30px"
+                                        padding: "10px 30px",
+
                                     }}
                                     variant="contained"
                                     type="submit"
@@ -95,26 +122,27 @@ function AddCommittee() {
                     )}
                 </Formik>
             </div>
-            <div>
-                <h4>Active Committees</h4>
+            <div className="headingCommittee">
+                <h4>Committees</h4>
             </div>
+            <hr />
             <div>
                 <TableContainer>
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>S.No</TableCell>
                                 <TableCell>Committee Name</TableCell>
                                 <TableCell>Committee Value</TableCell>
+                                <TableCell>Status</TableCell>
                                 <TableCell>Delete</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {committees.map((committee) => (
                                 <TableRow key={committee.id}>
-                                    <TableCell>{committee.id}</TableCell>
                                     <TableCell>{committee.label}</TableCell>
                                     <TableCell>{committee.value}</TableCell>
+                                    <TableCell>{committee.status}</TableCell>
                                     <TableCell>Delete</TableCell>
                                 </TableRow>
                             ))}
