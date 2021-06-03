@@ -57,7 +57,9 @@ function AddCommittee() {
         getData()
     }, []);
 
-
+    // const updateStatus = () => {
+    //     fetch(`https://mydreamcommittee.com/v1/committees/${id}`)
+    // }
 
     return (
         <div>
@@ -133,7 +135,8 @@ function AddCommittee() {
                                 <TableCell>Committee Name</TableCell>
                                 <TableCell>Committee Value</TableCell>
                                 <TableCell>Status</TableCell>
-                                <TableCell>Delete</TableCell>
+                                <TableCell>Change Status</TableCell>
+                                <TableCell></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -142,7 +145,15 @@ function AddCommittee() {
                                     <TableCell>{committee.label}</TableCell>
                                     <TableCell>{committee.value}</TableCell>
                                     <TableCell>{committee.status}</TableCell>
-                                    <TableCell>Delete</TableCell>
+                                    <TableCell>
+                                        {
+                                            <select name="changeStatus">
+                                                <option value="active">active</option>
+                                                <option value="close">close</option>
+                                            </select>
+                                        }
+                                    </TableCell>
+                                    <TableCell>Button</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

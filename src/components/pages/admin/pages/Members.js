@@ -30,16 +30,16 @@ function Members() {
 
     useEffect(() => {
         async function getData() {
-            const res = await fetch('https://mydreamcommittee.com/v1/committees/active');
+            const res = await fetch('https://mydreamcommittee.com/v1/committees');
             const body = await res.json();
-            setCommittee(body.data.Committees);
+            setCommittee(body.data.committees);
         }
         getData()
     }, []);
 
     useEffect(() => {
         async function getData() {
-            const res = await fetch(`https://mydreamcommittee.com/v1/users`);
+            const res = await fetch(`https://mydreamcommittee.com/v1/users/approved`);
             const body = await res.json();
             setMembers(body.data.users);
         }
