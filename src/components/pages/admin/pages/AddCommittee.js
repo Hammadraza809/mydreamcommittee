@@ -21,24 +21,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const addCommittee = data =>{
-    fetch(`https://mydreamcommittee.com/v1/committees`, {
-        method : 'POST',
-        headers: {
-            'Accept':'application/json',
-            'Content-Type':'application/json',
-        },
-        body: JSON.stringify({
-            label:data.label,
-            value:data.value,
-            status:'active'
-        })
-    })
-    .then(res => res.json())
-    .then(result => console.log(result))
-    .catch(err => console.log(err));
-}
-
 const validationSchema = Yup.object({
     label: Yup.string().required('Name is required.'),
     value: Yup.string().required('Value is required.'),
@@ -57,9 +39,23 @@ function AddCommittee() {
         getData()
     }, []);
 
-    // const updateStatus = () => {
-    //     fetch(`https://mydreamcommittee.com/v1/committees/${id}`)
-    // }
+    const addCommitte = data =>{
+        fetch(`https://mydreamcommittee.com/v1/committees`, {
+            method : 'POST',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+            },
+            body: JSON.stringify({
+                label:data.label,
+                value:data.value,
+                status:'active'
+            })
+        })
+        .then(res => res.json())
+        .then(result => setCommittees([...committees,result.data.committees]))
+        .catch(err => console.log(err));
+    }
 
     return (
         <div>
@@ -75,7 +71,7 @@ function AddCommittee() {
                     validationSchema={validationSchema}
                     onSubmit={(data, { setSubmitting }) => {
                         setSubmitting(true)
-                        addCommittee(data);
+                        addCommitte(data);
                         setSubmitting(false);
                     }}
                 >
