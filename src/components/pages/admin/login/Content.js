@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Content.css'
 import logo from '../../../../assets/images/logo.png';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,11 +18,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const MyTextField = ({ rows, multiline, placeholder, ...props }) => {
+const MyTextField = ({ type, rows, multiline, placeholder, ...props }) => {
     const [field, meta] = useField(props);
     const errorText = meta.error && meta.touched ? meta.error : "";
     return (
         <TextField
+            type={type}
             rows={rows}
             multiline={multiline}
             placeholder={placeholder}
@@ -39,12 +40,41 @@ const validationSchema = Yup.object({
     password: Yup.string().required('Password is required'),
 });
 
-function Main() {
+function Main(props) {
     const classes = useStyles();
+    const [error, setError] = useState(null)
+
+    const loginFunc = data => {
+        fetch(`https://mydreamcommittee.com/v1/login`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: data.username,
+                password: data.password
+            })
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result.statusCode === 201) {
+                    localStorage.setItem('acc_token', result.data.access_token);
+                    localStorage.setItem('ref-token', result.data.refresh_token);
+                    localStorage.setItem('user-id',result.data.session_id);
+                    props.props.push('/dashboard')
+                }
+                else {
+                    setError(result.messages)
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <div className="main">
             <div className="logo">
-                <img src={logo} style={{width:'200px', margin:'20px'}} />
+                <img src={logo} style={{ width: '200px', margin: '20px' }} />
             </div>
             <div className="loginForm">
                 <Container className="Form">
@@ -56,7 +86,7 @@ function Main() {
                         validationSchema={validationSchema}
                         onSubmit={(data, { setSubmitting }) => {
                             setSubmitting(true);
-                            console.log(data);
+                            loginFunc(data);
                             setSubmitting(false);
                         }}
                     >
@@ -67,13 +97,15 @@ function Main() {
                                     placeholder='Username'
                                     name='username'
                                 />
-                                <br/><br/>
+                                <br /><br />
                                 <label>Password</label>
                                 <MyTextField
                                     placeholder='Password'
                                     name='password'
+                                    type='password'
                                 />
-                                <br/><br/>
+                                {error && <><small style={{ color: 'red' }}>{error}</small></>}
+                                <br /><br />
                                 <Button
                                     style={{
                                         backgroundColor: "rgb(252, 143, 0)",
@@ -88,7 +120,6 @@ function Main() {
                                 </Button>
                             </Form>
                         )}
-
                     </Formik>
                 </Container>
             </div>

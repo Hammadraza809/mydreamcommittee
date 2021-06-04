@@ -45,6 +45,29 @@ export default function ClippedDrawer(props) {
     const classes = useStyles();
     const [fragment, setFragment] = useState("Requests")
 
+    const userid = localStorage.getItem('user-id');
+    const acc_token = localStorage.getItem('token');
+    const ref_token = localStorage.getItem('ref-token');
+    console.log(userid);
+
+    if(localStorage.getItem('token') === null){
+        props.props.push('/restricted');
+        return null;
+    }
+
+    // useEffect(() => {
+    //     async function chkLogin() {
+    //         const res = await fetch(`https://mydreamcommittee.com/v1/logout/${userid}`,{
+    //             method:'PATCH',
+
+    //         });
+    //         const body = await res.json();
+    //         setCommittees(body.data.committees);
+    //     }
+    //     chkLogin()
+    // },[])
+
+
     const loadFragment = () => {
         switch (fragment) {
             case "Requests":

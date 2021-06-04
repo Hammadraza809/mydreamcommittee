@@ -9,6 +9,8 @@ import Admin from './components/pages/admin/login/Index';
 import AdminDashboard from './components/pages/admin/dashboard/Index';
 import Requests from './components/pages/admin/pages/Requests';
 import Draw from './components/pages/admin/pages/Draw';
+import Restricted from './components/pages/admin/pages/common/Restricted';
+import Expired from './components/pages/admin/pages/common/Expired';
 
 import CarCommittee from './components/pages/committees/carcommittee/Index';
 
@@ -23,6 +25,8 @@ function App() {
       <Route exact path="/dashboard" component={AdminDashboard}/>
       <Route exact path="/requests" component={Requests}/>
       <Route exact path="/draw" component={Draw}/>
+      <Route exact path="/restricted" component={Restricted}/>
+      <Route exact path="/expired"  component={Expired}/>
 
       <Route exact path="/carcommittee" component={CarCommittee}/>
     </Router>

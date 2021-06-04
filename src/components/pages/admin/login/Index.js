@@ -1,10 +1,10 @@
 import React from 'react';
 import Content from './Content'
 
-function Login(){
+function Login(props){
     return(
         <div>
-            <Content/>
+            <Content props={props.history}/>
         </div>
     );
 }
