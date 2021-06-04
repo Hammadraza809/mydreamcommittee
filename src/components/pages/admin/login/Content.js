@@ -59,7 +59,7 @@ function Main(props) {
             .then(res => res.json())
             .then(result => {
                 if (result.statusCode === 201) {
-                    localStorage.setItem('acc_token', result.data.access_token);
+                    localStorage.setItem('acc-token', result.data.access_token);
                     localStorage.setItem('ref-token', result.data.refresh_token);
                     localStorage.setItem('user-id',result.data.session_id);
                     props.props.push('/dashboard')

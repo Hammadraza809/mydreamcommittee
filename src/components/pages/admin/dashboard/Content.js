@@ -44,40 +44,50 @@ const useStyles = makeStyles((theme) => ({
 export default function ClippedDrawer(props) {
     const classes = useStyles();
     const [fragment, setFragment] = useState("Requests")
+    const [access, setAccess] = useState(false);
 
     const userid = localStorage.getItem('user-id');
-    const acc_token = localStorage.getItem('token');
+    const acc_token = localStorage.getItem('acc-token');
     const ref_token = localStorage.getItem('ref-token');
-    console.log(userid);
-
-    if(localStorage.getItem('token') === null){
+    
+    if (localStorage.getItem('acc-token') === null) {
         props.props.push('/restricted');
         return null;
     }
 
-    // useEffect(() => {
-    //     async function chkLogin() {
-    //         const res = await fetch(`https://mydreamcommittee.com/v1/logout/${userid}`,{
-    //             method:'PATCH',
-
-    //         });
-    //         const body = await res.json();
-    //         setCommittees(body.data.committees);
-    //     }
-    //     chkLogin()
-    // },[])
-
+    fetch(`https://mydreamcommittee.com/v1/logout/${userid}`, {
+        method: 'PATCH',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': acc_token,
+        },
+        body: JSON.stringify({
+            refresh_token: ref_token
+        })
+    })
+    .then(res => res.json())
+    .then(result => {
+        if (result.statusCode === 401) {
+            localStorage.removeItem('acc-token');
+            localStorage.removeItem('ref-token');
+            localStorage.removeItem('user-id');
+            props.props.push('/expired');
+            return null;
+        }
+    })
+    .catch(err => console.log(err))
 
     const loadFragment = () => {
         switch (fragment) {
             case "Requests":
-                return <Requests/>
+                return <Requests />
             case "Members":
-                return <Members/>
+                return <Members />
             case "Winners":
-                return <Winners/>
+                return <Winners />
             case "Add_committee":
-                return <AddCommittee/>
+                return <AddCommittee />
             default:
                 break;
         }
