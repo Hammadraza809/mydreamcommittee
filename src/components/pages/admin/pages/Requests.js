@@ -43,7 +43,7 @@ function Requests() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {requests && requests.map((request) => (
+                        {requests && requests.map((request,index) => (
                             <TableRow key={request.id}>
                                 <TableCell>{request.name}</TableCell>
                                 <TableCell>{request.cnic}</TableCell>
@@ -53,7 +53,7 @@ function Requests() {
                                 <TableCell>{request.city}</TableCell>
                                 <TableCell>{request.committee}</TableCell>
                                 <TableCell>{request.status}</TableCell>
-                                <TableCell>{<ApprovedBtn props={request.id}/>}</TableCell>
+                                <TableCell><ApprovedBtn request={request} index={index} /></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

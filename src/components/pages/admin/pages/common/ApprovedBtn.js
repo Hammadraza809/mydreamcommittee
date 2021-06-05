@@ -11,9 +11,41 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function ApprovedBtn(id) {
+function ApprovedBtn(props) {
     const classes = useStyles();
-
+    const changeStatus = () => {
+        console.log(props.request.committee)
+        fetch(`https://mydreamcommittee.com/v1/controller/user.php?committee=${props.request.committee}&status=approved`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(res => res.json())
+            .then(result => {
+                // const id = props.request.committee + '-' + parseInt(result.data.users.length) + 1
+                // console.log(result.data.users.length,parseInt(result.data.users.length)+1)
+                const id = result.data.users.length + 1
+                console.log(id)
+                const obj = {
+                    membershipId: props.request.committee + '-' + id,
+                    status: 'approved'
+                }
+                fetch(`https://mydreamcommittee.com/v1/users/${props.request.id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(obj)
+                })
+                .then(res => res.json())
+                .then(result => console.log(result))
+                .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+    }
     return (
         <div>
             <Button
@@ -23,22 +55,8 @@ function ApprovedBtn(id) {
                     padding: "10px 10px",
                 }}
                 variant="contained"
-                // type="submit"
                 onClick={() => {
-                    fetch(`https://mydreamcommittee.com/v1/users/${id.props}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            membershipId: '',
-                            status: 'approved',
-                        })
-                    })
-                    .then(res => res.json())
-                    .then(result => console.log(result))
-                    .catch(err => console.log(err));
+                    changeStatus()
                 }}
             >
                 Approve

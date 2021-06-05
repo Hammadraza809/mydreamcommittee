@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Select, Table, TableCell, TableBody, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
@@ -27,6 +27,7 @@ function Members() {
     const classes = useStyles();
     const [committee, setCommittee] = useState([{ label: "Please Select committee", value: "" }]);
     const [members, setMembers] = useState([]);
+    const [loading,setLoading] = useState(false)
 
     useEffect(() => {
         async function getData() {
@@ -47,16 +48,20 @@ function Members() {
     }, []);
 
     const getMembers = data => {
-        fetch(`https://mydreamcommittee.com/v1/committee/${data}`, {
-        method : 'GET',
-        headers: {
-            'Accept':'application/json',
-            'Content-Type':'application/json',
-        },
-    })
-    .then(res => res.json())
-    .then(result => setMembers(result.data.users))
-    .catch(err => console.log(err));
+
+        setLoading(true)
+        fetch(`https://mydreamcommittee.com/v1/controller/user.php?committee=${data}&status=approved`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(res => res.json())
+            .then(result => {
+                setLoading(false)
+                setMembers(result.data.users)})
+            .catch(err => console.log(err));
     }
 
     return (
@@ -102,8 +107,18 @@ function Members() {
                                         }}
                                         variant="contained"
                                         type="submit"
+
                                     >
-                                        Filter
+                                        {loading ?  <CircularProgress
+                                            variant="determinate"
+                                            className={classes.bottom}
+                                            size={20}
+                                            thickness={4}
+                                            // {...props}
+                                            value={100}
+                                        /> :  'Filter'}
+                                       
+                                        {/*  */}
                                     </Button>
                                 </Col>
                             </Row>

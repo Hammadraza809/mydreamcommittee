@@ -29,7 +29,8 @@ const validationSchema = Yup.object({
 function AddCommittee() {
     const classes = useStyles();
     const [committees, setCommittees] = useState([]);
-
+    const [selectValue,setSelectValue] = useState('close')
+    const menu = React.useRef()
     useEffect(() => {
         async function getData() {
             const res = await fetch('https://mydreamcommittee.com/v1/committees');
@@ -56,7 +57,10 @@ function AddCommittee() {
             .then(result => setCommittees([...committees, result.data.committees]))
             .catch(err => console.log(err));
     }
-
+    const handleChange = (e) =>{
+        // console.log()
+        setSelectValue(e.target.value)
+    }
     return (
         <div>
             <div>
@@ -143,7 +147,7 @@ function AddCommittee() {
                                     <TableCell>{committee.status}</TableCell>
                                     <TableCell>
                                         {
-                                            <select id="dropdown" name="changeStatus">
+                                            <select id="dropdown" ref={menu} defaultValue={selectValue} onChange={handleChange} name="changeStatus">
                                                 <option value="active">active</option>
                                                 <option value="close">close</option>
                                             </select>
@@ -162,7 +166,7 @@ function AddCommittee() {
                                                 variant="contained"
                                                 type="submit"
                                                 onClick={() => {
-                                                    alert("chl rha hy");
+                                                    console.log(selectValue)
                                                 }}
                                             >
                                                 Update
