@@ -49,34 +49,42 @@ export default function ClippedDrawer(props) {
     const userid = localStorage.getItem('user-id');
     const acc_token = localStorage.getItem('acc-token');
     const ref_token = localStorage.getItem('ref-token');
-    
+
     if (localStorage.getItem('acc-token') === null) {
         props.props.push('/restricted');
         return null;
     }
-
-    fetch(`https://mydreamcommittee.com/v1/logout/${userid}`, {
-        method: 'PATCH',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': acc_token,
-        },
-        body: JSON.stringify({
-            refresh_token: ref_token
-        })
-    })
-    .then(res => res.json())
-    .then(result => {
-        if (result.statusCode === 401) {
-            localStorage.removeItem('acc-token');
-            localStorage.removeItem('ref-token');
-            localStorage.removeItem('user-id');
-            props.props.push('/expired');
-            return null;
-        }
-    })
-    .catch(err => console.log(err))
+    // else {
+    //     fetch(`https://mydreamcommittee.com/v1/logout/${userid}`, {
+    //         method: 'PATCH',
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json',
+    //             'Authorization': acc_token,
+    //         },
+    //         body: JSON.stringify({
+    //             refresh_token: ref_token
+    //         })
+    //     })
+    //     .then(res => res.json())
+    //     .then(result => {
+    //         console.log(result);
+    //         if (result.statusCode === 401) {
+    //             localStorage.removeItem('acc-token');
+    //             localStorage.removeItem('ref-token');
+    //             localStorage.removeItem('user-id');
+    //             props.props.push('/expired');
+    //             return null;
+    //         }
+    //         else{
+    //             localStorage.setItem('acc-token',result.data.access_token)
+    //             localStorage.setItem('ref-token',result.data.refresh_token)
+    //             localStorage.setItem('user-id',result.data.session_id)
+    //             return;
+    //         }
+    //     })
+    //     .catch(err => console.log(err))
+    // }
 
     const loadFragment = () => {
         switch (fragment) {
@@ -155,7 +163,27 @@ export default function ClippedDrawer(props) {
                     <Divider />
                     <List>
                         <ListItem button onClick={() => {
-                            console.log("Logout")
+                            fetch(`https://mydreamcommittee.com/v1/logout/${userid}`,{
+                                method:'DELETE',
+                                headers:{
+                                    'Accept':'application/json',
+                                    'Content-Type':'application/json',
+                                    'Authorization' : acc_token,
+                                },
+                            })
+                            .then(res => res.json())
+                            .then(result => {
+                                if(result.statusCode === 200){
+                                    localStorage.removeItem('acc-token');
+                                    localStorage.removeItem('ref-token');
+                                    localStorage.removeItem('user-id');
+                                    props.props.push('/admin')
+                                }
+                                else {
+                                    return null;
+                                }
+                            })
+                            .catch(err => console.log(err))
                         }}>
                             <ListItemIcon>
                                 <ExitToApp />

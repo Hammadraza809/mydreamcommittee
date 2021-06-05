@@ -39,22 +39,22 @@ function AddCommittee() {
         getData()
     }, []);
 
-    const addCommitte = data =>{
+    const addCommitte = data => {
         fetch(`https://mydreamcommittee.com/v1/committees`, {
-            method : 'POST',
+            method: 'POST',
             headers: {
-                'Accept':'application/json',
-                'Content-Type':'application/json',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                label:data.label,
-                value:data.value,
-                status:'active'
+                label: data.label,
+                value: data.value,
+                status: 'active'
             })
         })
-        .then(res => res.json())
-        .then(result => setCommittees([...committees,result.data.committees]))
-        .catch(err => console.log(err));
+            .then(res => res.json())
+            .then(result => setCommittees([...committees, result.data.committees]))
+            .catch(err => console.log(err));
     }
 
     return (
@@ -143,13 +143,32 @@ function AddCommittee() {
                                     <TableCell>{committee.status}</TableCell>
                                     <TableCell>
                                         {
-                                            <select name="changeStatus">
+                                            <select id="dropdown" name="changeStatus">
                                                 <option value="active">active</option>
                                                 <option value="close">close</option>
                                             </select>
                                         }
                                     </TableCell>
-                                    <TableCell>Button</TableCell>
+                                    <TableCell>
+                                        {
+                                            <Button
+                                                className="btn"
+                                                style={{
+                                                    color: "white",
+                                                    backgroundColor: "rgb(252, 143, 0)",
+                                                    padding: "10px 20px",
+
+                                                }}
+                                                variant="contained"
+                                                type="submit"
+                                                onClick={() => {
+                                                    alert("chl rha hy");
+                                                }}
+                                            >
+                                                Update
+                                            </Button>
+                                        }
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
