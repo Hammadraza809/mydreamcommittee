@@ -8,15 +8,29 @@ import * as Yup from 'yup';
 import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
     root: {
+        position: 'relative',
         '& > *': {
             margin: theme.spacing(0),
             width: '100%',
 
         },
+        flexGrow: 1,
     },
     table: {
         minWidth: 650,
-    }
+    },
+    bottom: {
+        color: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+      },
+    top: {
+        color: '#1a90ff',
+        animationDuration: '550ms',
+        position: 'absolute',
+        left: 0,
+    },
+    circle: {
+        strokeLinecap: 'round',
+    },
 }));
 
 const validationSchema = Yup.object({
@@ -27,7 +41,7 @@ function Members() {
     const classes = useStyles();
     const [committee, setCommittee] = useState([{ label: "Please Select committee", value: "" }]);
     const [members, setMembers] = useState([]);
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         async function getData() {
@@ -110,15 +124,16 @@ function Members() {
 
                                     >
                                         {loading ?  <CircularProgress
-                                            variant="determinate"
+                                            variant="indeterminate"
+                                            disableShrink
                                             className={classes.bottom}
-                                            size={20}
+                                            classes={{
+                                                circle:classes.circle,
+                                            }}
+                                            size={30}
                                             thickness={4}
-                                            // {...props}
                                             value={100}
                                         /> :  'Filter'}
-                                       
-                                        {/*  */}
                                     </Button>
                                 </Col>
                             </Row>

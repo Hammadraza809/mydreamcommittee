@@ -5,7 +5,7 @@ import ApprovedBtn from './common/ApprovedBtn';
 const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 650,
-    }
+    },
 }));
 
 function Requests() {

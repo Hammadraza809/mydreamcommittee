@@ -8,6 +8,7 @@ import { Formik, Form, useField, Field } from 'formik';
 import * as Yup from 'yup';
 import './AddCommittee.css'
 import { Table, TableCell, TableBody, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,7 +19,20 @@ const useStyles = makeStyles((theme) => ({
     },
     table: {
         minWidth: 650,
-    }
+    },
+    bottom: {
+        color: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+    },
+    top: {
+        color: '#1a90ff',
+        animationDuration: '550ms',
+        position: 'absolute',
+        left: 0,
+    },
+    circle: {
+        strokeLinecap: 'round',
+    },
+
 }));
 
 const validationSchema = Yup.object({
@@ -29,8 +43,10 @@ const validationSchema = Yup.object({
 function AddCommittee() {
     const classes = useStyles();
     const [committees, setCommittees] = useState([]);
-    const [selectValue,setSelectValue] = useState('close')
+    const [selectValue, setSelectValue] = useState('close');
+    const [loading, setLoading] = useState(false);
     const menu = React.useRef()
+
     useEffect(() => {
         async function getData() {
             const res = await fetch('https://mydreamcommittee.com/v1/committees');
@@ -40,7 +56,27 @@ function AddCommittee() {
         getData()
     }, []);
 
+    const updateCommittee = (value,id) => {
+        setLoading(true)
+        fetch(`https://mydreamcommittee.com/v1/committees/${id}`,{
+            method : 'PATCH',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body : JSON.stringify({
+                status: value
+            })
+        })
+        .then(res => res.json())
+        .then(result => {
+            setLoading(false);
+        })
+        .catch(err => console.log(err))
+    }
+
     const addCommitte = data => {
+        setLoading(true)
         fetch(`https://mydreamcommittee.com/v1/committees`, {
             method: 'POST',
             headers: {
@@ -54,10 +90,13 @@ function AddCommittee() {
             })
         })
             .then(res => res.json())
-            .then(result => setCommittees([...committees, result.data.committees]))
+            .then(result => {
+                setLoading(false);
+                setCommittees(result.data.committees)
+            })
             .catch(err => console.log(err));
     }
-    const handleChange = (e) =>{
+    const handleChange = (e) => {
         // console.log()
         setSelectValue(e.target.value)
     }
@@ -116,7 +155,17 @@ function AddCommittee() {
                                     type="submit"
                                     disabled={isSubmitting}
                                 >
-                                    Add
+                                    {loading ? <CircularProgress
+                                        variant="indeterminate"
+                                        disableShrink
+                                        className={classes.bottom}
+                                        classes={{
+                                            circle: classes.circle,
+                                        }}
+                                        size={30}
+                                        thickness={4}
+                                        value={100}
+                                    /> : 'Add'}
                                 </Button>
                             </Row>
                         </Form>
@@ -166,10 +215,20 @@ function AddCommittee() {
                                                 variant="contained"
                                                 type="submit"
                                                 onClick={() => {
-                                                    console.log(selectValue)
+                                                    updateCommittee(selectValue,committee.id);
                                                 }}
                                             >
-                                                Update
+                                                {loading ? <CircularProgress
+                                                    variant="indeterminate"
+                                                    disableShrink
+                                                    className={classes.bottom}
+                                                    classes={{
+                                                        circle: classes.circle,
+                                                    }}
+                                                    size={30}
+                                                    thickness={4}
+                                                    value={100}
+                                                /> : 'Update'}
                                             </Button>
                                         }
                                     </TableCell>
