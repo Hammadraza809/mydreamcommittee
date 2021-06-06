@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import './AddCommittee.css'
 import { Table, TableCell, TableBody, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ShowModel from './common/ShowModel';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,7 +47,10 @@ function AddCommittee() {
     const [selectValue, setSelectValue] = useState('close');
     const [loading, setLoading] = useState(false);
     const menu = React.useRef()
+  
+    const [open, setOpen] = useState(false);
 
+  
     useEffect(() => {
         async function getData() {
             const res = await fetch('https://mydreamcommittee.com/v1/committees');
@@ -56,48 +60,56 @@ function AddCommittee() {
         getData()
     }, []);
 
-    const updateCommittee = (value,id) => {
+    const updateCommittee = (value, id) => {
         setLoading(true)
-        fetch(`https://mydreamcommittee.com/v1/committees/${id}`,{
-            method : 'PATCH',
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body : JSON.stringify({
-                status: value
-            })
-        })
-        .then(res => res.json())
-        .then(result => {
-            setLoading(false);
-        })
-        .catch(err => console.log(err))
-    }
-
-    const addCommitte = data => {
-        setLoading(true)
-        fetch(`https://mydreamcommittee.com/v1/committees`, {
-            method: 'POST',
+        fetch(`https://mydreamcommittee.com/v1/committees/${id}`, {
+            method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                label: data.label,
-                value: data.value,
-                status: 'active'
+                status: value
             })
         })
             .then(res => res.json())
             .then(result => {
                 setLoading(false);
-                setCommittees(result.data.committees)
+                ShowModel.handleOpen();
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err))
+    }
+
+    const handleOpen = () => {
+        setOpen(true);
+      };
+
+      const handleClose = () => {
+        setOpen(false);
+      };
+    const addCommitte = data => {
+        setOpen(true)
+        // setLoading(true)
+        // fetch(`https://mydreamcommittee.com/v1/committees`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         label: data.label,
+        //         value: data.value,
+        //         status: 'active'
+        //     })
+        // })
+        //     .then(res => res.json())
+        //     .then(result => {
+        //         setLoading(false);
+        //         setCommittees(result.data.committees)
+        //     })
+        //     .catch(err => console.log(err));
     }
     const handleChange = (e) => {
-        // console.log()
         setSelectValue(e.target.value)
     }
     return (
@@ -215,7 +227,7 @@ function AddCommittee() {
                                                 variant="contained"
                                                 type="submit"
                                                 onClick={() => {
-                                                    updateCommittee(selectValue,committee.id);
+                                                    updateCommittee(selectValue, committee.id);
                                                 }}
                                             >
                                                 {loading ? <CircularProgress
@@ -237,7 +249,9 @@ function AddCommittee() {
                         </TableBody>
                     </Table>
                 </TableContainer>
+
             </div>
+            <ShowModel open={open} onClose={handleClose} />
         </div>
     )
 }
