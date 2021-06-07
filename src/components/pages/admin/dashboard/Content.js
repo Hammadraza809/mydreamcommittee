@@ -15,6 +15,7 @@ import Requests from '../pages/Requests';
 import Members from '../pages/Members';
 import Winners from '../pages/Winners';
 import AddCommittee from '../pages/AddCommittee';
+import GoToDraw from '../pages/common/GoToDrawModal';
 
 const drawerWidth = 240;
 
@@ -45,6 +46,12 @@ export default function ClippedDrawer(props) {
     const classes = useStyles();
     const [fragment, setFragment] = useState("Requests")
     const [access, setAccess] = useState(false);
+    const [open, setOpen] = useState(true);
+
+    const handleClose = () => {
+        props.props.push('/draw')
+        setOpen(false);
+    };
 
     const userid = localStorage.getItem('user-id');
     const acc_token = localStorage.getItem('acc-token');
@@ -96,6 +103,8 @@ export default function ClippedDrawer(props) {
                 return <Winners />
             case "Add_committee":
                 return <AddCommittee props={props.props}/>
+            case "GoToDraw":
+                return <GoToDraw open={open} onClose={handleClose} props={props} />
             default:
                 break;
         }
@@ -153,7 +162,7 @@ export default function ClippedDrawer(props) {
                         </ListItem>
                     </List>
                     <List>
-                        <ListItem button onClick={() => props.props.push('/draw')}>
+                        <ListItem button onClick={e => setFragment("GoToDraw")}>
                             <ListItemIcon>
                                 <Shuffle />
                             </ListItemIcon>
