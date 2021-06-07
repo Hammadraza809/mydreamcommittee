@@ -35,7 +35,8 @@ function Model(props) {
     console.log(props)
     
     const handleClose = data => {
-        props.onClose;
+        console.log(props.onClose);
+        // props.onClose;
     }
     
     const classes = useStyles();
@@ -107,7 +108,7 @@ function Model(props) {
                                             }}
                                             variant="contained"
                                             type="submit"
-                                            onClick={handleClose}
+                                            // onClick={handleClose}
                                         >
                                             {loading ? <CircularProgress
                                                 variant="indeterminate"

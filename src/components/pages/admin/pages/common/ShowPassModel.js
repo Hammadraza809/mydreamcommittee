@@ -26,17 +26,28 @@ class ShowPassModal extends React.Component {
     componentDidMount() {
         this.getUser()
     }
-    // getUser() {
-    //     let formdata = new FormData();
-    //     formdata.append("membershipid", this.props.user);
-    //     fetch('http://mydreamcommittee.com/winner.php', {
-    //         method: 'POST',
-    //         body: formdata
-    //     })
-    //         .then((res) => res.text())
-    //         .then((result) => { this.setState({ user: result }) })
-    //         .catch(err => console.log(err))
-    // }
+    getUser() {
+        const membershipId = this.props.user;
+        fetch(`https://mydreamcommittee.com/v1/user/${membershipId}`,{
+            method:'GET',
+        })
+        .then(res => res.json())
+        .then(result => {
+            console.log(result);
+            // this.setState({user:result})
+        })
+        .catch(err => console.log(err));
+
+        // let formdata = new FormData();
+        // formdata.append("membershipid", this.props.user);
+        // fetch('http://mydreamcommittee.com/winner.php', {
+        //     method: 'POST',
+        //     body: formdata
+        // })
+        //     .then((res) => res.text())
+        //     .then((result) => { this.setState({ user: result }) })
+        //     .catch(err => console.log(err))
+    }
     showModal = () => {
         this.setState({
             visible: true,
@@ -47,17 +58,28 @@ class ShowPassModal extends React.Component {
         this.props.hideConfirm()
 
     };
-    // setWinner = () => {
-    //     let formdata = new FormData();
-    //     formdata.append("membershipid", this.props.user);
-    //     fetch('http://mydreamcommittee.com/winnerdetails.php', {
-    //         method: 'POST',
-    //         body: formdata
-    //     })
-    //         .then((res) => res.text())
-    //         .then((result) => { this.closeModal() })
-    //         .catch(err => console.log(err))
-    // }
+    setWinner = () => {
+        const membershipId = this.props.user
+        fetch(`https://mydreamcommittee.com/v1/user/${membershipId}`,{
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(result => {
+            console.log(result)
+            this.closeModal()
+        })
+        .catch(err => console.log(err));
+
+        // let formdata = new FormData();
+        // formdata.append("membershipid", this.props.user);
+        // fetch('http://mydreamcommittee.com/winnerdetails.php', {
+        //     method: 'POST',
+        //     body: formdata
+        // })
+        //     .then((res) => res.text())
+        //     .then((result) => { this.closeModal() })
+        //     .catch(err => console.log(err))
+    }
 
     render() {
 

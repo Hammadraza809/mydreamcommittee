@@ -147,7 +147,6 @@ function Members() {
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>S.No</TableCell>
                                     <TableCell>Name</TableCell>
                                     <TableCell>CNIC</TableCell>
                                     <TableCell>Email</TableCell>
@@ -161,7 +160,6 @@ function Members() {
                             <TableBody>
                                 {members.map((member) => (
                                     <TableRow key={member.id}>
-                                        <TableCell>{member.id}</TableCell>
                                         <TableCell>{member.name}</TableCell>
                                         <TableCell>{member.cnic}</TableCell>
                                         <TableCell>{member.email}</TableCell>

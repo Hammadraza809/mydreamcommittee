@@ -3,6 +3,7 @@ import TextLoop from "react-text-loop";
 import "./Draw.css";
 import { Button, Row, Col } from "react-bootstrap";
 import ShowPassModal from '../pages/common/ShowPassModel';
+
 class App extends Component {
     constructor(props) {
         super(props);
