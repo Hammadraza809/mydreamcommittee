@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { Formik, Form, useField, Field } from 'formik';
 import * as Yup from 'yup';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,6 +16,18 @@ const useStyles = makeStyles((theme) => ({
             width: '100%',
 
         },
+    },
+    bottom: {
+        color: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+    },
+    top: {
+        color: '#1a90ff',
+        animationDuration: '550ms',
+        position: 'absolute',
+        left: 0,
+    },
+    circle: {
+        strokeLinecap: 'round',
     },
 }));
 
@@ -43,8 +56,10 @@ const validationSchema = Yup.object({
 function Main(props) {
     const classes = useStyles();
     const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false);
 
     const loginFunc = data => {
+        setLoading(true);
         fetch(`https://mydreamcommittee.com/v1/login`, {
             method: 'POST',
             headers: {
@@ -63,10 +78,13 @@ function Main(props) {
                     localStorage.setItem('ref-token', result.data.refresh_token);
                     localStorage.setItem('user-id',result.data.session_id);
                     props.props.push('/dashboard')
+                    setLoading(false);
                 }
                 else {
                     setError(result.messages)
+                    setLoading(false);
                 }
+                
             })
             .catch(err => console.log(err))
     }
@@ -116,7 +134,17 @@ function Main(props) {
                                     type="submit"
                                     disabled={isSubmitting}
                                 >
-                                    Login
+                                    {loading ? <CircularProgress
+                                        variant="indeterminate"
+                                        disableShrink
+                                        className={classes.bottom}
+                                        classes={{
+                                            circle: classes.circle,
+                                        }}
+                                        size={30}
+                                        thickness={4}
+                                        value={100}
+                                    /> : 'Login'}
                                 </Button>
                             </Form>
                         )}

@@ -95,7 +95,7 @@ export default function ClippedDrawer(props) {
             case "Winners":
                 return <Winners />
             case "Add_committee":
-                return <AddCommittee />
+                return <AddCommittee props={props.props}/>
             default:
                 break;
         }

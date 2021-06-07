@@ -28,50 +28,48 @@ const useStyles = makeStyles((theme) => ({
 function ApprovedBtn(props) {
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
-
     const [open, setOpen] = useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-      };
+    const [response, setResponse] = useState([null]);
 
-      const handleClose = () => {
+    const handleClose = () => {
         setOpen(false);
-      };
+    };
+
     const changeStatus = () => {
         setLoading(true);
-        setOpen(true)
-        // fetch(`https://mydreamcommittee.com/v1/controller/user.php?committee=${props.request.committee}&status=approved`, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        // })
-        //     .then(res => res.json())
-        //     .then(result => {
-        //         const id = result.data.users.length + 1;
-        //         const member = props.request.committee;
-        //         const comp = member+ '-' + id;
-        //         const obj = {
-        //             membershipId: comp,
-        //             status: 'approved'
-        //         }
-        //         fetch(`https://mydreamcommittee.com/v1/users/${props.request.id}`, {
-        //             method: 'PATCH',
-        //             headers: {
-        //                 'Accept': 'application/json',
-        //                 'Content-Type': 'application/json',
-        //             },
-        //             body: JSON.stringify(obj)
-        //         })
-        //             .then(res => res.json())
-        //             .then(result => {
-        //                 setLoading(false)
-        //                 console.log(result.messages)
-        //             })
-        //             .catch(err => console.log(err));
-        //     })
-        //     .catch(err => console.log(err));
+        fetch(`https://mydreamcommittee.com/v1/controller/user.php?committee=${props.request.committee}&status=approved`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(res => res.json())
+            .then(result => {
+                const id = result.data.users.length + 1;
+                const member = props.request.committee;
+                const comp = member + '-' + id;
+                const obj = {
+                    membershipId: comp,
+                    status: 'approved'
+                }
+                fetch(`https://mydreamcommittee.com/v1/users/${props.request.id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(obj)
+                })
+                    .then(res => res.json())
+                    .then(result => {
+                        setLoading(false);
+                        setResponse(result.messages);
+                        setOpen(true);
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
     }
     return (
         <div>
@@ -98,7 +96,7 @@ function ApprovedBtn(props) {
                     value={100}
                 /> : 'Approve'}
             </Button>
-            <ShowModal open={open} onClose={handleClose} />
+            <ShowModal open={open} onClose={handleClose} res={response} />
         </div>
     )
 }

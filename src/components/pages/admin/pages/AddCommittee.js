@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import './AddCommittee.css'
 import { Table, TableCell, TableBody, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import ShowModel from './common/ShowModel';
+import ShowModal from '../pages/common/ShowModel';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,16 +41,15 @@ const validationSchema = Yup.object({
     value: Yup.string().required('Value is required.'),
 });
 
-function AddCommittee() {
+function AddCommittee(props) {
     const classes = useStyles();
     const [committees, setCommittees] = useState([]);
     const [selectValue, setSelectValue] = useState('close');
     const [loading, setLoading] = useState(false);
     const menu = React.useRef()
-  
     const [open, setOpen] = useState(false);
+    const [response, setResponse] = useState([null]);
 
-  
     useEffect(() => {
         async function getData() {
             const res = await fetch('https://mydreamcommittee.com/v1/committees');
@@ -75,39 +74,39 @@ function AddCommittee() {
             .then(res => res.json())
             .then(result => {
                 setLoading(false);
-                ShowModel.handleOpen();
+                setResponse(result.messages);
+                setOpen(true);
             })
             .catch(err => console.log(err))
     }
 
-    const handleOpen = () => {
-        setOpen(true);
-      };
-
-      const handleClose = () => {
+    const handleClose = () => {
+        props.props.push('/dashboard')
         setOpen(false);
-      };
+    };
+
     const addCommitte = data => {
-        setOpen(true)
-        // setLoading(true)
-        // fetch(`https://mydreamcommittee.com/v1/committees`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         label: data.label,
-        //         value: data.value,
-        //         status: 'active'
-        //     })
-        // })
-        //     .then(res => res.json())
-        //     .then(result => {
-        //         setLoading(false);
-        //         setCommittees(result.data.committees)
-        //     })
-        //     .catch(err => console.log(err));
+        setLoading(true)
+        fetch(`https://mydreamcommittee.com/v1/committees`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                label: data.label,
+                value: data.value,
+                status: 'active'
+            })
+        })
+            .then(res => res.json())
+            .then(result => {
+                setLoading(false);
+                setCommittees(result.data.committees);
+                setResponse(result.messages);
+                setOpen(true);
+            })
+            .catch(err => console.log(err));
     }
     const handleChange = (e) => {
         setSelectValue(e.target.value)
@@ -249,9 +248,8 @@ function AddCommittee() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-
             </div>
-            <ShowModel open={open} onClose={handleClose} />
+            <ShowModal open={open} onClose={handleClose} res={response} props={props}/>
         </div>
     )
 }

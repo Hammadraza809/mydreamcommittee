@@ -15,44 +15,36 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Model(msg) {
+function Model(props) {
     const classes = useStyles();
-    const [open, setOpen] = useState(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-        // msg.onClose;
-    };
-    console.log(msg.open)
     return (
-
         <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
             className={classes.modal}
-            open={msg.open}
-            // {...msg}
-
-            // onClose={msg.onClose}
+            open={props.open}
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{
                 timeout: 500,
             }}
         >
-            <Fade in={msg.open}>
+            <Fade in={props.open}>
                 <div className={classes.paper}>
-                    {/* <h2 id="transition-modal-title">{msg}</h2> */}
-                    <Button onClick={msg.onClose}>Click Me</Button>
-                    <p id="transition-modal-description">react-transition-group animates me.</p>
+                    <p>{props.res}</p>
+                    <Button
+                        style={{
+                            color: "white",
+                            backgroundColor: "rgb(252, 143, 0)",
+                        }}
+                        variant="contained"
+                        onClick={props.onClose}
+                    >
+                        Ok
+                    </Button>
                 </div>
             </Fade>
         </Modal>
-
     )
 }
 export default Model;
