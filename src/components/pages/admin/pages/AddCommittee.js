@@ -96,7 +96,7 @@ function AddCommittee(props) {
             body: JSON.stringify({
                 label: data.label,
                 value: data.value,
-                status: 'active'
+                status: 'active',
             })
         })
             .then(res => res.json())
@@ -115,7 +115,7 @@ function AddCommittee(props) {
         <div>
             <div>
                 <h1><u>Add Committees</u></h1>
-                <hr/>
+                <hr />
             </div>
             <div>
                 <Formik
@@ -124,10 +124,11 @@ function AddCommittee(props) {
                         value: '',
                     }}
                     validationSchema={validationSchema}
-                    onSubmit={(data, { setSubmitting }) => {
+                    onSubmit={(data, { setSubmitting, resetForm }) => {
                         setSubmitting(true)
                         addCommitte(data);
                         setSubmitting(false);
+                        resetForm({})
                     }}
                 >
                     {({ errors, handleChange, values, isSubmitting, touched }) => (
@@ -250,7 +251,7 @@ function AddCommittee(props) {
                     </Table>
                 </TableContainer>
             </div>
-            <ShowModal open={open} onClose={handleClose} res={response} props={props}/>
+            <ShowModal open={open} onClose={handleClose} res={response} props={props} />
         </div>
     )
 }

@@ -17,7 +17,7 @@ import Winners from '../pages/Winners';
 import AddCommittee from '../pages/AddCommittee';
 import GoToDraw from '../pages/common/GoToDrawModal';
 
-const drawerWidth = 240;
+const drawerWidth = 210;
 
 const useStyles = makeStyles((theme) => ({
     root: {

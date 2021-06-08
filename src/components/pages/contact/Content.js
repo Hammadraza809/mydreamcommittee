@@ -56,11 +56,12 @@ function Main() {
                             msg: ''
                         }}
                         validationSchema={validationSchema}
-                        onSubmit={(data, { setSubmitting }) => {
+                        onSubmit={(data, { setSubmitting, resetForm }) => {
                             setSubmitting(true);
                             //make async call
                             console.log(data);
                             setSubmitting(false);
+                            resetForm({})
                             
                         }}
                     >

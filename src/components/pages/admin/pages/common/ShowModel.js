@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
+        textAlign:'center'
     },
 }));
 
@@ -31,7 +32,8 @@ function Model(props) {
         >
             <Fade in={props.open}>
                 <div className={classes.paper}>
-                    <p>{props.res}</p>
+                    <h1>Alert</h1>
+                    <h3>{props.res}</h3>
                     <Button
                         style={{
                             color: "white",
