@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Formik, Form, useField, Field } from 'formik';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import * as Yup from 'yup';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +17,18 @@ const useStyles = makeStyles((theme) => ({
       margin: '5px 0px',
       width: '100%',
     },
+  },
+  bottom: {
+    color: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+  },
+  top: {
+    color: '#1a90ff',
+    animationDuration: '550ms',
+    position: 'absolute',
+    left: 0,
+  },
+  circle: {
+    strokeLinecap: 'round',
   },
 }));
 
@@ -43,25 +56,36 @@ const validationSchema = Yup.object({
   address: Yup.string().required('House address is required.'),
   cityName: Yup.string().required('City Name is required.'),
   committee: Yup.string().required('Please select anyone committee'),
-  photo: Yup.mixed().required('Please upload picture of bank deposite slip')
-    .test("size", "Image should be  format", (value) => {
-      return value && value[0].size <= 500000;
-     
-    }),
+  // photo: Yup.mixed().required('Please upload picture of bank deposite slip')
+  //   .test("size", "Image should be  format", (value) => {
+  //     return value && value[0].size <= 500000;
+
+  //   }),
 });
 
 function Main() {
   const classes = useStyles();
-  const [committee, setCommittee] = useState([{ label:"Please Select committee", value:"" }]);
+  const [committee, setCommittee] = useState([{ label: "Please Select committee", value: "" }]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {
       const res = await fetch('https://mydreamcommittee.com/v1/committees/active');
       const body = await res.json();
-      console.log(setCommittee(body.data.Committees))
+      setCommittee(body.data.Committees);
     }
     getData()
   }, []);
+
+  const onRegister = data => {
+    setLoading(true);
+    fetch(`https://mydramcommittee.com/v1/users`,{
+      method: 'POST',
+      headers: {
+        
+      }
+    })
+  }
 
   return (
     <div className="registerFrom">
@@ -85,7 +109,7 @@ function Main() {
             onSubmit={(data, { setSubmitting }) => {
               setSubmitting(true);
               //make async call
-              console.log(data);
+              onRegister(data);
               setSubmitting(false);
             }}
           >
@@ -164,13 +188,13 @@ function Main() {
                     </Field>
                     {/* {errors.committee} */}
                   </Col>
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+                  {/* <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
                     <label>Upload picture of deposite slip:</label><br />
                     <MyTextField
                       type='file'
                       name="photo"
                     />
-                  </Col>
+                  </Col> */}
                 </Row>
                 {/* <Row className="firstRow">
                   <Col>
@@ -195,7 +219,17 @@ function Main() {
                     type="submit"
                     disabled={isSubmitting}
                   >
-                    Register
+                    {loading ? <CircularProgress
+                      variant="indeterminate"
+                      disableShrink
+                      className={classes.bottom}
+                      classes={{
+                        circle: classes.circle,
+                      }}
+                      size={30}
+                      thickness={4}
+                      value={100}
+                    /> : 'Register'}
                   </Button>
                 </Row>
               </Form>

@@ -3,12 +3,13 @@ import TextLoop from "react-text-loop";
 import "./Draw.css";
 import { Button, Row, Col } from "react-bootstrap";
 import ShowPassModal from '../pages/common/ShowPassModel';
+import logo from '../../../../assets/images/logo.png'
 
 class App extends Component {
     constructor(props) {
         super(props);
         if (localStorage.getItem('acc-token') === null) {
-            props.props.push('/restricted');
+            this.props.history.push('/restricted');
             return null;
         }
         this.showConfirmModal = React.createRef();
@@ -29,7 +30,7 @@ class App extends Component {
             touched: false,
             showConfirm: false,
             validationRules: {
-                minLength: 3,
+                minLength: 2,
                 isRequired: true,
             },
         };
@@ -41,31 +42,32 @@ class App extends Component {
             this
         );
     }
-    // componentDidMount() {
-    //     this.getUsers()
-    // }
-    // async getUsers() {
-    //     await fetch(`https://mydreamcommittee.com/v1/controller/user.php?committee=${data}&status=approved`, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json',
-    //         },
-    //     })
-    //         .then(res => res.json())
-    //         .then((result) => {
-    //             console.log(result)
-    //             this.setState({
-    //                 ...this.state,
-    //                 items: result,
-    //                 currentItems: result,
-    //             });
 
-    //         })
-    // }
+    componentDidMount() {
+        this.getUsers()
+    }
+    async getUsers() {
+        await fetch(`https://mydreamcommittee.com/v1/controller/user.php?committee=${this.props.match.params.data}&status=approved`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(res => res.json())
+            .then((result) => {
+                this.setState({
+                    ...this.state,
+                    items: result.data.users,
+                    currentItems: result.data.users,
+                });
+
+            })
+            .catch(e => console.log(e))
+    }
     handleSubmit(e) {
         e.preventDefault();
-        if (this.state.drawItems.length > 2) {
+        if (this.state.drawItems.length > 1) {
             let formInputItems = this.state.drawItems;
             let itemList = formInputItems.split("\n");
             this.setState({
@@ -95,7 +97,7 @@ class App extends Component {
     randomDrawItem = () => {
         const { currentItems, showTextAnimation, removeDrawnItem } = this.state;
         const currItems = currentItems.map(res => {
-            return res.membershipid
+            return res.membershipId
         })
 
         var tuna = currentItems.find(function (sandwich) {
@@ -109,10 +111,10 @@ class App extends Component {
         });
 
         let maxItemIndex = currItems.length;
-        const getIndex = currentItems.indexOf(tuna)
-        console.log(getIndex)
-        // const randomIndex = Math.floor(Math.random() * maxItemIndex);
-        const randomIndex = getIndex
+        // const getIndex = currentItems.indexOf(tuna)
+        // console.log(getIndex)
+        const randomIndex = Math.floor(Math.random() * maxItemIndex);
+        // const randomIndex = getIndex
         this.sleep(showTextAnimation ? 30000 : 0).then(() => {
             this.setState({
                 ...this.state,
@@ -155,15 +157,18 @@ class App extends Component {
         // console.log(items)
 
         const newItems = items.map(res => {
-            return res.membershipid
+            return res.membershipId
         })
 
         return (
             <div location={this.props.history} className="mainn">
-                <div className="texxt">
-                    Welcome to the lucky draw for Dream Car Committee<br />
-          Your Dream Car is on your way .... <hr />
+                <div className="logo">
+                    <img src={logo} style={{ width: '200px', margin: '10px' }} />
                 </div>
+                <div className="texxt">
+                    Welcome to My Dream Committee Lucky Draw..
+                </div>
+                <hr />
                 {items.length !== 0 && (
                     <div className="draw-block">
                         <Row>
@@ -177,19 +182,27 @@ class App extends Component {
                                             children={newItems}
                                         />
                                     }
-                                    {/* <Confetti active={this.state.showResult} /> */}
                                     {!showResult && result}
                                 </div>
-                                <Button
-                                    pill
-                                    block
-                                    name="drawButton"
-                                    color="primary"
-                                    onClick={this.randomDrawItem}
-                                    disabled={disableDrawButton || currentItems.length <= 1}
-                                >
-                                    {disableDrawButton ? "Drawing..." : "Draw"}
-                                </Button>
+                                <Row>
+                                    <Col md={12} sm={12}>
+                                        <Button
+                                            style={{
+                                                color: "white",
+                                                backgroundColor: "rgb(252, 143, 0)",
+                                                padding: "10px",
+                                                width: '800px',
+                                                border: 'none',
+                                            }}
+                                            pill
+                                            name="drawButton"
+                                            onClick={this.randomDrawItem}
+                                            disabled={disableDrawButton || currentItems.length <= 1}
+                                        >
+                                            {disableDrawButton ? "Drawing..." : "Draw"}
+                                        </Button>
+                                    </Col>
+                                </Row>
                             </Col>
                         </Row>
                         <br />
@@ -197,7 +210,13 @@ class App extends Component {
                             <Row>
                                 <Col md={12} sm={12}>
                                     <Button
-                                        color="primary"
+                                        style={{
+                                            color: "white",
+                                            backgroundColor: "rgb(252, 143, 0)",
+                                            padding: "10px",
+                                            width: '400px',
+                                            border: 'none',
+                                        }}
                                         onClick={this.showModal}
                                     >
                                         Confirm

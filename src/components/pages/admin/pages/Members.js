@@ -80,6 +80,10 @@ function Members() {
 
     return (
         <div className="main">
+            <div>
+                <h1><u>All Members</u></h1>
+                <hr/>
+            </div>
             <div className="filter">
                 <Formik
                     initialValues={{

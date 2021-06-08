@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
@@ -32,12 +31,9 @@ const validationSchema = Yup.object({
 })
 
 function Model(props) {
-    console.log(props)
     
-    const handleClose = data => {
-        console.log(props.onClose);
-        // props.onClose;
-    }
+    
+    
     
     const classes = useStyles();
     const [committee, setCommittee] = useState([{ label: "Please Select committee", value: "" }]);
@@ -51,7 +47,11 @@ function Model(props) {
         }
         getData()
     }, []);
-
+    const handleClose = data => {
+        props.props.props.push(`/draw/${data}`)
+        // props.onClose();
+        
+    }
     return (
         <Modal
             disableBackdropClick
@@ -74,7 +74,7 @@ function Model(props) {
                         validationSchema={validationSchema}
                         onSubmit={(data, { setSubmitting }) => {
                             setSubmitting(true)
-                            console.log(data.committee);
+                            // console.log(data.committee);
                             handleClose(data.committee);
                         }}
                     >

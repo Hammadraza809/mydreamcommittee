@@ -45,13 +45,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ClippedDrawer(props) {
     const classes = useStyles();
     const [fragment, setFragment] = useState("Requests")
-    const [access, setAccess] = useState(false);
     const [open, setOpen] = useState(true);
-
-    const handleClose = () => {
-        props.props.push('/draw')
-        setOpen(false);
-    };
 
     const userid = localStorage.getItem('user-id');
     const acc_token = localStorage.getItem('acc-token');
@@ -92,6 +86,10 @@ export default function ClippedDrawer(props) {
     //     })
     //     .catch(err => console.log(err))
     // }
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const loadFragment = () => {
         switch (fragment) {

@@ -24,7 +24,7 @@ function App() {
       <Route exact path="/admin" component={Admin}/>
       <Route exact path="/dashboard" component={AdminDashboard}/>
       <Route exact path="/requests" component={Requests}/>
-      <Route exact path="/draw" component={Draw}/>
+      <Route exact path="/draw/:data" component={Draw}/>
       <Route exact path="/restricted" component={Restricted}/>
       <Route exact path="/expired"  component={Expired}/>
 

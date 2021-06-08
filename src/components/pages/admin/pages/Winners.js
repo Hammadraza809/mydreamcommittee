@@ -82,6 +82,10 @@ function Winners(){
 
     return (
         <div className="main">
+            <div>
+                <h1><u>Winners</u></h1>
+                <hr/>
+            </div>
             <div className="filter">
                 <Formik
                     initialValues={{

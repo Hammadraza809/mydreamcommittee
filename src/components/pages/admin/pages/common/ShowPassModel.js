@@ -20,7 +20,7 @@ class ShowPassModal extends React.Component {
         this.state = {
             loading: false,
             visible: false,
-            user: ''
+            user: []
         };
     }
     componentDidMount() {
@@ -28,25 +28,14 @@ class ShowPassModal extends React.Component {
     }
     getUser() {
         const membershipId = this.props.user;
-        fetch(`https://mydreamcommittee.com/v1/user/${membershipId}`,{
-            method:'GET',
+        fetch(`https://mydreamcommittee.com/v1/user/${membershipId}`, {
+            method: 'GET',
         })
-        .then(res => res.json())
-        .then(result => {
-            console.log(result);
-            // this.setState({user:result})
-        })
-        .catch(err => console.log(err));
-
-        // let formdata = new FormData();
-        // formdata.append("membershipid", this.props.user);
-        // fetch('http://mydreamcommittee.com/winner.php', {
-        //     method: 'POST',
-        //     body: formdata
-        // })
-        //     .then((res) => res.text())
-        //     .then((result) => { this.setState({ user: result }) })
-        //     .catch(err => console.log(err))
+            .then(res => res.json())
+            .then(result => {
+                this.setState({ user: result.data.users[0] })
+            })
+            .catch(err => console.log(err));
     }
     showModal = () => {
         this.setState({
@@ -60,30 +49,19 @@ class ShowPassModal extends React.Component {
     };
     setWinner = () => {
         const membershipId = this.props.user
-        fetch(`https://mydreamcommittee.com/v1/user/${membershipId}`,{
+        fetch(`https://mydreamcommittee.com/v1/user/${membershipId}`, {
             method: 'DELETE'
         })
-        .then(res => res.json())
-        .then(result => {
-            console.log(result)
-            this.closeModal()
-        })
-        .catch(err => console.log(err));
-
-        // let formdata = new FormData();
-        // formdata.append("membershipid", this.props.user);
-        // fetch('http://mydreamcommittee.com/winnerdetails.php', {
-        //     method: 'POST',
-        //     body: formdata
-        // })
-        //     .then((res) => res.text())
-        //     .then((result) => { this.closeModal() })
-        //     .catch(err => console.log(err))
+            .then(res => res.json())
+            .then(result => {
+                this.closeModal()
+            })
+            .catch(err => console.log(err));
     }
 
     render() {
 
-        const { visible, loading } = this.state;
+        const { visible, loading,user } = this.state;
         return (
             <Modal
                 isOpen={visible}
@@ -103,14 +81,18 @@ class ShowPassModal extends React.Component {
                 >
                     <Row>
                         <Col>
-                            <h1>Congratulations</h1>
+                            <h1><u><i>Congratulations</i></u></h1>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <h1>{this.state.user}</h1>
+                            <h4>{"Name:          " +user.name}</h4>
+                            <h4>{"CNIC:          " +user.cnic}</h4>
+                            <h4>{"City:          " +user.cnic}</h4>
+                            <h4>{"Membership Id: " +user.cnic}</h4>
                         </Col>
                     </Row>
+                    <br/>
                     <Row>
                         <Col>
                             <Button color="primary" onClick={this.setWinner}>

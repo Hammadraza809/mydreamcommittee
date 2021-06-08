@@ -114,7 +114,8 @@ function AddCommittee(props) {
     return (
         <div>
             <div>
-                <h1>Add Committees</h1>
+                <h1><u>Add Committees</u></h1>
+                <hr/>
             </div>
             <div>
                 <Formik
