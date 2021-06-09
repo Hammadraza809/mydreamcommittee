@@ -1,5 +1,6 @@
 {
   "name": "mydreamcommittee",
+  "homepage": "https://mydreamcommittee.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
