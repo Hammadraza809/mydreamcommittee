@@ -34,6 +34,7 @@ function Model(props) {
                 <div className={classes.paper}>
                     <h1>Alert</h1>
                     <h3>{props.res}</h3>
+                    <br/>
                     <Button
                         style={{
                             color: "white",

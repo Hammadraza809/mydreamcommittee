@@ -9,8 +9,8 @@ const customStyles = {
         bottom: "auto",
         marginRight: "-50%",
         transform: "translate(-50%, -50%)",
-        width: "50%",
-        height: "50%",
+        width: "60%",
+        height: "60%",
     },
 };
 Modal.setAppElement('#root')
@@ -61,7 +61,7 @@ class ShowPassModal extends React.Component {
 
     render() {
 
-        const { visible, loading,user } = this.state;
+        const { visible, loading, user } = this.state;
         return (
             <Modal
                 isOpen={visible}
@@ -82,22 +82,34 @@ class ShowPassModal extends React.Component {
                     <Row>
                         <Col>
                             <h1><u><i>Congratulations</i></u></h1>
+                            <br />
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <h4>{"Name:          " +user.name}</h4>
-                            <h4>{"CNIC:          " +user.cnic}</h4>
-                            <h4>{"City:          " +user.cnic}</h4>
-                            <h4>{"Membership Id: " +user.cnic}</h4>
+                            <h4>{"Name: " + user.name}</h4>
+                            <h4>{"CNIC: " + user.cnic}</h4>
+                            <h4>{"City: " + user.city}</h4>
+                            <h4>{"Membership Id: " + user.membershipId}</h4>
                         </Col>
                     </Row>
-                    <br/>
+                    <br />
                     <Row>
                         <Col>
-                            <Button color="primary" onClick={this.setWinner}>
+                            <Button
+                                style={{
+                                    color: "white",
+                                    backgroundColor: "rgb(252, 143, 0)",
+                                    padding: "10px",
+                                    width: '100px',
+                                    border: 'none',
+                                }}
+                                onClick={this.setWinner}
+                            >
                                 OK
                             </Button>
+                            <br/>
+                            <br/>
                         </Col>
                     </Row>
                 </div>

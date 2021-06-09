@@ -57,6 +57,8 @@ const validationSchema = Yup.object({
   address: Yup.string().required('House address is required.'),
   cityName: Yup.string().required('City Name is required.'),
   committee: Yup.string().required('Please select anyone committee'),
+  terms: Yup.boolean()
+    .oneOf([true], "You must accept the terms and conditions")
   // photo: Yup.mixed().required('Please upload picture of bank deposite slip')
   //   .test("size", "Image should be  format", (value) => {
   //     return value && value[0].size <= 500000;
@@ -131,7 +133,7 @@ function Main() {
               address: '',
               cityName: '',
               photo: '',
-              // terms: false,
+              terms: false,
             }}
             validationSchema={validationSchema}
             onSubmit={(data, { setSubmitting, resetForm }) => {
@@ -214,7 +216,7 @@ function Main() {
                         )
                       })}
                     </Field>
-                    {/* {errors.committee} */}
+                    {<div style={{color:'red'}}><small>{errors.committee}</small></div>}
                   </Col>
                   {/* <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
                     <label>Upload picture of deposite slip:</label><br />
@@ -224,18 +226,19 @@ function Main() {
                     />
                   </Col> */}
                 </Row>
-                {/* <Row className="firstRow">
+                <Row className="firstRow">
                   <Col>
-                    <lable>
+                    <label>
                       <Field
                         as={Checkbox}
                         name="terms"
                         type="checkbox"
                       />
-                    I accept terms and condition.
-                    </lable>
+                      I accept terms and condition.
+                    </label>
+                    {<div style={{color:'red'}}><small>{errors.terms}</small></div>}
                   </Col>
-                </Row> */}
+                </Row>
                 <Row className="btnRow">
                   <Button
                     style={{

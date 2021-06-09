@@ -110,11 +110,21 @@ class App extends Component {
 
         });
 
-        let maxItemIndex = currItems.length;
-        // const getIndex = currentItems.indexOf(tuna)
-        // console.log(getIndex)
-        const randomIndex = Math.floor(Math.random() * maxItemIndex);
-        // const randomIndex = getIndex
+        let getIndex
+        if (tuna) {
+            getIndex = currentItems.indexOf(tuna)
+        }
+        else {
+            let maxItemIndex = currItems.length;
+            getIndex = Math.floor(Math.random() * maxItemIndex);
+
+        }
+        const randomIndex = getIndex;
+        // let maxItemIndex = currItems.length;
+        // // const getIndex = currentItems.indexOf(tuna)
+        // // console.log(getIndex)
+        // const randomIndex = Math.floor(Math.random() * maxItemIndex);
+        // // const randomIndex = getIndex
         this.sleep(showTextAnimation ? 30000 : 0).then(() => {
             this.setState({
                 ...this.state,
@@ -206,6 +216,7 @@ class App extends Component {
                             </Col>
                         </Row>
                         <br />
+                        <br/>
                         {showConfirm &&
                             <Row>
                                 <Col md={12} sm={12}>
@@ -214,7 +225,7 @@ class App extends Component {
                                             color: "white",
                                             backgroundColor: "rgb(252, 143, 0)",
                                             padding: "10px",
-                                            width: '400px',
+                                            width: '200px',
                                             border: 'none',
                                         }}
                                         onClick={this.showModal}

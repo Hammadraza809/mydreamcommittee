@@ -11,6 +11,7 @@ import Requests from './components/pages/admin/pages/Requests';
 import Draw from './components/pages/admin/pages/Draw';
 import Restricted from './components/pages/admin/pages/common/Restricted';
 import Expired from './components/pages/admin/pages/common/Expired';
+import CustomWinner from './components/pages/admin/pages/CustomWinner';
 
 import CarCommittee from './components/pages/committees/carcommittee/Index';
 
@@ -25,6 +26,7 @@ function App() {
       <Route exact path="/dashboard" component={AdminDashboard}/>
       <Route exact path="/requests" component={Requests}/>
       <Route exact path="/draw/:data" component={Draw}/>
+      <Route exact path="/customwinner" component={CustomWinner}/>
       <Route exact path="/restricted" component={Restricted}/>
       <Route exact path="/expired"  component={Expired}/>
 
