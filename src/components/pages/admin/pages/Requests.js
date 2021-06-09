@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableCell, TableBody, TableContainer, TableHead, TableRow, Paper, makeStyles } from '@material-ui/core';
 import ApprovedBtn from './common/ApprovedBtn';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -21,16 +23,26 @@ function Requests() {
         getData()
     }, []);
 
+    const onDelete = (id) => {
+        console.log("id", id);
+        fetch(`https://mydreamcommittee.com/v1/users/${id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(result => console.log(result))
+            .catch(err => console.log(err))
+    }
+
     return (
         <div>
             <div>
                 <h1><u>Incoming Requests</u></h1>
-                <hr/>
+                <hr />
             </div>
             <TableContainer>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
-                        <TableRow>                          
+                        <TableRow>
                             <TableCell>Name</TableCell>
                             <TableCell>CNIC</TableCell>
                             <TableCell>Email</TableCell>
@@ -40,10 +52,11 @@ function Requests() {
                             <TableCell>Committee</TableCell>
                             <TableCell>Status</TableCell>
                             <TableCell></TableCell>
+                            <TableCell>Delete</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {requests && requests.map((request,index) => (
+                        {requests && requests.map((request, index) => (
                             <TableRow key={request.id}>
                                 <TableCell>{request.name}</TableCell>
                                 <TableCell>{request.cnic}</TableCell>
@@ -54,6 +67,11 @@ function Requests() {
                                 <TableCell>{request.committee}</TableCell>
                                 <TableCell>{request.status}</TableCell>
                                 <TableCell><ApprovedBtn request={request} index={index} /></TableCell>
+                                <TableCell>
+                                    <IconButton aria-label="delete" onClick={() => { onDelete(request.id) }}>
+                                        <DeleteIcon color='error' />
+                                    </IconButton>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

@@ -145,11 +145,11 @@ function AddCommittee(props) {
                                     {errors.label}
                                 </Col>
                                 <Col className={classes.root}>
-                                    <label>Enter Committee Value:</label>
+                                    <label>Enter Committee Code:</label>
                                     <Field
                                         as={TextField}
                                         name='value'
-                                        placeholder='car'
+                                        placeholder='DCC'
                                         variant='outlined'
                                     />
                                     {errors.value}
@@ -195,7 +195,7 @@ function AddCommittee(props) {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Committee Name</TableCell>
-                                <TableCell>Committee Value</TableCell>
+                                <TableCell>Committee Code</TableCell>
                                 <TableCell>Status</TableCell>
                                 <TableCell>Change Status</TableCell>
                                 <TableCell></TableCell>

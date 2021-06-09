@@ -68,7 +68,7 @@ const validationSchema = Yup.object({
 
 function Main() {
   const classes = useStyles();
-  const [committee, setCommittee] = useState([{ label: "Please Select committee", value: "" }]);
+  const [committee, setCommittee] = useState([]);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState([null]);
@@ -210,13 +210,14 @@ function Main() {
                       native
                       type="Select"
                     >
+                      <option value="">Please Select Committee</option>
                       {committee.map(item => {
                         return (
                           <option key={item.value} value={item.value}>{item.label}</option>
                         )
                       })}
                     </Field>
-                    {<div style={{color:'red'}}><small>{errors.committee}</small></div>}
+                    {<div style={{ color: 'red' }}><small>{errors.committee}</small></div>}
                   </Col>
                   {/* <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
                     <label>Upload picture of deposite slip:</label><br />
@@ -236,7 +237,7 @@ function Main() {
                       />
                       I accept terms and condition.
                     </label>
-                    {<div style={{color:'red'}}><small>{errors.terms}</small></div>}
+                    {<div style={{ color: 'red' }}><small>{errors.terms}</small></div>}
                   </Col>
                 </Row>
                 <Row className="btnRow">
