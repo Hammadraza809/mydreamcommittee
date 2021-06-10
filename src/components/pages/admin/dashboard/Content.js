@@ -49,7 +49,7 @@ export default function ClippedDrawer(props) {
 
     const userid = localStorage.getItem('user-id');
     const acc_token = localStorage.getItem('acc-token');
-    const ref_token = localStorage.getItem('ref-token');
+    // const ref_token = localStorage.getItem('ref-token');
 
     if (localStorage.getItem('acc-token') === null) {
         props.props.push('/restricted');

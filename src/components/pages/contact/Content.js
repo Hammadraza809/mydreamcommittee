@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container } from 'react-bootstrap';
 import "./Content.css";
@@ -62,7 +62,7 @@ function Main() {
                             console.log(data);
                             setSubmitting(false);
                             resetForm({})
-                            
+
                         }}
                     >
                         {({ values, errors, isSubmitting, }) => (

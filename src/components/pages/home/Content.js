@@ -46,23 +46,23 @@ class Main extends Component {
                     <Container>
                         <Row className="first-row">
                             <Col className="committe">
-                                <img src={mobile} />
+                                <img src={mobile} alt="mobile"/>
                                 <RgstrBtn />
                             </Col>
                             <Col className="committe">
-                                <img src={bike} />
+                                <img src={bike} alt="bike"/>
                                 <RgstrBtn />
                             </Col>
                             <Col className="committe">
-                                <img src={gold} />
+                                <img src={gold} alt="gold"/>
                                 <RgstrBtn />
                             </Col>
                             <Col className="committe">
-                                <img src={house} />
+                                <img src={house} alt="house"/>
                                 <RgstrBtn />
                             </Col>
                             <Col className="committe">
-                                <img src={tractor} />
+                                <img src={tractor} alt="tractor"/>
                                 <RgstrBtn />
                             </Col>
                             <Col className="committe-text">

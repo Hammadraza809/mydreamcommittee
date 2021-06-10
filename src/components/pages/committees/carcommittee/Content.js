@@ -10,7 +10,7 @@ class Main extends Component {
     render() {
         return (
             <div className="text">
-                <img className="d-block w-100 h-100" src={Slider1} />
+                <img className="d-block w-100 h-100" src={Slider1} alt="slider" />
                 <div className="headingg">
                     <h1>Dream Car Committee</h1>
                     <hr />
@@ -25,12 +25,13 @@ class Main extends Component {
                                     color: "black"
                                 }}
                                     href="https://www.youtube.com/c/TV88OFFICIAL"
-                                    target="_blank">
+                                    target="_blank" rel="noreferrer noopener">
                                     <img style={{
                                         width: "60px",
                                         height: "40px",
                                         margin: "10px"
                                     }}
+                                    alt="youtube"
                                         src={youtube}
                                     />
                                         Subscribe to our youtube channel TV88 OFFICIAL

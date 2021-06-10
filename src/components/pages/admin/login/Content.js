@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container } from 'react-bootstrap';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
-import { Formik, Form, useField, Field } from 'formik';
+import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -76,7 +76,7 @@ function Main(props) {
                 if (result.statusCode === 201) {
                     localStorage.setItem('acc-token', result.data.access_token);
                     localStorage.setItem('ref-token', result.data.refresh_token);
-                    localStorage.setItem('user-id',result.data.session_id);
+                    localStorage.setItem('user-id', result.data.session_id);
                     props.props.push('/dashboard')
                     setLoading(false);
                 }
@@ -84,7 +84,7 @@ function Main(props) {
                     setError(result.messages)
                     setLoading(false);
                 }
-                
+
             })
             .catch(err => console.log(err))
     }
@@ -92,7 +92,7 @@ function Main(props) {
     return (
         <div className="main">
             <div className="logo">
-                <img src={logo} style={{ width: '200px', margin: '20px' }} />
+                <img src={logo} style={{ width: '200px', margin: '20px' }} alt="logo" />
             </div>
             <div className="loginForm">
                 <Container className="Form">

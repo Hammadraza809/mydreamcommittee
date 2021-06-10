@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles, Modal, Backdrop, Fade, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
-        textAlign:'center'
+        textAlign: 'center'
     },
 }));
 
@@ -34,7 +34,7 @@ function Model(props) {
                 <div className={classes.paper}>
                     <h1>Alert</h1>
                     <h3>{props.res}</h3>
-                    <br/>
+                    <br />
                     <Button
                         style={{
                             color: "white",

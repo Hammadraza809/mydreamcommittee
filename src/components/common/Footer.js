@@ -14,10 +14,11 @@ class Footer extends Component {
                         <Row>
                             <Col xs={12} sm={12} md={4} lg={6} className="follow">
                                 Susbcribe Us on Youtube <br />
-                                <a href="https://www.youtube.com/TV88OFFICIAL" target="_blank">
+                                <a href="https://www.youtube.com/TV88OFFICIAL" target="_blank" rel="noopener noreferrer">
                                     <img style={{
                                         width:"40px", padding:"5px"
-                                        }} 
+                                        }}
+                                        alt="youtube link icon" 
                                         src={Youtube} />
                                         TV88 OFFICIAL
                                 </a>

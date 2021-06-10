@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "react-modal";
 import { Button, Row, Col } from "react-bootstrap";
 const customStyles = {
@@ -61,7 +61,7 @@ class ShowPassModal extends React.Component {
 
     render() {
 
-        const { visible, loading, user } = this.state;
+        const { visible, user } = this.state;
         return (
             <Modal
                 isOpen={visible}
@@ -108,8 +108,8 @@ class ShowPassModal extends React.Component {
                             >
                                 OK
                             </Button>
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                         </Col>
                     </Row>
                 </div>

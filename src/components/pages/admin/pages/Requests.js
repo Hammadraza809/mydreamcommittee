@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableCell, TableBody, TableContainer, TableHead, TableRow, Paper, makeStyles } from '@material-ui/core';
+import { Table, TableCell, TableBody, TableContainer, TableHead, TableRow, makeStyles } from '@material-ui/core';
 import ApprovedBtn from './common/ApprovedBtn';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';

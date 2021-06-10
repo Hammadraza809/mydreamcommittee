@@ -32,9 +32,6 @@ const validationSchema = Yup.object({
 
 function Model(props) {
     
-    
-    
-    
     const classes = useStyles();
     const [committee, setCommittee] = useState([{ label: "Please Select committee", value: "" }]);
     const [loading, setLoading] = useState(false);
@@ -48,6 +45,7 @@ function Model(props) {
         getData()
     }, []);
     const handleClose = data => {
+        setLoading(false);
         props.props.props.push(`/draw/${data}`)
         // props.onClose();
         

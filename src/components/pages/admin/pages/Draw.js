@@ -101,7 +101,7 @@ class App extends Component {
         })
 
         var tuna = currentItems.find(function (sandwich) {
-            return sandwich.customwinner == 'true';
+            return sandwich.customwinner === 'true';
         });
         this.setState({
             ...this.state,
@@ -155,12 +155,12 @@ class App extends Component {
     render() {
         const {
             items,
-            drawItems,
+            // drawItems,
             currentItems,
             result,
             disableDrawButton,
-            pastDrawnItems,
-            placeholder,
+            // pastDrawnItems,
+            // placeholder,
             showResult,
             showConfirm
         } = this.state;
@@ -173,7 +173,7 @@ class App extends Component {
         return (
             <div location={this.props.history} className="mainn">
                 <div className="logo">
-                    <img src={logo} style={{ width: '200px', margin: '10px' }} />
+                    <img src={logo} style={{ width: '200px', margin: '10px' }} alt="logo"/>
                 </div>
                 <div className="texxt">
                     Welcome to My Dream Committee Lucky Draw..

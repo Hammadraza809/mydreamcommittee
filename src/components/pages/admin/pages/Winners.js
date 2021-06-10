@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Members.css';
 import { Row, Col } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Select, Table, TableCell, TableBody, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
+import { Button, Select, Table, TableCell, TableBody, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     bottom: {
         color: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
-      },
+    },
     top: {
         color: '#1a90ff',
         animationDuration: '550ms',
@@ -40,7 +40,7 @@ const validationSchema = Yup.object({
 
 
 
-function Winners(){
+function Winners() {
     const classes = useStyles();
     const [committee, setCommittee] = useState([{ label: "Please Select committee", value: "" }]);
     const [members, setMembers] = useState([]);
@@ -76,7 +76,8 @@ function Winners(){
             .then(res => res.json())
             .then(result => {
                 setLoading(false)
-                setMembers(result.data.users)})
+                setMembers(result.data.users)
+            })
             .catch(err => console.log(err));
     }
 
@@ -84,7 +85,7 @@ function Winners(){
         <div className="main">
             <div>
                 <h1><u>Winners</u></h1>
-                <hr/>
+                <hr />
             </div>
             <div className="filter">
                 <Formik
@@ -129,17 +130,17 @@ function Winners(){
                                         type="submit"
 
                                     >
-                                        {loading ?  <CircularProgress
+                                        {loading ? <CircularProgress
                                             variant="indeterminate"
                                             disableShrink
                                             className={classes.bottom}
                                             classes={{
-                                                circle:classes.circle,
+                                                circle: classes.circle,
                                             }}
                                             size={30}
                                             thickness={4}
                                             value={100}
-                                        /> :  'Filter'}
+                                        /> : 'Filter'}
                                     </Button>
                                 </Col>
                             </Row>

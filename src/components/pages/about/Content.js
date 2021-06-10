@@ -9,7 +9,7 @@ class Main extends Component {
         return (
             <div className="text">
                 <Row className="img">
-                    <img className="d-block w-100" src={Slider2} />
+                    <img className="d-block w-100" src={Slider2} alt="slider" />
                 </Row>
                 <div className="headingg">
                     <h1>My Dream Committee</h1>
