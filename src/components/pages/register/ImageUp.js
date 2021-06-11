@@ -59,9 +59,14 @@ const validationSchema = Yup.object({
   committee: Yup.string().required('Please select anyone committee'),
   terms: Yup.boolean()
     .oneOf([true], "You must accept the terms and conditions")
+  // photo: Yup.mixed().required('Please upload picture of bank deposite slip')
+  //   .test("size", "Image should be  format", (value) => {
+  //     return value && value[0].size <= 500000;
+
+  //   }),
 });
 
-function Main() {
+function ImageUp() {
   const classes = useStyles();
   const [committee, setCommittee] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -142,90 +147,11 @@ function Main() {
               <Form>
                 <Row className="firstRow">
                   <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
-                    <label>Name:</label><br />
+                    <label>Upload picture of deposite slip:</label><br />
                     <MyTextField
-                      placeholder="Full Name"
-                      name="fullName"
-
+                      type='file'
+                      name="photo"
                     />
-                  </Col>
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
-                    <label>CNIC:</label><br />
-                    <MyTextField
-                      placeholder="CNIC"
-                      name="cnic"
-
-                    />
-                  </Col>
-                </Row>
-                <Row className="firstRow">
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
-                    <label>Email:</label><br />
-                    <MyTextField
-                      placeholder="Email"
-                      name="email"
-
-                    />
-                  </Col>
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
-                    <label>Mobile No:</label><br />
-                    <MyTextField
-                      placeholder="Mobile No"
-                      name="mobileNo"
-
-                    />
-                  </Col>
-                </Row>
-                <Row className="firstRow">
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
-                    <label>Address:</label><br />
-                    <MyTextField
-                      placeholder="Address"
-                      name="address"
-
-                    />
-                  </Col>
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
-                    <label>City Name:</label><br />
-                    <MyTextField
-                      placeholder="City Name"
-                      name="cityName"
-                      as={TextField}
-                      variant='outlined'
-                    />
-                  </Col>
-                </Row>
-                <Row className="firstRow">
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
-                    <label>Committees:</label><br />
-                    <Field
-                      name="committee"
-                      as={Select}
-                      variant='outlined'
-                      native
-                      type="Select"
-                    >
-                      <option value="">Please Select Committee</option>
-                      {committee.map(item => {
-                        return (
-                          <option key={item.value} value={item.value}>{item.label}</option>
-                        )
-                      })}
-                    </Field>
-                    {<div style={{ color: 'red' }}><small>{errors.committee}</small></div>}
-                  </Col>
-                </Row>
-                <Row className="firstRow">
-                  <Col>
-                    <label>
-                      <Field
-                        as={Checkbox}
-                        name="terms"
-                        type="checkbox"
-                      />
-                      I accept terms and condition.
-                    </label>
-                    {<div style={{ color: 'red' }}><small>{errors.terms}</small></div>}
                   </Col>
                 </Row>
                 <Row className="btnRow">
@@ -249,7 +175,7 @@ function Main() {
                       size={30}
                       thickness={4}
                       value={100}
-                    /> : 'Next'}
+                    /> : 'Register'}
                   </Button>
                 </Row>
               </Form>
@@ -261,4 +187,4 @@ function Main() {
     </div>
   );
 }
-export default Main;
+export default ImageUp;
