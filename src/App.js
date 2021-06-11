@@ -5,6 +5,7 @@ import Home from './components/pages/home/Index';
 import About from './components/pages/about/Index';
 import Contact from './components/pages/contact/Index';
 import RegisterForm from './components/pages/register/Index';
+import ImageUp from './components/pages/register/ImageUp';
 import Admin from './components/pages/admin/login/Index';
 import AdminDashboard from './components/pages/admin/dashboard/Index';
 import Requests from './components/pages/admin/pages/Requests';
@@ -22,6 +23,7 @@ function App() {
       <Route exact path="/about" component={About}/>
       <Route exact path="/contact" component={Contact}/>
       <Route exact path="/register" component={RegisterForm}/>
+      <Route exact path="/image" component={ImageUp}/>
       <Route exact path="/admin" component={Admin}/>
       <Route exact path="/dashboard" component={AdminDashboard}/>
       <Route exact path="/requests" component={Requests}/>

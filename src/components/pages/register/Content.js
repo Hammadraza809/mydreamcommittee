@@ -10,7 +10,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Formik, Form, useField, Field } from 'formik';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as Yup from 'yup';
-import ShowModal from '../admin/pages/common/ShowModel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,11 +60,10 @@ const validationSchema = Yup.object({
     .oneOf([true], "You must accept the terms and conditions")
 });
 
-function Main() {
+function Main(props) {
   const classes = useStyles();
   const [committee, setCommittee] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const [response, setResponse] = useState([null]);
 
   useEffect(() => {
@@ -76,10 +74,6 @@ function Main() {
     }
     getData()
   }, []);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const onRegister = data => {
     const obj = {
@@ -106,8 +100,9 @@ function Main() {
       .then(res => res.json())
       .then(result => {
         setLoading(false);
-        setResponse(result.messages);
-        setOpen(true);
+        console.log(result);
+        props.props.history.push('/image');
+        // setResponse(result.messages);
       })
       .catch(err => console.log(err));
   }
@@ -138,7 +133,7 @@ function Main() {
               resetForm({})
             }}
           >
-            {({ values, errors, isSubmitting, resetForm }) => (
+            {({ errors, isSubmitting, }) => (
               <Form>
                 <Row className="firstRow">
                   <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
@@ -257,7 +252,6 @@ function Main() {
           </Formik>
         </div>
       </Container>
-      <ShowModal open={open} onClose={handleClose} res={response} />
     </div>
   );
 }
