@@ -10,6 +10,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Formik, Form, useField, Field } from 'formik';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as Yup from 'yup';
+import Imageup from './ImageUp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,8 +102,8 @@ function Main(props) {
       .then(result => {
         setLoading(false);
         console.log(result);
+        setResponse(result);
         props.props.history.push('/image');
-        // setResponse(result.messages);
       })
       .catch(err => console.log(err));
   }
@@ -128,6 +129,7 @@ function Main(props) {
             validationSchema={validationSchema}
             onSubmit={(data, { setSubmitting, resetForm }) => {
               setSubmitting(true);
+              props.props.history.push('/image');
               onRegister(data);
               setSubmitting(false);
               resetForm({})
@@ -252,6 +254,7 @@ function Main(props) {
           </Formik>
         </div>
       </Container>
+      {/* <Imageup res={response}/> */}
     </div>
   );
 }

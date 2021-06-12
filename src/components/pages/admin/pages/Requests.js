@@ -14,6 +14,18 @@ function Requests() {
     const classes = useStyles();
     const [requests, setRequests] = useState([]);
 
+
+    // const getMembers = () => {
+    //     fetch(`https://mydreamcommittee.com/v1/users/pending`,{
+    //         method: 'GET',
+    //     })
+    //     .then(res => res.json())
+    //     .then(result => {
+    //         setRequests(result.body.users)
+    //     })
+    //     .then(err => console.log(err));
+    // }
+
     useEffect(() => {
         async function getData() {
             const res = await fetch('https://mydreamcommittee.com/v1/users/pending');
@@ -23,16 +35,33 @@ function Requests() {
         getData()
     }, []);
 
+    const getRemMembers = () => {
+        fetch(`https://mydreamcommittee.com/v1/users/pending`, {
+            method: 'GET'
+        })
+            .then(res => res.json())
+            .then(result => {
+                setRequests(result.data.users)
+            })
+            .then(err => console.log(err));
+    }
+
     const onDelete = (id) => {
-        console.log("id", id);
         fetch(`https://mydreamcommittee.com/v1/users/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
-            .then(result => console.log(result))
+            .then(result => {
+                if (result.statusCode === 200) {
+                    window.location.reload(true);
+                    setRequests(null);
+                    getRemMembers()
+
+                }
+                // console.log(result)
+            })
             .catch(err => console.log(err))
     }
-
     return (
         <div>
             <div>

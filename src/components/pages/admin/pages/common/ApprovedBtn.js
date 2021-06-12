@@ -30,9 +30,11 @@ function ApprovedBtn(props) {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [response, setResponse] = useState([null]);
+    const [request, setRequests] = useState(props.request);
 
     const handleClose = () => {
         setOpen(false);
+        setRequests(request);
     };
 
     const changeStatus = () => {

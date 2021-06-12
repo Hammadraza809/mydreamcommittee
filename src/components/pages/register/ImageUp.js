@@ -5,8 +5,6 @@ import './ImageUp.css';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button'
-import Select from '@material-ui/core/Select';
-import Checkbox from '@material-ui/core/Checkbox';
 import { Formik, Form, useField, Field } from 'formik';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as Yup from 'yup';
@@ -61,19 +59,11 @@ const validationSchema = Yup.object({
 
 function ImageUp(props) {
   console.log(props);
+  console.log(props.props);
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState([null]);
-
-  // useEffect(() => {
-  //   async function getData() {
-  //     const res = await fetch('https://mydreamcommittee.com/v1/committees/active');
-  //     const body = await res.json();
-  //     setCommittee(body.data.Committees);
-  //   }
-  //   getData()
-  // }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -81,16 +71,7 @@ function ImageUp(props) {
 
   const onRegister = data => {
     const obj = {
-      name: data.fullName,
-      cnic: data.cnic,
-      email: data.email,
-      mobileNo: data.mobileNo,
-      address: data.address,
-      city: data.cityName,
-      committee: data.committee,
-      membershipId: '',
-      status: 'pending',
-      customwinner: 'false'
+      
     }
     setLoading(true);
     fetch(`https://mydreamcommittee.com/v1/users`, {
@@ -116,19 +97,23 @@ function ImageUp(props) {
       <div className="registerFrom">
         <Container>
           <div className="heading">
-            <h1>Registration Form</h1>
+            <h1>Upload Deposit Slip Image</h1>
           </div>
-          <div className="rForm">
+          <div className="slipimg">
+            <p>
+              <h5><u>Important to note</u></h5>
+              <ul>
+                <li>Please upload bank diposit slip as a payment proof.</li>
+                <li>Our team will verify you.</li>
+                <li>If the payment is varified then you will be registered for this committee and a membership Id will assign to you</li>
+                <li>Picture should be in .png or .jpeg or .jpg format.</li>
+              </ul>
+            </p>
+          </div>
+          <div className="rForm imgForm">
             <Formik
               initialValues={{
-                fullName: '',
-                cnic: '',
-                email: '',
-                mobileNo: '',
-                address: '',
-                cityName: '',
                 photo: '',
-                terms: false,
               }}
               validationSchema={validationSchema}
               onSubmit={(data, { setSubmitting, resetForm }) => {
