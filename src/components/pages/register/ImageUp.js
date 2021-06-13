@@ -33,67 +33,63 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MyTextField = ({ type, rows, multiline, placeholder, ...props }) => {
-  const [field, meta] = useField(props);
-  const errorText = meta.error && meta.touched ? meta.error : "";
-  return (
-    <TextField
-      type={type}
-      rows={rows}
-      multiline={multiline}
-      placeholder={placeholder}
-      {...field}
-      helperText={errorText}
-      variant="outlined"
-      error={!!errorText}
-    />
-  )
-}
-const validationSchema = Yup.object({
-  // photo: Yup.mixed().required('Please upload picture of bank deposite slip')
-  //   .test("size", "Image should be  format", (value) => {
-  //     return value && value[0].size <= 500000;
+const SUPP_FORMAT = ['image/jpg','image/jpeg','image/png'];
 
-  //   }),
+const validationSchema = Yup.object({
+  photo: Yup.mixed().required('Please upload picture of bank deposite slip')
+    .test("fileType", "Image should be jpg/png/jpeg format", (value) => {
+      SUPP_FORMAT.includes(value.type);
+    }),
 });
 
 function ImageUp(props) {
-  console.log(props);
-  console.log(props.props);
+  const id = localStorage.getItem("id");
+  const nic = localStorage.getItem("nic");
+
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState([null]);
 
   const handleClose = () => {
+    props.history.push('/register');
     setOpen(false);
   };
 
   const onRegister = data => {
-    const obj = {
-      
-    }
     setLoading(true);
-    fetch(`https://mydreamcommittee.com/v1/users`, {
+    let formdata = new FormData();
+    formdata.append("attributes", JSON.stringify({
+      "title": `image-${id}`,
+      "filename": `-${nic}`,
+    }));
+    formdata.append("imagefile", data.photo);
+    console.log(formdata);
+    fetch(`https://mydreamcommittee.com/v1/userimage/${id}/images`, {
       method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(obj)
+      body: formdata,
     })
       .then(res => res.json())
       .then(result => {
-        setLoading(false);
-        setResponse(result.messages);
-        setOpen(true);
+        if (result.statusCode === 201) {
+          setLoading(false)
+          console.log(result);
+          setResponse("Registration Successfull. Our team will contact you shortly.");
+          setOpen(true);
+        }
+        else {
+          setLoading(false);
+          setResponse("Registration unsuccessfull. Please try again latter.")
+          setOpen(true);
+        }
+
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
   }
 
   return (
     <div>
-      <Header/>
+      <Header />
       <div className="registerFrom">
         <Container>
           <div className="heading">
@@ -118,20 +114,24 @@ function ImageUp(props) {
               validationSchema={validationSchema}
               onSubmit={(data, { setSubmitting, resetForm }) => {
                 setSubmitting(true);
-                onRegister(data);
+                // onRegister(data);
                 setSubmitting(false);
                 resetForm({})
               }}
             >
-              {({ values, errors, isSubmitting, resetForm }) => (
+              {({ errors, isSubmitting, setFieldValue, }) => (
                 <Form>
                   <Row className="firstRow">
                     <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
                       <label>Upload picture of deposite slip:</label><br />
-                      <MyTextField
+                      <input
                         type='file'
                         name="photo"
+                        onChange={(e) => {
+                          setFieldValue("photo", e.target.files[0])
+                        }}
                       />
+                      {<div style={{ color: 'red' }}><small>{errors.photo}</small></div>}
                     </Col>
                   </Row>
                   <Row className="btnRow">
@@ -165,7 +165,7 @@ function ImageUp(props) {
         </Container>
         <ShowModal open={open} onClose={handleClose} res={response} />
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

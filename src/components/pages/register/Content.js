@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button'
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Formik, Form, useField, Field } from 'formik';
+import { Formik, Form, useField, Field, FormikConfig, FormikValues } from 'formik';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as Yup from 'yup';
 import Imageup from './ImageUp';
@@ -61,11 +61,12 @@ const validationSchema = Yup.object({
     .oneOf([true], "You must accept the terms and conditions")
 });
 
-function Main(props) {
+export default function Main(props) {
   const classes = useStyles();
   const [committee, setCommittee] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState([null]);
+  // const [response, setResponse] = useState([null]);
+  // const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
     async function getData() {
@@ -101,12 +102,17 @@ function Main(props) {
       .then(res => res.json())
       .then(result => {
         setLoading(false);
-        console.log(result);
-        setResponse(result);
+        localStorage.setItem("id",result.data.users[0].id);
+        localStorage.setItem("nic",result.data.users[0].cnic);
         props.props.history.push('/image');
       })
       .catch(err => console.log(err));
   }
+
+  // const steps = [
+  //   <Main next={handleNextStep} data={data} />,
+  //   <Imageup next={handleNextStep} prev={handlePrevStep} data={data} />
+  // ];
 
   return (
     <div className="registerFrom">
@@ -258,4 +264,3 @@ function Main(props) {
     </div>
   );
 }
-export default Main;
