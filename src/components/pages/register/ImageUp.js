@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import './ImageUp.css';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button'
-import { Formik, Form, useField, Field } from 'formik';
+import { Formik, Form, } from 'formik';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as Yup from 'yup';
 import ShowModal from '../admin/pages/common/ShowModel';
@@ -33,12 +32,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SUPP_FORMAT = ['image/jpg','image/jpeg','image/png'];
-
 const validationSchema = Yup.object({
   photo: Yup.mixed().required('Please upload picture of bank deposite slip')
+    .test("fileSize", "The file is too large. Max size is 5mb.", (value) => {
+      console.log(value);
+      return value && value.size <= 5000000;
+    })
     .test("fileType", "Image should be jpg/png/jpeg format", (value) => {
-      SUPP_FORMAT.includes(value.type);
+      return value && (value.type === 'image/png' || value.type === 'image/jpg'|| value.type === 'image/jpeg')
     }),
 });
 
@@ -75,14 +76,17 @@ function ImageUp(props) {
           setLoading(false)
           console.log(result);
           setResponse("Registration Successfull. Our team will contact you shortly.");
+          localStorage.removeItem('id');
+          localStorage.removeItem('nic');
           setOpen(true);
         }
         else {
           setLoading(false);
-          setResponse("Registration unsuccessfull. Please try again latter.")
+          setResponse("Registration unsuccessfull. Please try again latter.");
+          localStorage.removeItem('id');
+          localStorage.removeItem('nic');
           setOpen(true);
         }
-
       })
       .catch(err => console.log(err))
   }
@@ -114,7 +118,7 @@ function ImageUp(props) {
               validationSchema={validationSchema}
               onSubmit={(data, { setSubmitting, resetForm }) => {
                 setSubmitting(true);
-                // onRegister(data);
+                onRegister(data);
                 setSubmitting(false);
                 resetForm({})
               }}

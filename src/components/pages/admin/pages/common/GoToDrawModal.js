@@ -33,7 +33,7 @@ const validationSchema = Yup.object({
 function Model(props) {
     
     const classes = useStyles();
-    const [committee, setCommittee] = useState([{ label: "Please Select committee", value: "" }]);
+    const [committee, setCommittee] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -87,6 +87,7 @@ function Model(props) {
                                             variant='outlined'
                                             native
                                         >
+                                            <option>Please Select Committee</option>
                                             {committee.map(item => {
                                                 return (
                                                     <option key={item.value} value={item.value}>{item.label}</option>

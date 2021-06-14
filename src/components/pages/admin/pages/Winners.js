@@ -42,24 +42,54 @@ const validationSchema = Yup.object({
 
 function Winners() {
     const classes = useStyles();
-    const [committee, setCommittee] = useState([{ label: "Please Select committee", value: "" }]);
+    const [committee, setCommittee] = useState([]);
     const [members, setMembers] = useState([]);
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         async function getData() {
-            const res = await fetch('https://mydreamcommittee.com/v1/committees');
-            const body = await res.json();
-            setCommittee(body.data.committees);
+            fetch(`https://mydreamcommittee.com/v1/committees`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(res => res.json())
+                .then(result => {
+                    setLoading(false)
+                    setCommittee(result.data.committees)
+                })
+                .catch(err => {
+                    setLoading(false);
+                    alert("Connection timeout please reload the page to load content")
+                    console.log(err)
+                    return null;
+                });
         }
         getData()
     }, []);
 
     useEffect(() => {
         async function getData() {
-            const res = await fetch(`https://mydreamcommittee.com/v1/winners`);
-            const body = await res.json();
-            setMembers(body.data.users);
+            fetch(`https://mydreamcommittee.com/v1/winners`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(res => res.json())
+                .then(result => {
+                    setLoading(false)
+                    setMembers(result.data.users)
+                })
+                .catch(err => {
+                    setLoading(false);
+                    alert("Connection timeout please reload the page to load content")
+                    console.log(err);
+                    return null;
+                });
         }
         getData()
     }, []);
@@ -78,7 +108,12 @@ function Winners() {
                 setLoading(false)
                 setMembers(result.data.users)
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                setLoading(false);
+                alert("Connection timeout please reload the page to load content")
+                console.log(err);
+                return null;
+            });
     }
 
     return (
@@ -109,6 +144,7 @@ function Winners() {
                                         variant='outlined'
                                         native
                                     >
+                                        <option>Please Select Committee</option>
                                         {committee.map(item => {
                                             return (
                                                 <option key={item.value} value={item.value}>{item.label}</option>

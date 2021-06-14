@@ -6,13 +6,13 @@ import { Button, Select, Table, TableCell, TableBody, TableContainer, TableHead,
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         position: 'relative',
         '& > *': {
             margin: theme.spacing(0),
             width: '100%',
-
         },
         flexGrow: 1,
     },
@@ -39,30 +39,59 @@ const validationSchema = Yup.object({
 
 function Members() {
     const classes = useStyles();
-    const [committee, setCommittee] = useState([{ label: "Please Select committee", value: "" }]);
+    const [committee, setCommittee] = useState([]);
     const [members, setMembers] = useState([]);
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         async function getData() {
-            const res = await fetch('https://mydreamcommittee.com/v1/committees');
-            const body = await res.json();
-            setCommittee(body.data.committees);
+            fetch(`https://mydreamcommittee.com/v1/committees`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(res => res.json())
+                .then(result => {
+                    setLoading(false)
+                    setCommittee(result.data.committees)
+                })
+                .catch(err => {
+                    setLoading(false);
+                    alert("Connection timeout please reload the page to load content")
+                    console.log(err)
+                    return null;
+                });
         }
         getData()
     }, []);
 
     useEffect(() => {
         async function getData() {
-            const res = await fetch(`https://mydreamcommittee.com/v1/users/approved`);
-            const body = await res.json();
-            setMembers(body.data.users);
+            fetch(`https://mydreamcommittee.com/v1/users/approved`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(res => res.json())
+                .then(result => {
+                    setLoading(false)
+                    setMembers(result.data.users)
+                })
+                .catch(err => {
+                    setLoading(false);
+                    alert("Connection timeout please reload the page to load content")
+                    console.log(err);
+                    return null;
+                });
         }
         getData()
     }, []);
-
+    
     const getMembers = data => {
-
         setLoading(true)
         fetch(`https://mydreamcommittee.com/v1/controller/user.php?committee=${data}&status=approved`, {
             method: 'GET',
@@ -76,7 +105,12 @@ function Members() {
                 setLoading(false)
                 setMembers(result.data.users)
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                setLoading(false);
+                alert("Connection timeout please reload the page to load content")
+                console.log(err);
+                return null;
+            });
     }
 
     return (
@@ -107,22 +141,22 @@ function Members() {
                                         variant='outlined'
                                         native
                                     >
+                                        <option>Please Select Committee</option>
                                         {committee.map(item => {
                                             return (
                                                 <option key={item.value} value={item.value}>{item.label}</option>
                                             )
                                         })}
                                     </Field>
-
                                 </Col>
                                 <Col className={classes.root}>
                                     <Button
                                         style={{
                                             color: "white",
                                             backgroundColor: "rgb(252, 143, 0)",
-                                            margin: "24px 0 0 0",
+                                            margin: "24px 10px 0 0",
                                             padding: "10px 10px",
-                                            width: '20%'
+                                            width: '20%',
                                         }}
                                         variant="contained"
                                         type="submit"

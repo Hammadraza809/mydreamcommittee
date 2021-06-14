@@ -7,10 +7,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button'
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Formik, Form, useField, Field, FormikConfig, FormikValues } from 'formik';
+import { Formik, Form, useField, Field, } from 'formik';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as Yup from 'yup';
-import Imageup from './ImageUp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,8 +101,8 @@ export default function Main(props) {
       .then(res => res.json())
       .then(result => {
         setLoading(false);
-        localStorage.setItem("id",result.data.users[0].id);
-        localStorage.setItem("nic",result.data.users[0].cnic);
+        localStorage.setItem("id", result.data.users[0].id);
+        localStorage.setItem("nic", result.data.users[0].cnic);
         props.props.history.push('/image');
       })
       .catch(err => console.log(err));
