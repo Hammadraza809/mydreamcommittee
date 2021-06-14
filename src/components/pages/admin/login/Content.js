@@ -86,7 +86,12 @@ function Main(props) {
                 }
 
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setLoading(false)
+                console.log(err)
+                alert("Connection timeout. Please refresh the page and try again.")
+                
+            })
     }
 
     return (

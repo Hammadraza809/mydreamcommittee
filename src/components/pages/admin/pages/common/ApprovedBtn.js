@@ -65,11 +65,24 @@ function ApprovedBtn(props) {
                 })
                     .then(res => res.json())
                     .then(result => {
-                        setLoading(false);
-                        setResponse(result.messages);
-                        setOpen(true);
+                        if(result.statusCode === 200){
+                            setLoading(false);
+                            setResponse(result.messages+" Refreh page.");
+                            setOpen(true);
+                        }
+                        else{
+                            setLoading(false);
+                            setResponse("Error. User not updated.")
+                            setOpen(true);
+                        }
+                        
                     })
-                    .catch(err => console.log(err));
+                    .catch(err => {
+                        setLoading(false)
+                        console.log(err)
+                        alert("Connect timeout. Please refresh the page to laod content.")
+                        return null;
+                    });
             })
             .catch(err => console.log(err));
     }

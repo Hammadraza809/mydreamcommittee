@@ -73,11 +73,23 @@ function AddCommittee(props) {
         })
             .then(res => res.json())
             .then(result => {
-                setLoading(false);
-                setResponse(result.messages);
-                setOpen(true);
+                if (result.statusCode === 200) {
+                    setLoading(false);
+                    setResponse(result.messages + " Please refresh page.");
+                    setOpen(true);
+                } else {
+                    setLoading(false);
+                    setResponse("Error. Committee not updated.")
+                    setOpen(true);
+                }
+
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setLoading(false)
+                console.log(err)
+                alert("Connect timeout. Please refresh the page to laod content.")
+                return null;
+            })
     }
 
     const handleClose = () => {
@@ -101,12 +113,25 @@ function AddCommittee(props) {
         })
             .then(res => res.json())
             .then(result => {
-                setLoading(false);
-                setCommittees(result.data.committees);
-                setResponse(result.messages);
-                setOpen(true);
+                if (result.statusCode === 201) {
+                    setLoading(false);
+                    setCommittees(result.data.committees);
+                    setResponse(result.messages + " Please refresh page.");
+                    setOpen(true);
+                }
+                else {
+                    setLoading(false);
+                    setResponse("Error. Committee not added.")
+                    setOpen(true);
+                }
+
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                setLoading(false)
+                console.log(err)
+                alert("Connect timeout. Please refresh the page to laod content.")
+                return null;
+            });
     }
     const handleChange = (e) => {
         setSelectValue(e.target.value)
@@ -202,7 +227,7 @@ function AddCommittee(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {committees.map((committee) => (
+                            {committees && committees.map((committee) => (
                                 <TableRow key={committee.id}>
                                     <TableCell>{committee.label}</TableCell>
                                     <TableCell>{committee.value}</TableCell>
