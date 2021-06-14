@@ -15,6 +15,7 @@ import Expired from './components/pages/admin/pages/common/Expired';
 import CustomWinner from './components/pages/admin/pages/CustomWinner';
 
 import CarCommittee from './components/pages/committees/carcommittee/Index';
+import TractorCommittee from './components/pages/committees/tractorcommittee/Index';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
       <Route exact path="/expired"  component={Expired}/>
 
       <Route exact path="/carcommittee" component={CarCommittee}/>
+      <Route exact path="/tractorcommittee" component={TractorCommittee}/>
     </Router>
   );
 }

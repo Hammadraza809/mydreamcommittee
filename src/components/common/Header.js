@@ -18,6 +18,7 @@ class Header extends Component {
                         <Nav.Link className="navItem" href="/about">About Us</Nav.Link>
                         <NavDropdown className="navItem" title="Committees" id="collasible-nav-dropdown">
                             <NavDropdown.Item className="navItem1" href="/carcommittee">Dream Car Committee</NavDropdown.Item>
+                            <NavDropdown.Item className="navItem1" href="/tractorcommittee">Dream Tractor Committee</NavDropdown.Item>
                             <NavDropdown.Item className="navItem1" href="/mobilecommittee" disabled>Dream Mobile Committee (Coming Soon)</NavDropdown.Item>
                             <NavDropdown.Item className="navItem1" href="/bikecommittee" disabled>Dream Bike Committee (Coming Soon)</NavDropdown.Item>
                             <NavDropdown.Item className="navItem1" href="/tractorcommittee" disabled>Dream Tractor Committee (Coming Soon)</NavDropdown.Item>
@@ -26,7 +27,6 @@ class Header extends Component {
                         </NavDropdown>
                         <Nav.Link className="navItem" href="/contact">Contact Us</Nav.Link>
                     </Nav>
-
                 </Navbar.Collapse>
             </Navbar>
         );
