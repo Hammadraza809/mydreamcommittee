@@ -26,11 +26,10 @@ class Footer extends Component {
                             <Col xs={12} sm={12} md={4} lg={6} className="committeeList">
                                 Committees<br />
                                 <ul>
-                                    <li><a href="/carcommittee">Dream Car Committee</a></li>
-                                    <li><a href="#">Dream Bike Committee (Comming Soon..)</a></li>
+                                    <li><a href="/carcommittee">Dream Car Committee (Registration Cloed)</a></li>
+                                    <li><a href="/tractorcommittee">Dream Tractor Committee (Now Registering)</a></li>
                                     <li><a href="#">Dream Gold Committee (Comming Soon..)</a></li>
                                     <li><a href="#">Dream House Committee (Comming Soon..)</a></li>
-                                    <li><a href="#">Dream Tractor Committee (Comming Soon..)</a></li>
                                 </ul>
                             </Col>
                         </Row>
