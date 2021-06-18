@@ -232,6 +232,7 @@ function Requests() {
                                     <TableCell>City</TableCell>
                                     <TableCell>Committee</TableCell>
                                     <TableCell>Status</TableCell>
+                                    <TableCell>Image Link</TableCell>
                                     <TableCell></TableCell>
                                     <TableCell>Delete</TableCell>
                                 </TableRow>
@@ -247,7 +248,15 @@ function Requests() {
                                         <TableCell>{request.city}</TableCell>
                                         <TableCell>{request.committee}</TableCell>
                                         <TableCell>{request.status}</TableCell>
-                                        <TableCell><ApprovedBtn request={request} index={index} /></TableCell>
+                                        <TableCell
+                                            component='a'
+                                            href={request.images[0].imageurl}
+                                            target='_blank'
+                                            padding='none'
+                                        >
+                                            <b><u>Click to open image</u></b>
+                                        </TableCell>
+                                        <TableCell><ApprovedBtn request={request} index={index}/></TableCell>
                                         <TableCell>
                                             <IconButton aria-label="delete" onClick={() => { onDelete(request.id) }}>
                                                 <DeleteIcon color='error' />

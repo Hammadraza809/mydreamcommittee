@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 const validationSchema = Yup.object({
     label: Yup.string().required('Name is required.'),
     value: Yup.string().required('Value is required.'),
+    members: Yup.string().required('No of Members required.'),
 });
 
 function AddCommittee(props) {
@@ -109,6 +110,7 @@ function AddCommittee(props) {
                 label: data.label,
                 value: data.value,
                 status: 'active',
+                members: data.members,
             })
         })
             .then(res => res.json())
@@ -179,6 +181,16 @@ function AddCommittee(props) {
                                     />
                                     {errors.value}
                                 </Col>
+                                <Col className={classes.root}>
+                                    <label>Enter No of Members:</label>
+                                    <Field
+                                        as={TextField}
+                                        name='members'
+                                        placeholder='200'
+                                        variant='outlined'
+                                    />
+                                    {errors.members}
+                                </Col>
                             </Row>
                             <Row className="btnRoww" >
                                 <Button
@@ -221,6 +233,7 @@ function AddCommittee(props) {
                             <TableRow>
                                 <TableCell>Committee Name</TableCell>
                                 <TableCell>Committee Code</TableCell>
+                                <TableCell>No of Members</TableCell>
                                 <TableCell>Status</TableCell>
                                 <TableCell>Change Status</TableCell>
                                 <TableCell></TableCell>
@@ -231,6 +244,7 @@ function AddCommittee(props) {
                                 <TableRow key={committee.id}>
                                     <TableCell>{committee.label}</TableCell>
                                     <TableCell>{committee.value}</TableCell>
+                                    <TableCell>{committee.members}</TableCell>
                                     <TableCell>{committee.status}</TableCell>
                                     <TableCell>
                                         {
