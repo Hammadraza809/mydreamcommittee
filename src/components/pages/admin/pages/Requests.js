@@ -68,6 +68,8 @@ function Requests() {
         getData()
     }, []);
 
+
+    //getting filtered members
     const getMembers = data => {
 
         setLoading(true)
@@ -90,7 +92,8 @@ function Requests() {
                 return null;
             });
     }
-
+    
+    //fetching all pending members
     useEffect(() => {
         async function getData() {
             fetch(`https://mydreamcommittee.com/v1/users/pending`, {
@@ -114,7 +117,8 @@ function Requests() {
         }
         getData()
     }, []);
-
+    
+    //after deletion remaining members fetching.
     const getRemMembers = () => {
         fetch(`https://mydreamcommittee.com/v1/users/pending`, {
             method: 'GET'
@@ -131,6 +135,7 @@ function Requests() {
             });
     }
 
+    //deleting a member
     const onDelete = (id) => {
         fetch(`https://mydreamcommittee.com/v1/users/${id}`, {
             method: 'DELETE'
