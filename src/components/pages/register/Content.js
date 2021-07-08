@@ -56,6 +56,7 @@ const validationSchema = Yup.object({
   address: Yup.string().required('House address is required.'),
   cityName: Yup.string().required('City Name is required.'),
   committee: Yup.string().required('Please select anyone committee'),
+  refrenceId: Yup.string().required('Please enter a refrence Id of refrenced person.'),
   terms: Yup.boolean()
     .oneOf([true], "You must accept the terms and conditions")
 });
@@ -86,6 +87,7 @@ export default function Main(props) {
       city: data.cityName,
       committee: data.committee,
       membershipId: '',
+      refrenceId: data.refrenceId,
       status: 'pending',
       customwinner: 'false'
     }
@@ -128,6 +130,7 @@ export default function Main(props) {
               mobileNo: '',
               address: '',
               cityName: '',
+              refrenceId: '',
               photo: '',
               terms: false,
             }}
@@ -215,6 +218,15 @@ export default function Main(props) {
                       })}
                     </Field>
                     {<div style={{ color: 'red' }}><small>{errors.committee}</small></div>}
+                  </Col>
+                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+                    <label>Refrence ID:</label><br />
+                    <MyTextField
+                      placeholder="Refrence ID (e.g. DCC-01)"
+                      name="refrenceId"
+                      as={TextField}
+                      variant='outlined'
+                    />
                   </Col>
                 </Row>
                 <Row className="firstRow">

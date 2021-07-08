@@ -22,11 +22,14 @@ class Footer extends Component {
                                         src={Youtube} />
                                         TV88 OFFICIAL
                                 </a>
+                                <br/><br/>
+                                <a href="/terms">Terms and conditions</a>
                             </Col>
                             <Col xs={12} sm={12} md={4} lg={6} className="committeeList">
                                 Committees<br />
                                 <ul>
-                                    <li><a href="/carcommittee">Dream Car Committee (Registration Cloed)</a></li>
+                                    <li><a href="/carcommittee">Dream Car Committee (Registration Closed)</a></li>
+                                    <li><a href="/carcommittee">Dream Car Committee 2 (Now Registering)</a></li>
                                     <li><a href="/tractorcommittee">Dream Tractor Committee (Now Registering)</a></li>
                                     <li><a href="#">Dream Gold Committee (Comming Soon..)</a></li>
                                     <li><a href="#">Dream House Committee (Comming Soon..)</a></li>

@@ -194,6 +194,7 @@ function Members() {
                                     <TableCell>City</TableCell>
                                     <TableCell>Committee</TableCell>
                                     <TableCell>Membership Id</TableCell>
+                                    <TableCell>Refrence Id</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -207,6 +208,7 @@ function Members() {
                                         <TableCell>{member.city}</TableCell>
                                         <TableCell>{member.committee}</TableCell>
                                         <TableCell>{member.membershipId}</TableCell>
+                                        <TableCell>{member.refrenceId}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
