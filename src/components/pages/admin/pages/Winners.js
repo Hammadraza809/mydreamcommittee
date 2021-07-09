@@ -198,7 +198,7 @@ function Winners() {
                                     <TableCell>City</TableCell>
                                     <TableCell>Committee</TableCell>
                                     <TableCell>Membership Id</TableCell>
-                                    <TableCell>Refrence Id</TableCell>
+                                    <TableCell>Referral ID</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>

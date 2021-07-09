@@ -55,8 +55,8 @@ const validationSchema = Yup.object({
   mobileNo: Yup.string().required('Mobile No is required.'),
   address: Yup.string().required('House address is required.'),
   cityName: Yup.string().required('City Name is required.'),
-  committee: Yup.string().required('Please select anyone committee'),
-  refrenceId: Yup.string().required('Please enter a refrence Id of refrenced person.'),
+  committee: Yup.string().required('Please select desired committee'),
+  refrenceId: Yup.string().required('Please enter Referral ID.'),
   terms: Yup.boolean()
     .oneOf([true], "You must accept the terms and conditions")
 });
@@ -220,9 +220,9 @@ export default function Main(props) {
                     {<div style={{ color: 'red' }}><small>{errors.committee}</small></div>}
                   </Col>
                   <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
-                    <label>Refrence ID:</label><br />
+                    <label>Referral ID:</label><br />
                     <MyTextField
-                      placeholder="Refrence ID (e.g. DCC-01)"
+                      placeholder="Referral ID (e.g. DCC-01)"
                       name="refrenceId"
                       as={TextField}
                       variant='outlined'
@@ -237,7 +237,7 @@ export default function Main(props) {
                         name="terms"
                         type="checkbox"
                       />
-                      I accept terms and condition.
+                      I accept <a className="rTerms" href="\terms">Terms and Conditions</a>
                     </label>
                     {<div style={{ color: 'red' }}><small>{errors.terms}</small></div>}
                   </Col>

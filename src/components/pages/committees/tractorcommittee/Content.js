@@ -71,7 +71,7 @@ class Main extends Component {
                         </div>
                         <br />
                         <div className="termslink">
-                            <h4>Read <a className="termslink" href="\terms">Terms and conditions here</a></h4>
+                            <h4>Read <a className="termslink" href="\terms">Terms and Conditions here</a></h4>
                         </div>
                         <br/>
                         <div className="rgstr">

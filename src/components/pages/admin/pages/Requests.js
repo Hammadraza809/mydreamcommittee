@@ -44,6 +44,7 @@ function Requests() {
     const [committee, setCommittee] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    //Fetching Committess for drop down.
     useEffect(() => {
         async function getData() {
             fetch(`https://mydreamcommittee.com/v1/committees`, {
@@ -105,6 +106,7 @@ function Requests() {
             })
                 .then(res => res.json())
                 .then(result => {
+                    console.log(result)
                     setLoading(false)
                     setRequests(result.data.users)
                 })
@@ -237,8 +239,8 @@ function Requests() {
                                     <TableCell>City</TableCell>
                                     <TableCell>Committee</TableCell>
                                     <TableCell>Status</TableCell>
-                                    <TableCell>Refrence Id</TableCell>
-                                    <TableCell>Image Link</TableCell>
+                                    <TableCell>Referral ID</TableCell>
+                                    {/* <TableCell>Image Link</TableCell> */}
                                     <TableCell></TableCell>
                                     <TableCell>Delete</TableCell>
                                 </TableRow>
@@ -255,14 +257,14 @@ function Requests() {
                                         <TableCell>{request.committee}</TableCell>
                                         <TableCell>{request.status}</TableCell>
                                         <TableCell>{request.refrenceId}</TableCell>
-                                        <TableCell
-                                            component='a'
-                                            href={request.images[0].imageurl}
-                                            target='_blank'
+                                        {/* <TableCell
+                                            // component='a'
+                                            // href={request.images[0].imageurl}
+                                            // target='_blank'
                                             padding='none'
                                         >
                                             <b><u>Click to open image</u></b>
-                                        </TableCell>
+                                        </TableCell> */}
                                         <TableCell><ApprovedBtn request={request} index={index}/></TableCell>
                                         <TableCell>
                                             <IconButton aria-label="delete" onClick={() => { onDelete(request.id) }}>

@@ -18,8 +18,8 @@ class Header extends Component {
                         <Nav.Link className="navItem" href="/about">About Us</Nav.Link>
                         <NavDropdown className="navItem" title="Committees" id="collasible-nav-dropdown">
                             <NavDropdown.Item className="navItem1" href="/carcommittee">Dream Car Committee (Registration Closed)</NavDropdown.Item>
-                            <NavDropdown.Item className="navItem1" href="/carcommittee">Dream Car Committee 2 (Now Registering)</NavDropdown.Item>
-                            <NavDropdown.Item className="navItem1" href="/tractorcommittee">Dream Tractor Committee (Now Registering)</NavDropdown.Item>
+                            <NavDropdown.Item className="navItem1" href="/carcommittee">Dream Car Committee 2 (Registrations Open)</NavDropdown.Item>
+                            <NavDropdown.Item className="navItem1" href="/tractorcommittee">Dream Tractor Committee (Registrations Open)</NavDropdown.Item>
                             <NavDropdown.Item className="navItem1" href="/mobilecommittee" disabled>Dream Mobile Committee (Coming Soon)</NavDropdown.Item>
                             <NavDropdown.Item className="navItem1" href="/goldcommittee" disabled>Dream Gold Committee (Coming Soon)</NavDropdown.Item>
                             <NavDropdown.Item className="navItem1" href="/housecommittee" disabled>Dream House Committee (Coming Soon)</NavDropdown.Item>

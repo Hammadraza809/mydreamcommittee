@@ -13,7 +13,7 @@ class Footer extends Component {
                     <Container>
                         <Row>
                             <Col xs={12} sm={12} md={4} lg={6} className="follow">
-                                Susbcribe Us on Youtube <br />
+                                Subscribe us on YouTube <br />
                                 <a href="https://www.youtube.com/TV88OFFICIAL" target="_blank" rel="noopener noreferrer">
                                     <img style={{
                                         width:"40px", padding:"5px"
@@ -23,16 +23,16 @@ class Footer extends Component {
                                         TV88 OFFICIAL
                                 </a>
                                 <br/><br/>
-                                <a href="/terms">Terms and conditions</a>
+                                <a href="/terms">Terms and Conditions.</a>
                             </Col>
                             <Col xs={12} sm={12} md={4} lg={6} className="committeeList">
                                 Committees<br />
                                 <ul>
                                     <li><a href="/carcommittee">Dream Car Committee (Registration Closed)</a></li>
-                                    <li><a href="/carcommittee">Dream Car Committee 2 (Now Registering)</a></li>
-                                    <li><a href="/tractorcommittee">Dream Tractor Committee (Now Registering)</a></li>
-                                    <li><a href="#">Dream Gold Committee (Comming Soon..)</a></li>
-                                    <li><a href="#">Dream House Committee (Comming Soon..)</a></li>
+                                    <li><a href="/carcommittee">Dream Car Committee 2 (Registrations Open)</a></li>
+                                    <li><a href="/tractorcommittee">Dream Tractor Committee (Registrations Open)</a></li>
+                                    <li><a href="#">Dream Gold Committee (Coming Soon..)</a></li>
+                                    <li><a href="#">Dream House Committee (Coming Soon..)</a></li>
                                 </ul>
                             </Col>
                         </Row>
@@ -42,7 +42,7 @@ class Footer extends Component {
                     <Container>
                         <Row>
                             <Col xs={12} sm={12} md={4} lg={6}>
-                                Copyright <CopyRight fontSize="small"/> 2021.
+                                Copyright <CopyRight fontSize="small"/> HBH IT Solutions.
                             </Col>
                             <Col xs={12} sm={12} md={4} lg={6}>
                                 All Rights Reserved. My Dream Committee.
