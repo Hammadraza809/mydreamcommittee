@@ -25,7 +25,7 @@ function App() {
       <Route exact path="/about" component={About} />
       <Route exact path="/contact" component={Contact} />
       <Route exact path="/register" component={RegisterForm} />
-      <Route exact path="/image" component={ImageUp} />
+      {/* <Route exact path="/image" component={ImageUp} /> */}
       <Route exact path="/admin" component={Admin} />
       <Route exact path="/dashboard" component={AdminDashboard} />
       <Route exact path="/requests" component={Requests} />

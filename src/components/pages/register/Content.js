@@ -10,6 +10,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Formik, Form, useField, Field, } from 'formik';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as Yup from 'yup';
+import ShowModal from '../admin/pages/common/ShowModel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,14 +59,22 @@ const validationSchema = Yup.object({
   committee: Yup.string().required('Please select desired committee'),
   refrenceId: Yup.string().required('Please enter Referral ID.'),
   terms: Yup.boolean()
-    .oneOf([true], "You must accept the terms and conditions")
+    .oneOf([true], "You must accept the terms and conditions"),
+  photo: Yup.mixed().required('Please upload picture of bank deposite slip')
+    .test("fileSize", "The file is too large. Max size is 5mb.", (value) => {
+      return value && value.size <= 5000000;
+    })
+    .test("fileType", "Image should be jpg/png/jpeg format", (value) => {
+      return value && (value.type === 'image/png' || value.type === 'image/jpg' || value.type === 'image/jpeg')
+    }),
 });
 
 export default function Main(props) {
   const classes = useStyles();
   const [committee, setCommittee] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [response, setResponse] = useState([null]);
+  const [open, setOpen] = useState(false);
+  const [response, setResponse] = useState([null]);
   // const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
@@ -76,6 +85,11 @@ export default function Main(props) {
     }
     getData()
   }, []);
+
+  const handleClose = () => {
+    props.history.push('/register');
+    setOpen(false);
+  };
 
   const onRegister = data => {
     const obj = {
@@ -102,18 +116,43 @@ export default function Main(props) {
     })
       .then(res => res.json())
       .then(result => {
-        setLoading(false);
-        localStorage.setItem("id", result.data.users[0].id);
-        localStorage.setItem("nic", result.data.users[0].cnic);
-        props.props.history.push('/image');
+        //For image
+        console.log(result);
+        const id = result.data.users[0].id;
+        const nic = result.data.users[0].nic;
+        console.log(id, nic);
+        // localStorage.setItem("id", result.data.users[0].id);
+        // localStorage.setItem("nic", result.data.users[0].cnic);
+        // props.props.history.push('/image');
+        // let formdata = new FormData();
+        // formdata.append("attributes", JSON.stringify({
+        //   "title": `image-${id}`,
+        //   "filename": `-${nic}`,
+        // }));
+        // formdata.append("imagefile", data.photo);
+        // console.log(formdata);
+        // fetch(`https://mydreamcommittee.com/v1/userimage/${id}/images`, {
+        //   method: 'POST',
+        //   body: formdata,
+        // })
+        //   .then(res => res.json())
+        //   .then(result => {
+        //     if (result.statusCode === 201) {
+        //       setLoading(false)
+        //       console.log(result);
+        //       setResponse("Registration Successfull. Our team will contact you shortly.");
+        //       setOpen(true);
+        //     }
+        //     else {
+        //       setLoading(false);
+        //       setResponse("Registration unsuccessfull. Please try again latter.");
+        //       setOpen(true);
+        //     }
+        //   })
+        //   .catch(err => console.log(err))
       })
       .catch(err => console.log(err));
   }
-
-  // const steps = [
-  //   <Main next={handleNextStep} data={data} />,
-  //   <Imageup next={handleNextStep} prev={handlePrevStep} data={data} />
-  // ];
 
   return (
     <div className="registerFrom">
@@ -137,13 +176,12 @@ export default function Main(props) {
             validationSchema={validationSchema}
             onSubmit={(data, { setSubmitting, resetForm }) => {
               setSubmitting(true);
-              props.props.history.push('/image');
               onRegister(data);
               setSubmitting(false);
               resetForm({})
             }}
           >
-            {({ errors, isSubmitting, }) => (
+            {({ errors, isSubmitting, setFieldValue }) => (
               <Form>
                 <Row className="firstRow">
                   <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
@@ -229,6 +267,30 @@ export default function Main(props) {
                     />
                   </Col>
                 </Row>
+                <div>
+
+                </div>
+                <Row className="firstRow">
+                  <Col xs={12} sm={12} md={12} lg={12} className="coll" className={classes.root}>
+                    <label>Upload picture of deposite slip:</label><br />
+                    <small className="slipimg">
+                      <ul>
+                        <li>Please upload bank diposit slip as a payment proof.</li>
+                        <li>Our team will verify you.</li>
+                        <li>If the payment is varified then you will be registered for this committee and a membership Id will assign to you</li>
+                        <li>Picture should be in .png or .jpeg or .jpg format.</li>
+                      </ul>
+                    </small>
+                    <input
+                      type='file'
+                      name="photo"
+                      onChange={(e) => {
+                        setFieldValue("photo", e.target.files[0])
+                      }}
+                    />
+                    {<div style={{ color: 'red' }}><small>{errors.photo}</small></div>}
+                  </Col>
+                </Row>
                 <Row className="firstRow">
                   <Col>
                     <label>
@@ -263,7 +325,7 @@ export default function Main(props) {
                       size={30}
                       thickness={4}
                       value={100}
-                    /> : 'Next'}
+                    /> : 'Register'}
                   </Button>
                 </Row>
               </Form>
@@ -271,7 +333,7 @@ export default function Main(props) {
           </Formik>
         </div>
       </Container>
-      {/* <Imageup res={response}/> */}
+      <ShowModal open={open} onClose={handleClose} res={response} />
     </div>
   );
 }
