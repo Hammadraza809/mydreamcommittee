@@ -11,6 +11,7 @@ import { Formik, Form, useField, Field, } from 'formik';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as Yup from 'yup';
 import ShowModal from '../admin/pages/common/ShowModel';
+import './ImageUp.css'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,7 +76,6 @@ export default function Main(props) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState([null]);
-  // const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
     async function getData() {
@@ -87,7 +87,6 @@ export default function Main(props) {
   }, []);
 
   const handleClose = () => {
-    props.history.push('/register');
     setOpen(false);
   };
 
@@ -117,39 +116,32 @@ export default function Main(props) {
       .then(res => res.json())
       .then(result => {
         //For image
-        console.log(result);
         const id = result.data.users[0].id;
-        const nic = result.data.users[0].nic;
-        console.log(id, nic);
-        // localStorage.setItem("id", result.data.users[0].id);
-        // localStorage.setItem("nic", result.data.users[0].cnic);
-        // props.props.history.push('/image');
-        // let formdata = new FormData();
-        // formdata.append("attributes", JSON.stringify({
-        //   "title": `image-${id}`,
-        //   "filename": `-${nic}`,
-        // }));
-        // formdata.append("imagefile", data.photo);
-        // console.log(formdata);
-        // fetch(`https://mydreamcommittee.com/v1/userimage/${id}/images`, {
-        //   method: 'POST',
-        //   body: formdata,
-        // })
-        //   .then(res => res.json())
-        //   .then(result => {
-        //     if (result.statusCode === 201) {
-        //       setLoading(false)
-        //       console.log(result);
-        //       setResponse("Registration Successfull. Our team will contact you shortly.");
-        //       setOpen(true);
-        //     }
-        //     else {
-        //       setLoading(false);
-        //       setResponse("Registration unsuccessfull. Please try again latter.");
-        //       setOpen(true);
-        //     }
-        //   })
-        //   .catch(err => console.log(err))
+        const nic = result.data.users[0].cnic;
+        let formdata = new FormData();
+        formdata.append("attributes", JSON.stringify({
+          "title": `image-${id}`,
+          "filename": `-${nic}`,
+        }));
+        formdata.append("imagefile", data.photo);
+        fetch(`https://mydreamcommittee.com/v1/userimage/${id}/images`, {
+          method: 'POST',
+          body: formdata,
+        })
+          .then(res => res.json())
+          .then(result => {
+            if (result.statusCode === 201) {
+              setLoading(false)
+              setResponse("Registration Successfull. Our team will contact you shortly.");
+              setOpen(true);
+            }
+            else {
+              setLoading(false);
+              setResponse("Registration unsuccessfull. Please try again latter.");
+              setOpen(true);
+            }
+          })
+          .catch(err => console.log(err))
       })
       .catch(err => console.log(err));
   }
