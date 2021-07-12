@@ -240,7 +240,7 @@ function Requests() {
                                     <TableCell>Committee</TableCell>
                                     <TableCell>Status</TableCell>
                                     <TableCell>Referral ID</TableCell>
-                                    {/* <TableCell>Image Link</TableCell> */}
+                                    <TableCell>Image Link</TableCell>
                                     <TableCell></TableCell>
                                     <TableCell>Delete</TableCell>
                                 </TableRow>
@@ -257,14 +257,14 @@ function Requests() {
                                         <TableCell>{request.committee}</TableCell>
                                         <TableCell>{request.status}</TableCell>
                                         <TableCell>{request.refrenceId}</TableCell>
-                                        {/* <TableCell
-                                            // component='a'
-                                            // href={request.images[0].imageurl}
-                                            // target='_blank'
+                                        <TableCell
+                                            component='a'
+                                            href={request.images[0].imageurl}
+                                            target='_blank'
                                             padding='none'
                                         >
                                             <b><u>Click to open image</u></b>
-                                        </TableCell> */}
+                                        </TableCell>
                                         <TableCell><ApprovedBtn request={request} index={index}/></TableCell>
                                         <TableCell>
                                             <IconButton aria-label="delete" onClick={() => { onDelete(request.id) }}>

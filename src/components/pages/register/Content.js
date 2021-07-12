@@ -58,7 +58,7 @@ const validationSchema = Yup.object({
   address: Yup.string().required('House address is required.'),
   cityName: Yup.string().required('City Name is required.'),
   committee: Yup.string().required('Please select desired committee'),
-  refrenceId: Yup.string().required('Please enter Referral ID.'),
+  refrenceId: Yup.string().max(8,"Refferal ID must contains 8 characters."),
   terms: Yup.boolean()
     .oneOf([true], "You must accept the terms and conditions"),
   photo: Yup.mixed().required('Please upload picture of bank deposite slip')
@@ -252,7 +252,7 @@ export default function Main(props) {
                   <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
                     <label>Referral ID:</label><br />
                     <MyTextField
-                      placeholder="Referral ID (e.g. DCC-01)"
+                      placeholder="Referral ID (e.g. DCC-001)"
                       name="refrenceId"
                       as={TextField}
                       variant='outlined'
@@ -264,13 +264,13 @@ export default function Main(props) {
                 </div>
                 <Row className="firstRow">
                   <Col xs={12} sm={12} md={12} lg={12} className="coll" className={classes.root}>
-                    <label>Upload picture of deposite slip:</label><br />
+                    <label>Upload picture of deposit slip:</label><br />
                     <small className="slipimg">
                       <ul>
-                        <li>Please upload bank diposit slip as a payment proof.</li>
-                        <li>Our team will verify you.</li>
-                        <li>If the payment is varified then you will be registered for this committee and a membership Id will assign to you</li>
-                        <li>Picture should be in .png or .jpeg or .jpg format.</li>
+                        <li>Please upload bank deposit slip as a payment proof.</li>
+                        <li>Our team will verify with you.</li>
+                        <li>If the payment is varified then you will be registered for this committee and a membership Id will be assign to you</li>
+                        <li>Image should be in .png or .jpeg or .jpg format.</li>
                       </ul>
                     </small>
                     <input
@@ -291,7 +291,7 @@ export default function Main(props) {
                         name="terms"
                         type="checkbox"
                       />
-                      I accept <a className="rTerms" href="\terms">Terms and Conditions</a>
+                      I accept <a className="rTerms" href="\terms"><u>Terms and Conditions</u></a>
                     </label>
                     {<div style={{ color: 'red' }}><small>{errors.terms}</small></div>}
                   </Col>
