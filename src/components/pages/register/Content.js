@@ -34,11 +34,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MyTextField = ({ type, rows, multiline, placeholder, ...props }) => {
+const MyTextField = ({ type, rows, multiline, placeholder, disabled, ...props }) => {
   const [field, meta] = useField(props);
   const errorText = meta.error && meta.touched ? meta.error : "";
   return (
     <TextField
+      disabled={disabled}
       type={type}
       rows={rows}
       multiline={multiline}
@@ -57,8 +58,8 @@ const validationSchema = Yup.object({
   mobileNo: Yup.string().required('Mobile No is required.'),
   address: Yup.string().required('House address is required.'),
   cityName: Yup.string().required('City Name is required.'),
-  committee: Yup.string().required('Please select desired committee'),
-  refrenceId: Yup.string().max(8,"Refferal ID must contains 8 characters."),
+  // committee: Yup.string().required('Please select desired committee'),
+  refrenceId: Yup.string().max(8, "Refferal ID must contains 8 characters."),
   terms: Yup.boolean()
     .oneOf([true], "You must accept the terms and conditions"),
   photo: Yup.mixed().required('Please upload picture of bank deposite slip')
@@ -71,17 +72,19 @@ const validationSchema = Yup.object({
 });
 
 export default function Main(props) {
+  const commt = props.props.match.params.data;
   const classes = useStyles();
-  const [committee, setCommittee] = useState([]);
+  const [mycommittee, setMyCommittee] = useState([]);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState([null]);
 
   useEffect(() => {
     async function getData() {
-      const res = await fetch('https://mydreamcommittee.com/v1/committees/active');
+      const res = await fetch(`https://mydreamcommittee.com/v1/committees/${commt}`);
       const body = await res.json();
-      setCommittee(body.data.Committees);
+      setMyCommittee(body.data.Committees[0].label);
+      console.log(body.data.Committees[0].label);
     }
     getData()
   }, []);
@@ -98,52 +101,54 @@ export default function Main(props) {
       mobileNo: data.mobileNo,
       address: data.address,
       city: data.cityName,
-      committee: data.committee,
+      committee: commt,
       membershipId: '',
       refrenceId: data.refrenceId,
       status: 'pending',
       customwinner: 'false'
     }
-    setLoading(true);
-    fetch(`https://mydreamcommittee.com/v1/users`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(obj)
-    })
-      .then(res => res.json())
-      .then(result => {
-        //For image
-        const id = result.data.users[0].id;
-        const nic = result.data.users[0].cnic;
-        let formdata = new FormData();
-        formdata.append("attributes", JSON.stringify({
-          "title": `image-${id}`,
-          "filename": `-${nic}`,
-        }));
-        formdata.append("imagefile", data.photo);
-        fetch(`https://mydreamcommittee.com/v1/userimage/${id}/images`, {
-          method: 'POST',
-          body: formdata,
-        })
-          .then(res => res.json())
-          .then(result => {
-            if (result.statusCode === 201) {
-              setLoading(false)
-              setResponse("Registration Successfull. Our team will contact you shortly.");
-              setOpen(true);
-            }
-            else {
-              setLoading(false);
-              setResponse("Registration unsuccessfull. Please try again latter.");
-              setOpen(true);
-            }
-          })
-          .catch(err => console.log(err))
-      })
-      .catch(err => console.log(err));
+    console.log(mycommittee)
+    console.log(obj)
+    // setLoading(true);
+    // fetch(`https://mydreamcommittee.com/v1/users`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(obj)
+    // })
+    //   .then(res => res.json())
+    //   .then(result => {
+    //     //For image
+    //     const id = result.data.users[0].id;
+    //     const nic = result.data.users[0].cnic;
+    //     let formdata = new FormData();
+    //     formdata.append("attributes", JSON.stringify({
+    //       "title": `image-${id}`,
+    //       "filename": `-${nic}`,
+    //     }));
+    //     formdata.append("imagefile", data.photo);
+    //     fetch(`https://mydreamcommittee.com/v1/userimage/${id}/images`, {
+    //       method: 'POST',
+    //       body: formdata,
+    //     })
+    //       .then(res => res.json())
+    //       .then(result => {
+    //         if (result.statusCode === 201) {
+    //           setLoading(false)
+    //           setResponse("Registration Successfull. Our team will contact you shortly.");
+    //           setOpen(true);
+    //         }
+    //         else {
+    //           setLoading(false);
+    //           setResponse("Registration unsuccessfull. Please try again latter.");
+    //           setOpen(true);
+    //         }
+    //       })
+    //       .catch(err => console.log(err))
+    //   })
+    //   .catch(err => console.log(err));
   }
 
   return (
@@ -161,6 +166,7 @@ export default function Main(props) {
               mobileNo: '',
               address: '',
               cityName: '',
+              committee: mycommittee,
               refrenceId: '',
               photo: '',
               terms: false,
@@ -232,21 +238,23 @@ export default function Main(props) {
                 </Row>
                 <Row className="firstRow">
                   <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
-                    <label>Committees:</label><br />
-                    <Field
+                    <label>Committee:</label><br />
+                    <MyTextField
+                      // value={commt}
                       name="committee"
-                      as={Select}
+                      as={TextField}
                       variant='outlined'
-                      native
-                      type="Select"
+                      // native
+                      // type="Select"
+                      disabled
                     >
-                      <option value="">Please Select Committee</option>
+                      {/* <option value="">Please Select Committee</option>
                       {committee.map(item => {
                         return (
                           <option key={item.value} value={item.value}>{item.label}</option>
                         )
-                      })}
-                    </Field>
+                      })} */}
+                    </MyTextField>
                     {<div style={{ color: 'red' }}><small>{errors.committee}</small></div>}
                   </Col>
                   <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>

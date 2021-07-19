@@ -10,6 +10,10 @@ import TractorDetails from '../../../../assets/images/tractordetails.jpeg';
 import TractorSlider from '../../../../assets/images/tractorslider.jpg';
 
 class Main extends Component {
+    constructor(props){
+        super(props);
+    }
+
     render() {
         return (
             <div className="text">
@@ -77,7 +81,10 @@ class Main extends Component {
                         <div className="rgstr">
                             <Row className="btnRgstr">
                                 <Button
-                                    href="\register"
+                                onClick={() => {
+                                    this.props.props.history.push("/register/DTC")
+                                }}
+                                    // href="\register"
                                     style={{
                                         backgroundColor: "rgb(252, 143, 0)",
                                         color: "white",
