@@ -84,7 +84,7 @@ export default function Main(props) {
       const res = await fetch(`https://mydreamcommittee.com/v1/committees/${commt}`);
       const body = await res.json();
       setMyCommittee(body.data.Committees[0].label);
-      console.log(body.data.Committees[0].label);
+      // console.log(body.data.Committees[0].label);
     }
     getData()
   }, []);
@@ -107,8 +107,8 @@ export default function Main(props) {
       status: 'pending',
       customwinner: 'false'
     }
-    console.log(mycommittee)
-    console.log(obj)
+    // console.log(mycommittee)
+    // console.log(obj)
     // setLoading(true);
     // fetch(`https://mydreamcommittee.com/v1/users`, {
     //   method: 'POST',

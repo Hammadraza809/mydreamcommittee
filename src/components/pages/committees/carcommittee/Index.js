@@ -3,11 +3,11 @@ import Header from '../../../common/Header';
 import Footer from '../../../common/Footer';
 import Content from './Content';
 
-function Carcommittee(){
+function Carcommittee(props){
     return(
         <div>
             <Header/>
-            <Content/>
+            <Content props={props}/>
             <Footer/>
         </div>
     );
