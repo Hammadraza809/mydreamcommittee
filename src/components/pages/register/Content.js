@@ -5,7 +5,7 @@ import './Content.css';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button'
-import Select from '@material-ui/core/Select';
+import Backdrop from '@material-ui/core/Backdrop';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Formik, Form, useField, Field, } from 'formik';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -58,7 +58,6 @@ const validationSchema = Yup.object({
   mobileNo: Yup.string().required('Mobile No is required.'),
   address: Yup.string().required('House address is required.'),
   cityName: Yup.string().required('City Name is required.'),
-  // committee: Yup.string().required('Please select desired committee'),
   refrenceId: Yup.string().max(8, "Refferal ID must contains 8 characters."),
   terms: Yup.boolean()
     .oneOf([true], "You must accept the terms and conditions"),
@@ -74,24 +73,38 @@ const validationSchema = Yup.object({
 export default function Main(props) {
   const commt = props.props.match.params.data;
   const classes = useStyles();
-  const [mycommittee, setMyCommittee] = useState([]);
+  const [mycommittee, setMyCommittee] = useState(['']);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState([null]);
+  const [backdrop, setBackdrop] = useState(true);
 
   useEffect(() => {
     async function getData() {
       const res = await fetch(`https://mydreamcommittee.com/v1/committees/${commt}`);
       const body = await res.json();
       setMyCommittee(body.data.Committees[0].label);
-      // console.log(body.data.Committees[0].label);
+      setBackdrop(false);
     }
     getData()
-  }, []);
+  }, [commt]);
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  const initialValuess = {
+    fullName: '',
+    cnic: '',
+    email: '',
+    mobileNo: '',
+    address: '',
+    cityName: '',
+    committee: mycommittee,
+    refrenceId: '',
+    photo: '',
+    terms: false,
+  }
 
   const onRegister = data => {
     const obj = {
@@ -107,48 +120,46 @@ export default function Main(props) {
       status: 'pending',
       customwinner: 'false'
     }
-    // console.log(mycommittee)
-    // console.log(obj)
-    // setLoading(true);
-    // fetch(`https://mydreamcommittee.com/v1/users`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(obj)
-    // })
-    //   .then(res => res.json())
-    //   .then(result => {
-    //     //For image
-    //     const id = result.data.users[0].id;
-    //     const nic = result.data.users[0].cnic;
-    //     let formdata = new FormData();
-    //     formdata.append("attributes", JSON.stringify({
-    //       "title": `image-${id}`,
-    //       "filename": `-${nic}`,
-    //     }));
-    //     formdata.append("imagefile", data.photo);
-    //     fetch(`https://mydreamcommittee.com/v1/userimage/${id}/images`, {
-    //       method: 'POST',
-    //       body: formdata,
-    //     })
-    //       .then(res => res.json())
-    //       .then(result => {
-    //         if (result.statusCode === 201) {
-    //           setLoading(false)
-    //           setResponse("Registration Successfull. Our team will contact you shortly.");
-    //           setOpen(true);
-    //         }
-    //         else {
-    //           setLoading(false);
-    //           setResponse("Registration unsuccessfull. Please try again latter.");
-    //           setOpen(true);
-    //         }
-    //       })
-    //       .catch(err => console.log(err))
-    //   })
-    //   .catch(err => console.log(err));
+    setLoading(true);
+    fetch(`https://mydreamcommittee.com/v1/users`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(obj)
+    })
+      .then(res => res.json())
+      .then(result => {
+        //For image
+        const id = result.data.users[0].id;
+        const nic = result.data.users[0].cnic;
+        let formdata = new FormData();
+        formdata.append("attributes", JSON.stringify({
+          "title": `image-${id}`,
+          "filename": `-${nic}`,
+        }));
+        formdata.append("imagefile", data.photo);
+        fetch(`https://mydreamcommittee.com/v1/userimage/${id}/images`, {
+          method: 'POST',
+          body: formdata,
+        })
+          .then(res => res.json())
+          .then(result => {
+            if (result.statusCode === 201) {
+              setLoading(false)
+              setResponse("Registration Successfull. Our team will contact you shortly.");
+              setOpen(true);
+            }
+            else {
+              setLoading(false);
+              setResponse("Registration unsuccessfull. Please try again latter.");
+              setOpen(true);
+            }
+          })
+          .catch(err => console.log(err))
+      })
+      .catch(err => console.log(err));
   }
 
   return (
@@ -159,18 +170,10 @@ export default function Main(props) {
         </div>
         <div className="rForm">
           <Formik
-            initialValues={{
-              fullName: '',
-              cnic: '',
-              email: '',
-              mobileNo: '',
-              address: '',
-              cityName: '',
-              committee: mycommittee,
-              refrenceId: '',
-              photo: '',
-              terms: false,
-            }}
+            enableReinitialize
+            initialValues={
+              backdrop ? null : initialValuess
+            }
             validationSchema={validationSchema}
             onSubmit={(data, { setSubmitting, resetForm }) => {
               setSubmitting(true);
@@ -182,7 +185,7 @@ export default function Main(props) {
             {({ errors, isSubmitting, setFieldValue }) => (
               <Form>
                 <Row className="firstRow">
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+                  <Col xs={12} sm={12} md={6} lg={6} className={`coll ${classes.root}`}>
                     <label>Name:</label><br />
                     <MyTextField
                       placeholder="Full Name"
@@ -190,7 +193,7 @@ export default function Main(props) {
 
                     />
                   </Col>
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+                  <Col xs={12} sm={12} md={6} lg={6} className={`coll ${classes.root}`}>
                     <label>CNIC:</label><br />
                     <MyTextField
                       placeholder="CNIC"
@@ -200,7 +203,7 @@ export default function Main(props) {
                   </Col>
                 </Row>
                 <Row className="firstRow">
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+                  <Col xs={12} sm={12} md={6} lg={6} className={`coll ${classes.root}`}>
                     <label>Email:</label><br />
                     <MyTextField
                       placeholder="Email"
@@ -208,7 +211,7 @@ export default function Main(props) {
 
                     />
                   </Col>
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+                  <Col xs={12} sm={12} md={6} lg={6} className={`coll ${classes.root}`}>
                     <label>Mobile No:</label><br />
                     <MyTextField
                       placeholder="Mobile No"
@@ -218,7 +221,7 @@ export default function Main(props) {
                   </Col>
                 </Row>
                 <Row className="firstRow">
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+                  <Col xs={12} sm={12} md={6} lg={6} className={`coll ${classes.root}`}>
                     <label>Address:</label><br />
                     <MyTextField
                       placeholder="Address"
@@ -226,7 +229,7 @@ export default function Main(props) {
 
                     />
                   </Col>
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+                  <Col xs={12} sm={12} md={6} lg={6} className={`coll ${classes.root}`}>
                     <label>City Name:</label><br />
                     <MyTextField
                       placeholder="City Name"
@@ -237,27 +240,16 @@ export default function Main(props) {
                   </Col>
                 </Row>
                 <Row className="firstRow">
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+                  <Col xs={12} sm={12} md={6} lg={6} className={`coll ${classes.root}`}>
                     <label>Committee:</label><br />
                     <MyTextField
-                      // value={commt}
                       name="committee"
                       as={TextField}
                       variant='outlined'
-                      // native
-                      // type="Select"
                       disabled
-                    >
-                      {/* <option value="">Please Select Committee</option>
-                      {committee.map(item => {
-                        return (
-                          <option key={item.value} value={item.value}>{item.label}</option>
-                        )
-                      })} */}
-                    </MyTextField>
-                    {<div style={{ color: 'red' }}><small>{errors.committee}</small></div>}
+                    />
                   </Col>
-                  <Col xs={12} sm={12} md={6} lg={6} className="coll" className={classes.root}>
+                  <Col xs={12} sm={12} md={6} lg={6} className={`coll ${classes.root}`}>
                     <label>Referral ID:</label><br />
                     <MyTextField
                       placeholder="Referral ID (e.g. DCC-001)"
@@ -271,7 +263,7 @@ export default function Main(props) {
 
                 </div>
                 <Row className="firstRow">
-                  <Col xs={12} sm={12} md={12} lg={12} className="coll" className={classes.root}>
+                  <Col xs={12} sm={12} md={12} lg={12} className={`coll ${classes.root}`}>
                     <label>Upload picture of deposit slip:</label><br />
                     <small className="slipimg">
                       <ul>
@@ -333,6 +325,9 @@ export default function Main(props) {
           </Formik>
         </div>
       </Container>
+      <Backdrop style={{ zIndex: 100 }} open={backdrop}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <ShowModal open={open} onClose={handleClose} res={response} />
     </div>
   );

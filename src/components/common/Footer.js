@@ -31,8 +31,8 @@ class Footer extends Component {
                                     <li><a href="/carcommittee">Dream Car Committee (Registration Closed)</a></li>
                                     <li><a href="/carcommittee">Dream Car Committee 2 (Registrations Open)</a></li>
                                     <li><a href="/tractorcommittee">Dream Tractor Committee (Registrations Open)</a></li>
-                                    <li><a href="#">Dream Gold Committee (Coming Soon..)</a></li>
-                                    <li><a href="#">Dream House Committee (Coming Soon..)</a></li>
+                                    <li><a href="/">Dream Gold Committee (Coming Soon..)</a></li>
+                                    <li><a href="/">Dream House Committee (Coming Soon..)</a></li>
                                 </ul>
                             </Col>
                         </Row>

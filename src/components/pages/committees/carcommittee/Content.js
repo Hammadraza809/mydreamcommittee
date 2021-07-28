@@ -7,10 +7,6 @@ import youtube from '../../../../assets/images/youtube.png';
 import Button from '@material-ui/core/Button';
 
 class Main extends Component {
-    constructor(props){
-        super(props);
-    }
-
     render() {
         return (
             <div className="text">
@@ -85,7 +81,6 @@ class Main extends Component {
                                 onClick={() => {
                                     this.props.props.history.push("/register/DCC2")
                                 }}
-                                    // href="\register"
                                     style={{
                                         backgroundColor: "rgb(252, 143, 0)",
                                         color: "white",

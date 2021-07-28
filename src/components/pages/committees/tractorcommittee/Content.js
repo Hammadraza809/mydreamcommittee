@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import "./Content.css";
-import Slider1 from '../../../../assets/images/slider1.jpg';
 import youtube from '../../../../assets/images/youtube.png';
 import Button from '@material-ui/core/Button';
 import TractorTitle from '../../../../assets/images/tractortitle.jpeg';
@@ -10,10 +9,6 @@ import TractorDetails from '../../../../assets/images/tractordetails.jpeg';
 import TractorSlider from '../../../../assets/images/tractorslider.jpg';
 
 class Main extends Component {
-    constructor(props){
-        super(props);
-    }
-
     render() {
         return (
             <div className="text">
@@ -84,7 +79,6 @@ class Main extends Component {
                                 onClick={() => {
                                     this.props.props.history.push("/register/DTC")
                                 }}
-                                    // href="\register"
                                     style={{
                                         backgroundColor: "rgb(252, 143, 0)",
                                         color: "white",

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import "./Content.css";
@@ -7,23 +7,9 @@ import bike from '../../../assets/images/bike.png';
 import gold from '../../../assets/images/gold.png';
 import house from '../../../assets/images/house.png';
 import tractor from '../../../assets/images/tractor.png';
-import RgstrBtn from '../../common/RgstrBtn';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-}));
-
-
-
 function Main() {
-    const classes = useStyles();
     return (
         <div className="text">
             <div className="heading">
