@@ -179,7 +179,7 @@ export default function Main(props) {
               setSubmitting(true);
               onRegister(data);
               setSubmitting(false);
-              resetForm({})
+              resetForm('')
             }}
           >
             {({ errors, isSubmitting, setFieldValue }) => (
@@ -234,8 +234,7 @@ export default function Main(props) {
                     <MyTextField
                       placeholder="City Name"
                       name="cityName"
-                      as={TextField}
-                      variant='outlined'
+                      
                     />
                   </Col>
                 </Row>
@@ -244,8 +243,6 @@ export default function Main(props) {
                     <label>Committee:</label><br />
                     <MyTextField
                       name="committee"
-                      as={TextField}
-                      variant='outlined'
                       disabled
                     />
                   </Col>
@@ -254,8 +251,7 @@ export default function Main(props) {
                     <MyTextField
                       placeholder="Referral ID (e.g. DCC-001)"
                       name="refrenceId"
-                      as={TextField}
-                      variant='outlined'
+                      
                     />
                   </Col>
                 </Row>
@@ -274,11 +270,12 @@ export default function Main(props) {
                       </ul>
                     </small>
                     <input
-                      type='file'
+                      type="file"
                       name="photo"
                       onChange={(e) => {
                         setFieldValue("photo", e.target.files[0])
                       }}
+                      
                     />
                     {<div style={{ color: 'red' }}><small>{errors.photo}</small></div>}
                   </Col>

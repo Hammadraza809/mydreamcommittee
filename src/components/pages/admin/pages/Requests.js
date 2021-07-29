@@ -7,6 +7,8 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Row, Col } from 'react-bootstrap';
+import Backdrop from '@material-ui/core/Backdrop';
+import RejectBtn from './common/RejectBtn';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,6 +45,7 @@ function Requests() {
     const [requests, setRequests] = useState([]);
     const [committee, setCommittee] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [backdrop, setBackdrop] = useState(true);
 
     //Fetching Committess for drop down.
     useEffect(() => {
@@ -93,7 +96,7 @@ function Requests() {
                 return null;
             });
     }
-    
+
     //fetching all pending members
     useEffect(() => {
         async function getData() {
@@ -119,7 +122,7 @@ function Requests() {
         }
         getData()
     }, []);
-    
+
     //after deletion remaining members fetching.
     const getRemMembers = () => {
         fetch(`https://mydreamcommittee.com/v1/users/pending`, {
@@ -242,7 +245,7 @@ function Requests() {
                                     <TableCell>Referral ID</TableCell>
                                     <TableCell>Image Link</TableCell>
                                     <TableCell></TableCell>
-                                    <TableCell>Delete</TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -265,11 +268,12 @@ function Requests() {
                                         >
                                             <b><u>Click to open image</u></b>
                                         </TableCell>
-                                        <TableCell><ApprovedBtn request={request} index={index}/></TableCell>
+                                        <TableCell><ApprovedBtn request={request} index={index} /></TableCell>
                                         <TableCell>
-                                            <IconButton aria-label="delete" onClick={() => { onDelete(request.id) }}>
+                                            <RejectBtn request={request} index={index} />
+                                            {/* <IconButton aria-label="delete" onClick={() => { onDelete(request.id) }}>
                                                 <DeleteIcon color='error' />
-                                            </IconButton>
+                                            </IconButton> */}
                                         </TableCell>
                                     </TableRow>
                                 ))}

@@ -16,6 +16,7 @@ import Members from '../pages/Members';
 import Winners from '../pages/Winners';
 import AddCommittee from '../pages/AddCommittee';
 import GoToDraw from '../pages/common/GoToDrawModal';
+import RejectedReq from '../pages/RejectedReq';
 
 const drawerWidth = 210;
 
@@ -97,10 +98,12 @@ export default function ClippedDrawer(props) {
                 return <Requests />
             case "Members":
                 return <Members />
+            case "Rejected":
+                return <RejectedReq />
             case "Winners":
                 return <Winners />
             case "Add_committee":
-                return <AddCommittee props={props.props}/>
+                return <AddCommittee props={props.props} />
             case "GoToDraw":
                 return <GoToDraw open={open} onClose={handleClose} props={props} />
             default:
@@ -144,6 +147,14 @@ export default function ClippedDrawer(props) {
                         </ListItem>
                     </List>
                     <List>
+                        <ListItem button onClick={e => setFragment("Rejected")}>
+                            <ListItemIcon>
+                                <Group />
+                            </ListItemIcon>
+                            <ListItemText primary="Rejected Requests" />
+                        </ListItem>
+                    </List>
+                    <List>
                         <ListItem button onClick={e => setFragment("Winners")}>
                             <ListItemIcon>
                                 <EmojiPeople />
@@ -170,27 +181,27 @@ export default function ClippedDrawer(props) {
                     <Divider />
                     <List>
                         <ListItem button onClick={() => {
-                            fetch(`https://mydreamcommittee.com/v1/logout/${userid}`,{
-                                method:'DELETE',
-                                headers:{
-                                    'Accept':'application/json',
-                                    'Content-Type':'application/json',
-                                    'Authorization' : acc_token,
+                            fetch(`https://mydreamcommittee.com/v1/logout/${userid}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json',
+                                    'Authorization': acc_token,
                                 },
                             })
-                            .then(res => res.json())
-                            .then(result => {
-                                if(result.statusCode === 200){
-                                    localStorage.removeItem('acc-token');
-                                    localStorage.removeItem('ref-token');
-                                    localStorage.removeItem('user-id');
-                                    props.props.push('/admin')
-                                }
-                                else {
-                                    return null;
-                                }
-                            })
-                            .catch(err => console.log(err))
+                                .then(res => res.json())
+                                .then(result => {
+                                    if (result.statusCode === 200) {
+                                        localStorage.removeItem('acc-token');
+                                        localStorage.removeItem('ref-token');
+                                        localStorage.removeItem('user-id');
+                                        props.props.push('/admin')
+                                    }
+                                    else {
+                                        return null;
+                                    }
+                                })
+                                .catch(err => console.log(err))
                         }}>
                             <ListItemIcon>
                                 <ExitToApp />
