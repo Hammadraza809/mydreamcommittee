@@ -6,6 +6,7 @@ import { Button, Select, Table, TableCell, TableBody, TableContainer, TableHead,
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from "@material-ui/core/Backdrop";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,8 +42,10 @@ function Members() {
     const classes = useStyles();
     const [committee, setCommittee] = useState([]);
     const [members, setMembers] = useState([]);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [backdrop, setBackdrop] = useState(true);
 
+    //getting committees for dropdown.
     useEffect(() => {
         async function getData() {
             fetch(`https://mydreamcommittee.com/v1/committees`, {
@@ -50,6 +53,9 @@ function Members() {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    Pragma: "no-cache",
+                    Expires: 0,
                 },
             })
                 .then(res => res.json())
@@ -67,6 +73,7 @@ function Members() {
         getData()
     }, []);
 
+    //fetching all approved members
     useEffect(() => {
         async function getData() {
             fetch(`https://mydreamcommittee.com/v1/users/approved`, {
@@ -74,15 +81,20 @@ function Members() {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    Pragma: "no-cache",
+                    Expires: 0,
                 },
             })
                 .then(res => res.json())
                 .then(result => {
                     setLoading(false)
                     setMembers(result.data.users)
+                    setBackdrop(false);
                 })
                 .catch(err => {
                     setLoading(false);
+                    setBackdrop(false);
                     alert("Connection timeout please reload the page to load content")
                     console.log(err);
                     return null;
@@ -90,23 +102,30 @@ function Members() {
         }
         getData()
     }, []);
-    
+
+    //fetching filtered approved members
     const getMembers = data => {
         setLoading(true)
+        setBackdrop(true);
         fetch(`https://mydreamcommittee.com/v1/controller/user.php?committee=${data}&status=approved`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                Pragma: "no-cache",
+                Expires: 0,
             },
         })
             .then(res => res.json())
             .then(result => {
                 setLoading(false)
                 setMembers(result.data.users)
+                setBackdrop(false);
             })
             .catch(err => {
                 setLoading(false);
+                setBackdrop(false);
                 alert("Connection timeout please reload the page to load content")
                 console.log(err);
                 return null;
@@ -216,6 +235,9 @@ function Members() {
                     </TableContainer>
                 </div>
             </div>
+            <Backdrop style={{ zIndex: 100 }} open={backdrop}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </div>
     )
 }

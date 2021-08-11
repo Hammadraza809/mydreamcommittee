@@ -292,10 +292,7 @@ function Requests() {
                         />
                       </TableCell>
                       <TableCell>
-                        <RejectBtn request={request} index={index} />
-                        {/* <IconButton aria-label="delete" onClick={() => { onDelete(request.id) }}>
-                                                <DeleteIcon color='error' />
-                                            </IconButton> */}
+                        <RejectBtn request={request} index={index} func={getRemainingPendMem} />
                       </TableCell>
                     </TableRow>
                   ))}

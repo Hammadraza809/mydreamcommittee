@@ -38,6 +38,7 @@ function ApprovedBtn(props) {
   const changeStatus = async () => {
     setLoading(true);
     await fetch(
+      //fetching all approved members for specific committee
       `https://mydreamcommittee.com/v1/controller/user.php?committee=${props.request.committee}&status=approved`,
       {
         method: "GET",
@@ -60,7 +61,7 @@ function ApprovedBtn(props) {
           membershipId: comp,
           status: "approved",
         };
-        console.log(props.request.id, "========", obj);
+        //updating the status of the selected member. 
         fetch(`https://mydreamcommittee.com/v1/users/${props.request.id}`, {
           method: "PATCH",
           headers: {
@@ -73,17 +74,16 @@ function ApprovedBtn(props) {
           .then((result) => {
             if (result.statusCode === 200) {
               setLoading(false);
-              setResponse(result.messages + " Refreh page.");
+              setResponse("User Approved.");
               setOpen(true);
             } else {
               setLoading(false);
-              setResponse("Error. User not updated.");
+              setResponse("Error. User not updated. Please try again.");
               setOpen(true);
             }
           })
           .catch((err) => {
             setLoading(false);
-            console.log(err);
             alert("Connect timeout. Please refresh the page to laod content.");
             return null;
           });

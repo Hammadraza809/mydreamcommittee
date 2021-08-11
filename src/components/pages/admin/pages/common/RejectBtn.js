@@ -30,13 +30,13 @@ function RejectBtn(props) {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [response, setResponse] = useState([null]);
-    const [request, setRequests] = useState(props.request);
 
     const handleClose = () => {
         setOpen(false);
-        setRequests(request);
+        props.func();
     };
 
+    //rejected status button
     const changeStatus = () => {
         setLoading(true);
         fetch(`https://mydreamcommittee.com/v1/users/${props.request.id}`, {
@@ -46,14 +46,14 @@ function RejectBtn(props) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                status: 'reject'
+                status: 'rejected'
             })
         })
             .then(res => res.json())
             .then(result => {
                 if (result.statusCode === 200) {
                     setLoading(false);
-                    setResponse(result.messages + " Refreh page.");
+                    setResponse("User Rejected.");
                     setOpen(true);
                 }
                 else {
