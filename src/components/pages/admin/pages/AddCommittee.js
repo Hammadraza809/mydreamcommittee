@@ -60,14 +60,35 @@ function AddCommittee(props) {
   const [backdrop, setBackdrop] = useState(true);
 
   //fetching all committees
+  const getAllCommittees = () => {
+    setBackdrop(true);
+    fetch(`https://mydreamcommittee.com/v1/committees`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        Pragma: "no-cache",
+        Expires: 0,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setLoading(false);
+        setCommittees(result.data.committees);
+        setBackdrop(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setBackdrop(false);
+        alert("Connection timeout please reload the page to load content");
+        console.log(err);
+        return null;
+      });
+  };
+
   useEffect(() => {
-    async function getData() {
-      const res = await fetch("https://mydreamcommittee.com/v1/committees");
-      const body = await res.json();
-      setCommittees(body.data.committees);
-      setBackdrop(false);
-    }
-    getData();
+    getAllCommittees();
   }, []);
 
   const updateCommittee = (value, id) => {
@@ -87,13 +108,14 @@ function AddCommittee(props) {
       .then((result) => {
         if (result.statusCode === 200) {
           setLoading(false);
-          setResponse(result.messages + " Please refresh page.");
           setBackdrop(false);
+          setResponse(result.messages);
+          getAllCommittees();
           setOpen(true);
         } else {
           setLoading(false);
-          setResponse("Error. Committee not updated.");
           setBackdrop(false);
+          setResponse("Error. Committee not updated.");
           setOpen(true);
         }
       })
@@ -129,9 +151,12 @@ function AddCommittee(props) {
       .then((result) => {
         if (result.statusCode === 201) {
           setLoading(false);
-          setCommittees(...committees, result.data.committees);
+          setCommittees((committees) => [
+            ...committees,
+            result.data.committees[0],
+          ]);
           setBackdrop(false);
-          setResponse(result.messages + " Please refresh page.");
+          setResponse(result.messages);
           setOpen(true);
         } else {
           setLoading(false);
@@ -163,6 +188,7 @@ function AddCommittee(props) {
           initialValues={{
             label: "",
             value: "",
+            members: "",
           }}
           validationSchema={validationSchema}
           onSubmit={(data, { setSubmitting, resetForm }) => {
@@ -172,7 +198,7 @@ function AddCommittee(props) {
             resetForm("");
           }}
         >
-          {({ errors, handleChange, values, isSubmitting, touched }) => (
+          {({ errors, isSubmitting }) => (
             <Form>
               <Row>
                 <Col className={classes.root}>
