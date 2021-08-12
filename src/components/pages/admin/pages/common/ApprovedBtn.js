@@ -29,9 +29,6 @@ function ApprovedBtn(props) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState([null]);
-  // let noOfMembers;
-
-  // const myPromise = new Promise((resolve, reject, data) => {});
 
   const getCommitteeMembers = (data) => {
     return new Promise((resolve, reject) => {
@@ -49,7 +46,6 @@ function ApprovedBtn(props) {
         .then((result) => {
           if (result.statusCode === 200) {
             const noOfMembers = result.data.Committees[0].members;
-            // console.log(noOfMembers);
             resolve(noOfMembers);
           } else {
             reject();
@@ -83,48 +79,53 @@ function ApprovedBtn(props) {
     )
       .then((res) => res.json())
       .then((result) => {
-        const id = result.data.users.length + 1;
         getCommitteeMembers(props.request.committee).then((members) => {
-          console.log(members);
-          if (members === result.data.users.length) {
-            console.log(members);
+          const member = parseInt(members);
+          if (member === result.data.users.length) {
             setLoading(false);
-            setResponse("error");
+            setResponse(
+              "Error. Cannot approve member. Members compeleted for this committee."
+            );
+            setOpen(true);
             return;
+          } else {
+            const id = result.data.users.length + 1;
+            const member = props.request.committee;
+            const comp = member + "-" + id;
+            const obj = {
+              membershipId: comp,
+              status: "approved",
+            };
+            //updating the status of the selected member.
+            fetch(`https://mydreamcommittee.com/v1/users/${props.request.id}`, {
+              method: "PATCH",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(obj),
+            })
+              .then((res) => res.json())
+              .then((result) => {
+                if (result.statusCode === 200) {
+                  setLoading(false);
+                  setResponse("User Approved.");
+                  setOpen(true);
+                } else {
+                  setLoading(false);
+                  setResponse("Error. User not updated. Please try again.");
+                  setOpen(true);
+                }
+              })
+              .catch((err) => {
+                setLoading(false);
+                alert(
+                  "Connect timeout. Please refresh the page to laod content."
+                );
+                return null;
+              });
           }
         });
-        const member = props.request.committee;
-        const comp = member + "-" + id;
-        const obj = {
-          membershipId: comp,
-          status: "approved",
-        };
-        //updating the status of the selected member.
-        fetch(`https://mydreamcommittee.com/v1/users/${props.request.id}`, {
-          method: "PATCH",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(obj),
-        })
-          .then((res) => res.json())
-          .then((result) => {
-            if (result.statusCode === 200) {
-              setLoading(false);
-              setResponse("User Approved.");
-              setOpen(true);
-            } else {
-              setLoading(false);
-              setResponse("Error. User not updated. Please try again.");
-              setOpen(true);
-            }
-          })
-          .catch((err) => {
-            setLoading(false);
-            alert("Connect timeout. Please refresh the page to laod content.");
-            return null;
-          });
       })
       .catch((err) => console.log(err));
   };
