@@ -29,6 +29,36 @@ function ApprovedBtn(props) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState([null]);
+  // let noOfMembers;
+
+  // const myPromise = new Promise((resolve, reject, data) => {});
+
+  const getCommitteeMembers = (data) => {
+    return new Promise((resolve, reject) => {
+      fetch(`https://mydreamcommittee.com/v1/committees/${data}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: 0,
+        },
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          if (result.statusCode === 200) {
+            const noOfMembers = result.data.Committees[0].members;
+            // console.log(noOfMembers);
+            resolve(noOfMembers);
+          } else {
+            reject();
+            return;
+          }
+        })
+        .catch((err) => console.log(err));
+    });
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -53,15 +83,23 @@ function ApprovedBtn(props) {
     )
       .then((res) => res.json())
       .then((result) => {
-        console.log(result.data.users.length);
         const id = result.data.users.length + 1;
+        getCommitteeMembers(props.request.committee).then((members) => {
+          console.log(members);
+          if (members === result.data.users.length) {
+            console.log(members);
+            setLoading(false);
+            setResponse("error");
+            return;
+          }
+        });
         const member = props.request.committee;
         const comp = member + "-" + id;
         const obj = {
           membershipId: comp,
           status: "approved",
         };
-        //updating the status of the selected member. 
+        //updating the status of the selected member.
         fetch(`https://mydreamcommittee.com/v1/users/${props.request.id}`, {
           method: "PATCH",
           headers: {
