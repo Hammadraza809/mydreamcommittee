@@ -3,10 +3,10 @@ import {
   makeStyles,
   Modal,
   Backdrop,
-  Fade,
   Button,
   TextField,
   CircularProgress,
+  Slide,
 } from "@material-ui/core";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
@@ -41,9 +41,13 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: "1px solid grey",
+    border: "4px solid rgb(252, 143, 0)",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    width: "65%",
+    height: "90%",
+    overflow: "auto",
+    borderRadius: "5px",
   },
 }));
 
@@ -152,12 +156,20 @@ function EditRecordModal(props) {
         timeout: 500,
       }}
     >
-      <Fade in={props.open}>
+      <Slide direction="down" in={props.open}>
         <div className={classes.paper}>
           <Container>
             <div className="rForm">
               <div>
-                <h4>Update Member</h4>
+                <h4
+                  style={{
+                    textAlign: "center",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Update Member
+                </h4>
+                <hr style={{ backgroundColor: "rgb(252, 143, 0)" }} />
               </div>
               <Formik
                 enableReinitialize
@@ -169,7 +181,7 @@ function EditRecordModal(props) {
                   setSubmitting(false);
                 }}
               >
-                {({ errors, isSubmitting, setFieldValue }) => (
+                {({ isSubmitting }) => (
                   <Form>
                     <Row className="firstRow">
                       <Col
@@ -344,7 +356,7 @@ function EditRecordModal(props) {
           </Container>
           <ShowModal open={open} onClose={handleClose} res={response} />
         </div>
-      </Fade>
+      </Slide>
     </Modal>
   );
 }

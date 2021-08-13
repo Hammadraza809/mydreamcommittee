@@ -236,7 +236,7 @@ function Members() {
                   <TableCell>City</TableCell>
                   <TableCell>Committee</TableCell>
                   <TableCell>Membership Id</TableCell>
-                  <TableCell>Refrence Id</TableCell>
+                  <TableCell>Referral Id</TableCell>
                   <TableCell>Edit Record</TableCell>
                 </TableRow>
               </TableHead>
