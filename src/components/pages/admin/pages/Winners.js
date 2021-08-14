@@ -11,18 +11,41 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Paper,
+  withStyles,
 } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Backdrop from "@material-ui/core/Backdrop";
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+    padding: 5,
+  },
+  body: {
+    fontSize: 14,
+    padding: 5,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
+    display: "block",
     "& > *": {
-      margin: theme.spacing(0),
-      width: "100%",
+      margin: theme.spacing(0.5),
+      width: "60%",
     },
     flexGrow: 1,
   },
@@ -132,11 +155,10 @@ function Winners() {
 
   return (
     <div className="main">
-      <div>
-        <h1>
+      <div style={{ textAlign: "center" }}>
+        <h2>
           <u>Winners</u>
-        </h1>
-        <hr />
+        </h2>
       </div>
       <div className="filter">
         <Formik
@@ -147,13 +169,15 @@ function Winners() {
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
             getMembers(data.committee);
+            setSubmitting(false);
           }}
         >
-          {({ errors, isSubmitting, values, handleChange }) => (
+          {() => (
             <Form>
               <Row>
-                <Col className={classes.root}>
+                <Col xs={12} sm={12} md={6} lg={6} className={classes.root}>
                   <label>Select Committee:</label>
+                  <br />
                   <Field as={Select} name="committee" variant="outlined" native>
                     <option>Please Select Committee</option>
                     {committee.map((item) => {
@@ -164,15 +188,12 @@ function Winners() {
                       );
                     })}
                   </Field>
-                </Col>
-                <Col className={classes.root}>
                   <Button
                     style={{
                       color: "white",
                       backgroundColor: "rgb(252, 143, 0)",
-                      margin: "24px 0 0 0",
-                      padding: "10px 10px",
-                      width: "20%",
+                      padding: "10px 15px",
+                      width: "80px",
                     }}
                     variant="contained"
                     type="submit"
@@ -201,34 +222,38 @@ function Winners() {
       </div>
       <div className="results">
         <div className="rTable">
-          <TableContainer>
-            <Table className={classes.table} aria-label="simple table">
+          <TableContainer component={Paper}>
+            <Table
+              className={classes.table}
+              aria-label="simple table"
+              size="small"
+            >
               <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>CNIC</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Mobile No</TableCell>
-                  <TableCell>Address</TableCell>
-                  <TableCell>City</TableCell>
-                  <TableCell>Committee</TableCell>
-                  <TableCell>Membership Id</TableCell>
-                  <TableCell>Referral ID</TableCell>
-                </TableRow>
+                <StyledTableRow>
+                  <StyledTableCell>Name</StyledTableCell>
+                  <StyledTableCell>CNIC</StyledTableCell>
+                  <StyledTableCell>Email</StyledTableCell>
+                  <StyledTableCell>Mobile No</StyledTableCell>
+                  <StyledTableCell>Address</StyledTableCell>
+                  <StyledTableCell>City</StyledTableCell>
+                  <StyledTableCell>Committee</StyledTableCell>
+                  <StyledTableCell>Membership Id</StyledTableCell>
+                  <StyledTableCell>Referral ID</StyledTableCell>
+                </StyledTableRow>
               </TableHead>
               <TableBody>
                 {members.map((member) => (
-                  <TableRow key={member.id}>
-                    <TableCell>{member.name}</TableCell>
-                    <TableCell>{member.cnic}</TableCell>
-                    <TableCell>{member.email}</TableCell>
-                    <TableCell>{member.mobileno}</TableCell>
-                    <TableCell>{member.address}</TableCell>
-                    <TableCell>{member.city}</TableCell>
-                    <TableCell>{member.committee}</TableCell>
-                    <TableCell>{member.membershipId}</TableCell>
-                    <TableCell>{member.refrenceId}</TableCell>
-                  </TableRow>
+                  <StyledTableRow key={member.id}>
+                    <StyledTableCell>{member.name}</StyledTableCell>
+                    <StyledTableCell>{member.cnic}</StyledTableCell>
+                    <StyledTableCell>{member.email}</StyledTableCell>
+                    <StyledTableCell>{member.mobileno}</StyledTableCell>
+                    <StyledTableCell>{member.address}</StyledTableCell>
+                    <StyledTableCell>{member.city}</StyledTableCell>
+                    <StyledTableCell>{member.committee}</StyledTableCell>
+                    <StyledTableCell>{member.membershipId}</StyledTableCell>
+                    <StyledTableCell>{member.refrenceId}</StyledTableCell>
+                  </StyledTableRow>
                 ))}
               </TableBody>
             </Table>

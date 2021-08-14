@@ -15,9 +15,31 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Paper,
+  withStyles,
 } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ShowModal from "../pages/common/ShowModel";
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+    padding: 5,
+  },
+  body: {
+    fontSize: 14,
+    padding: 5,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -177,11 +199,10 @@ function AddCommittee(props) {
   };
   return (
     <div>
-      <div>
-        <h1>
-          <u>Add Committees</u>
-        </h1>
-        <hr />
+      <div style={{ textAlign: "center" }}>
+        <h2>
+          <u>Add New Committees</u>
+        </h2>
       </div>
       <div>
         <Formik
@@ -270,27 +291,31 @@ function AddCommittee(props) {
       </div>
       <hr />
       <div>
-        <TableContainer>
-          <Table className={classes.table} aria-label="simple table">
+        <TableContainer component={Paper}>
+          <Table
+            className={classes.table}
+            aria-label="simple table"
+            size="small"
+          >
             <TableHead>
-              <TableRow>
-                <TableCell>Committee Name</TableCell>
-                <TableCell>Committee Code</TableCell>
-                <TableCell>No of Members</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Change Status</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
+              <StyledTableRow>
+                <StyledTableCell>Committee Name</StyledTableCell>
+                <StyledTableCell>Committee Code</StyledTableCell>
+                <StyledTableCell>No of Members</StyledTableCell>
+                <StyledTableCell>Status</StyledTableCell>
+                <StyledTableCell>Change Status</StyledTableCell>
+                <StyledTableCell></StyledTableCell>
+              </StyledTableRow>
             </TableHead>
             <TableBody>
               {committees &&
                 committees.map((committee) => (
-                  <TableRow key={committee.id}>
-                    <TableCell>{committee.label}</TableCell>
-                    <TableCell>{committee.value}</TableCell>
-                    <TableCell>{committee.members}</TableCell>
-                    <TableCell>{committee.status}</TableCell>
-                    <TableCell>
+                  <StyledTableRow key={committee.id}>
+                    <StyledTableCell>{committee.label}</StyledTableCell>
+                    <StyledTableCell>{committee.value}</StyledTableCell>
+                    <StyledTableCell>{committee.members}</StyledTableCell>
+                    <StyledTableCell>{committee.status}</StyledTableCell>
+                    <StyledTableCell>
                       {
                         <select
                           id="dropdown"
@@ -303,8 +328,8 @@ function AddCommittee(props) {
                           <option value="close">close</option>
                         </select>
                       }
-                    </TableCell>
-                    <TableCell>
+                    </StyledTableCell>
+                    <StyledTableCell>
                       {
                         <Button
                           className="btn"
@@ -336,8 +361,8 @@ function AddCommittee(props) {
                           )}
                         </Button>
                       }
-                    </TableCell>
-                  </TableRow>
+                    </StyledTableCell>
+                  </StyledTableRow>
                 ))}
             </TableBody>
           </Table>

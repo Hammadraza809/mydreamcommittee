@@ -25,7 +25,7 @@ import AddCommittee from "../pages/AddCommittee";
 import GoToDraw from "../pages/common/GoToDrawModal";
 import RejectedReq from "../pages/RejectedReq";
 
-const drawerWidth = 210;
+const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
   },
 }));
 

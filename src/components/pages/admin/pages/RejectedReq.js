@@ -9,6 +9,8 @@ import {
   TableHead,
   TableRow,
   makeStyles,
+  Paper,
+  withStyles,
 } from "@material-ui/core";
 import ApprovedBtn from "./common/ApprovedBtn";
 import { Formik, Form, Field } from "formik";
@@ -17,12 +19,33 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Row, Col } from "react-bootstrap";
 import Backdrop from "@material-ui/core/Backdrop";
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+    padding: 5,
+  },
+  body: {
+    fontSize: 14,
+    padding: 5,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
+    display: "block",
     "& > *": {
-      margin: theme.spacing(0),
-      width: "100%",
+      margin: theme.spacing(0.5),
+      width: "60%",
     },
     flexGrow: 1,
   },
@@ -173,11 +196,10 @@ function Requests() {
   };
   return (
     <div>
-      <div>
-        <h1>
+      <div style={{ textAlign: "center" }}>
+        <h2>
           <u>Rejected Requests</u>
-        </h1>
-        <hr />
+        </h2>
       </div>
       <div className="filter">
         <Formik
@@ -190,11 +212,12 @@ function Requests() {
             getMembers(data.committee);
           }}
         >
-          {({ errors, isSubmitting, values, handleChange }) => (
+          {() => (
             <Form>
               <Row>
-                <Col className={classes.root}>
+                <Col xs={12} sm={12} md={6} lg={6} className={classes.root}>
                   <label>Select Committee:</label>
+                  <br />
                   <Field as={Select} name="committee" variant="outlined" native>
                     <option>Please Select Committee</option>
                     {committee.map((item) => {
@@ -205,15 +228,12 @@ function Requests() {
                       );
                     })}
                   </Field>
-                </Col>
-                <Col className={classes.root}>
                   <Button
                     style={{
                       color: "white",
                       backgroundColor: "rgb(252, 143, 0)",
-                      margin: "24px 10px 0 0",
-                      padding: "10px 10px",
-                      width: "20%",
+                      padding: "10px 15px",
+                      width: "80px",
                     }}
                     variant="contained"
                     type="submit"
@@ -242,38 +262,41 @@ function Requests() {
       </div>
       <div className="results">
         <div className="rTable">
-          <TableContainer>
-            <Table className={classes.table} aria-label="simple table">
+          <TableContainer component={Paper}>
+            <Table
+              className={classes.table}
+              aria-label="simple table"
+              size="small"
+            >
               <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>CNIC</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Mobile No</TableCell>
-                  <TableCell>Address</TableCell>
-                  <TableCell>City</TableCell>
-                  <TableCell>Committee</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Referral ID</TableCell>
-                  <TableCell>Image Link</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
+                <StyledTableRow>
+                  <StyledTableCell>Name</StyledTableCell>
+                  <StyledTableCell>CNIC</StyledTableCell>
+                  <StyledTableCell>Email</StyledTableCell>
+                  <StyledTableCell>Mobile No</StyledTableCell>
+                  <StyledTableCell>Address</StyledTableCell>
+                  <StyledTableCell>City</StyledTableCell>
+                  <StyledTableCell>Committee</StyledTableCell>
+                  <StyledTableCell>Status</StyledTableCell>
+                  <StyledTableCell>Referral ID</StyledTableCell>
+                  <StyledTableCell>Image Link</StyledTableCell>
+                  <StyledTableCell></StyledTableCell>
+                </StyledTableRow>
               </TableHead>
               <TableBody>
                 {requests &&
                   requests.map((request, index) => (
-                    <TableRow key={request.id}>
-                      <TableCell>{request.name}</TableCell>
-                      <TableCell>{request.cnic}</TableCell>
-                      <TableCell>{request.email}</TableCell>
-                      <TableCell>{request.mobileno}</TableCell>
-                      <TableCell>{request.address}</TableCell>
-                      <TableCell>{request.city}</TableCell>
-                      <TableCell>{request.committee}</TableCell>
-                      <TableCell>{request.status}</TableCell>
-                      <TableCell>{request.refrenceId}</TableCell>
-                      <TableCell
+                    <StyledTableRow key={request.id}>
+                      <StyledTableCell>{request.name}</StyledTableCell>
+                      <StyledTableCell>{request.cnic}</StyledTableCell>
+                      <StyledTableCell>{request.email}</StyledTableCell>
+                      <StyledTableCell>{request.mobileno}</StyledTableCell>
+                      <StyledTableCell>{request.address}</StyledTableCell>
+                      <StyledTableCell>{request.city}</StyledTableCell>
+                      <StyledTableCell>{request.committee}</StyledTableCell>
+                      <StyledTableCell>{request.status}</StyledTableCell>
+                      <StyledTableCell>{request.refrenceId}</StyledTableCell>
+                      <StyledTableCell
                         component="a"
                         href={request.images[0].imageurl}
                         target="_blank"
@@ -282,16 +305,15 @@ function Requests() {
                         <b>
                           <u>Click to open image</u>
                         </b>
-                      </TableCell>
-                      <TableCell>
+                      </StyledTableCell>
+                      <StyledTableCell>
                         <ApprovedBtn
                           request={request}
                           index={index}
                           func={getRemainingRejectMem}
                         />
-                      </TableCell>
-                      <TableCell></TableCell>
-                    </TableRow>
+                      </StyledTableCell>
+                    </StyledTableRow>
                   ))}
               </TableBody>
             </Table>
