@@ -11,6 +11,7 @@ import {
   makeStyles,
   Paper,
   withStyles,
+  TextField,
 } from "@material-ui/core";
 import ApprovedBtn from "./common/ApprovedBtn";
 import { Formik, Form, Field } from "formik";
@@ -194,9 +195,14 @@ function Requests() {
         return null;
       });
   };
+
+  const onSearch = (value) => {
+    console.log(value.header, value.value);
+  };
+
   return (
     <div>
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center", marginBottom: "15px" }}>
         <h2>
           <u>Rejected Requests</u>
         </h2>
@@ -212,7 +218,7 @@ function Requests() {
             getMembers(data.committee);
           }}
         >
-          {() => (
+          {(props) => (
             <Form>
               <Row>
                 <Col xs={12} sm={12} md={6} lg={6} className={classes.root}>
@@ -252,6 +258,56 @@ function Requests() {
                       />
                     ) : (
                       "Filter"
+                    )}
+                  </Button>
+                </Col>
+                <Col xs={12} sm={12} md={6} lg={6} className={classes.root}>
+                  <label>Search By:</label>
+                  <br />
+                  <Field
+                    style={{ width: "40%" }}
+                    as={Select}
+                    name="header"
+                    variant="outlined"
+                    native
+                  >
+                    <option>Search by</option>
+                    <option value="cnic">CNIC</option>
+                    <option value="mobileNo">Mobile No</option>
+                    <option value="membershipId">Memberhip Id</option>
+                    <option value="refrenceId">Referral Id</option>
+                  </Field>
+                  <Field
+                    as={TextField}
+                    style={{ width: "40%" }}
+                    variant="outlined"
+                    name="value"
+                    placeholder="Enter Value"
+                  ></Field>
+                  <Button
+                    style={{
+                      color: "white",
+                      backgroundColor: "rgb(252, 143, 0)",
+                      padding: "10px 15px",
+                      width: "80px",
+                    }}
+                    variant="contained"
+                    onClick={() => onSearch(props.values)}
+                  >
+                    {loading ? (
+                      <CircularProgress
+                        variant="indeterminate"
+                        disableShrink
+                        className={classes.bottom}
+                        classes={{
+                          circle: classes.circle,
+                        }}
+                        size={30}
+                        thickness={4}
+                        value={100}
+                      />
+                    ) : (
+                      "Search"
                     )}
                   </Button>
                 </Col>
