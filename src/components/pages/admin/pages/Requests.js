@@ -263,7 +263,7 @@ function Requests() {
                     )}
                   </Button>
                 </Col>
-                <Col xs={12} sm={12} md={6} lg={6} className={classes.root}>
+                {/* <Col xs={12} sm={12} md={6} lg={6} className={classes.root}>
                   <label>Search By:</label>
                   <br />
                   <Field
@@ -312,7 +312,7 @@ function Requests() {
                       "Search"
                     )}
                   </Button>
-                </Col>
+                </Col> */}
               </Row>
             </Form>
           )}

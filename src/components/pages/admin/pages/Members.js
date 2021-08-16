@@ -183,7 +183,7 @@ function Members() {
 
   return (
     <div className="main">
-      <div style={{ textAlign: "center", marginBottom: "15px"  }}>
+      <div style={{ textAlign: "center", marginBottom: "15px" }}>
         <h2>
           <u>All Members</u>
         </h2>
@@ -242,7 +242,7 @@ function Members() {
                     )}
                   </Button>
                 </Col>
-                <Col xs={12} sm={12} md={6} lg={6} className={classes.root}>
+                {/* <Col xs={12} sm={12} md={6} lg={6} className={classes.root}>
                   <label>Search By:</label>
                   <br />
                   <Field
@@ -291,7 +291,7 @@ function Members() {
                       "Search"
                     )}
                   </Button>
-                </Col>
+                </Col> */}
               </Row>
             </Form>
           )}
