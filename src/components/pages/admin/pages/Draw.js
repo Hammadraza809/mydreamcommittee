@@ -3,7 +3,7 @@ import TextLoop from "react-text-loop";
 import "./Draw.css";
 import { Button, Row, Col } from "react-bootstrap";
 import ShowPassModal from "../pages/common/ShowPassModel";
-import logo from "../../../../assets/images/logo.png";
+import cardrawbg from "../../../../assets/images/cardrawbg.jpg";
 
 class App extends Component {
   constructor(props) {
@@ -25,7 +25,6 @@ class App extends Component {
       showResult: false,
       disableDrawButton: false,
       value: "",
-      //   placeholder: "Please enter the draw items here. One item per line.",
       valid: false,
       touched: false,
       showConfirm: false,
@@ -169,74 +168,78 @@ class App extends Component {
     });
 
     return (
-      <div location={this.props.history} className="mainn">
-        <div className="logo">
-          <img
-            src={logo}
-            style={{ width: "200px", margin: "10px" }}
-            alt="logo"
-          />
-        </div>
-        <div className="texxt">Welcome to My Dream Committee Lucky Draw..</div>
-        <hr />
-        {items.length !== 0 && (
-          <div className="draw-block">
-            <Row>
-              <Col md={12} sm={12}>
-                <div className="draw-section">
-                  {showResult && items && (
-                    <TextLoop
-                      className="draw-text"
-                      interval={100}
-                      springConfig={{ stiffness: 250, damping: 10 }}
-                      children={newItems}
-                    />
-                  )}
-                  {!showResult && result}
-                </div>
+      <div
+        location={this.props.history}
+        className="mainn"
+        style={{
+          height: "753px",
+          backgroundImage: `url(${cardrawbg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "100% 100%",
+          backgroundPosition: "center",
+          display: "flex",
+          alignContent: "center",
+        }}
+      >
+        <div className="center-main">
+          {items.length !== 0 && (
+            <div className="draw-block">
+              <Row>
+                <Col md={12} sm={12}>
+                  <div className="draw-section">
+                    {showResult && items && (
+                      <TextLoop
+                        className="draw-text"
+                        interval={100}
+                        springConfig={{ stiffness: 250, damping: 10 }}
+                        children={newItems}
+                      />
+                    )}
+                    {!showResult && result}
+                  </div>
+                  <Row>
+                    <Col md={12} sm={12}>
+                      <Button
+                        style={{
+                          color: "white",
+                          backgroundColor: "rgb(252, 143, 0)",
+                          padding: "10px",
+                          width: "500px",
+                          border: "none",
+                        }}
+                        pill
+                        name="drawButton"
+                        onClick={this.randomDrawItem}
+                        disabled={disableDrawButton || currentItems.length <= 1}
+                      >
+                        {disableDrawButton ? "Drawing..." : "Draw"}
+                      </Button>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+              <br />
+              <br />
+              {showConfirm && (
                 <Row>
                   <Col md={12} sm={12}>
                     <Button
                       style={{
                         color: "white",
-                        backgroundColor: "rgb(252, 143, 0)",
+                        backgroundColor: "none",
                         padding: "10px",
-                        width: "800px",
-                        border: "none",
+                        width: "200px",
                       }}
-                      pill
-                      name="drawButton"
-                      onClick={this.randomDrawItem}
-                      disabled={disableDrawButton || currentItems.length <= 1}
+                      onClick={this.showModal}
                     >
-                      {disableDrawButton ? "Drawing..." : "Draw"}
+                      Confirm
                     </Button>
                   </Col>
                 </Row>
-              </Col>
-            </Row>
-            <br />
-            <br />
-            {showConfirm && (
-              <Row>
-                <Col md={12} sm={12}>
-                  <Button
-                    style={{
-                      color: "white",
-                      backgroundColor: "rgb(252, 143, 0)",
-                      padding: "10px",
-                      width: "200px",
-                      border: "none",
-                    }}
-                    onClick={this.showModal}
-                  >
-                    Confirm
-                  </Button>
-                </Col>
-              </Row>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
         {showConfirm && (
           <ShowPassModal
             ref={(target) => (this.showConfirmModal = target)}
