@@ -15,7 +15,6 @@ import {
   Backdrop,
   Paper,
   withStyles,
-  TextField,
 } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -175,10 +174,6 @@ function Members() {
         console.log(err);
         return null;
       });
-  };
-
-  const onSearch = (value) => {
-    console.log(value.header, value.value);
   };
 
   return (

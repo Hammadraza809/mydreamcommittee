@@ -114,6 +114,10 @@ function EditRecordModal(props) {
   //on update button click
   const onUpdate = (data) => {
     const obj = {
+      name: data.name,
+      cnic: data.cnic,
+      email: data.email,
+      mobileNo: data.mobileNo,
       address: data.address,
       city: data.cityName,
       membershipId: data.membershipId,
@@ -193,11 +197,7 @@ function EditRecordModal(props) {
                       >
                         <label>Name:</label>
                         <br />
-                        <MyTextField
-                          placeholder="Full Name"
-                          name="fullName"
-                          disabled
-                        />
+                        <MyTextField placeholder="Full Name" name="fullName" />
                       </Col>
                       <Col
                         xs={12}
@@ -208,7 +208,7 @@ function EditRecordModal(props) {
                       >
                         <label>CNIC:</label>
                         <br />
-                        <MyTextField placeholder="CNIC" name="cnic" disabled />
+                        <MyTextField placeholder="CNIC" name="cnic" />
                       </Col>
                     </Row>
                     <Row className="firstRow">
@@ -221,11 +221,7 @@ function EditRecordModal(props) {
                       >
                         <label>Email:</label>
                         <br />
-                        <MyTextField
-                          placeholder="Email"
-                          name="email"
-                          disabled
-                        />
+                        <MyTextField placeholder="Email" name="email" />
                       </Col>
                       <Col
                         xs={12}
@@ -236,11 +232,7 @@ function EditRecordModal(props) {
                       >
                         <label>Mobile No:</label>
                         <br />
-                        <MyTextField
-                          placeholder="Mobile No"
-                          name="mobileNo"
-                          disabled
-                        />
+                        <MyTextField placeholder="Mobile No" name="mobileNo" />
                       </Col>
                     </Row>
                     <Row className="firstRow">
