@@ -11,7 +11,6 @@ import {
   makeStyles,
   Paper,
   withStyles,
-  TextField,
 } from "@material-ui/core";
 import ApprovedBtn from "./common/ApprovedBtn";
 import { Formik, Form, Field } from "formik";
@@ -195,10 +194,6 @@ function Requests() {
         console.log(err);
         return null;
       });
-  };
-
-  const onSearch = (value) => {
-    console.log(value.header, value.value);
   };
 
   return (

@@ -79,7 +79,7 @@ const MyTextField = ({
 const validationSchema = Yup.object({
   fullName: Yup.string().required("Name is required"),
   cnic: Yup.string().required("CNIC number is required"),
-  email: Yup.string.required("Email/Father name is required"),
+  email: Yup.string().required("Email/Father name is required"),
   mobileNo: Yup.string().required("Mobile no is required"),
   address: Yup.string().required("House address is required."),
   cityName: Yup.string().required("City Name is required."),

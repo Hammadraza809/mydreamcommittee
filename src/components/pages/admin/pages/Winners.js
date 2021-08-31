@@ -13,7 +13,6 @@ import {
   TableRow,
   Paper,
   withStyles,
-  TextField,
 } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -152,10 +151,6 @@ function Winners() {
         alert("Connection timeout please reload the page to load content");
         return null;
       });
-  };
-
-  const onSearch = (value) => {
-    console.log(value.header, value.value);
   };
 
   return (
