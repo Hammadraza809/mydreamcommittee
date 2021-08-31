@@ -77,6 +77,10 @@ const MyTextField = ({
 };
 
 const validationSchema = Yup.object({
+  fullName: Yup.string().required("Name is required"),
+  cnic: Yup.string().required("CNIC number is required"),
+  email: Yup.string.required("Email/Father name is required"),
+  mobileNo: Yup.string().required("Mobile no is required"),
   address: Yup.string().required("House address is required."),
   cityName: Yup.string().required("City Name is required."),
   refrenceId: Yup.string().max(8, "Refferal ID must contains 8 characters."),
@@ -219,7 +223,7 @@ function EditRecordModal(props) {
                         lg={6}
                         className={`coll ${classes.root}`}
                       >
-                        <label>Email:</label>
+                        <label>Email/Father Name:</label>
                         <br />
                         <MyTextField placeholder="Email" name="email" />
                       </Col>
