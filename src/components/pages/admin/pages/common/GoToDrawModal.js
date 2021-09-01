@@ -50,8 +50,16 @@ function Model(props) {
     getData();
   }, []);
   const handleClose = (data) => {
-    setLoading(false);
-    props.props.props.push(`/draw/${data}`);
+    if (data === "DCC") {
+      setLoading(false);
+      props.props.props.push(`/draw/${data}`);
+    } else if (data === "DTC") {
+      setLoading(false);
+      props.props.props.push(`/tractordraw/${data}`);
+    } else if (data === "DCC2") {
+      setLoading(false);
+      props.props.props.push(`/car2draw/${data}`);
+    }
   };
 
   const closeModal = () => {

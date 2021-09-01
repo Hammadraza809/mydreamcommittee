@@ -69,6 +69,19 @@ const validationSchema = Yup.object({
   label: Yup.string().required("Name is required."),
   value: Yup.string().required("Value is required."),
   members: Yup.string().required("No of Members required."),
+  // photo: Yup.mixed()
+  //   .required("Please upload backgrounf image for draw")
+  //   .test("fileSize", "The file is too large. Max size is 5mb.", (value) => {
+  //     return value && value.size <= 5000000;
+  //   })
+  //   .test("fileType", "Image should be jpg/png/jpeg format", (value) => {
+  //     return (
+  //       value &&
+  //       (value.type === "image/png" ||
+  //         value.type === "image/jpg" ||
+  //         value.type === "image/jpeg")
+  //     );
+  //   }),
 });
 
 function AddCommittee(props) {
@@ -171,7 +184,47 @@ function AddCommittee(props) {
     })
       .then((res) => res.json())
       .then((result) => {
+        console.log(result);
         if (result.statusCode === 201) {
+          //   //For image
+          //   const id = result.data.committees[0].id;
+          //   const value = result.data.committees[0].value;
+          //   let formdata = new FormData();
+          //   formdata.append(
+          //     "attributes",
+          //     JSON.stringify({
+          //       title: `image-${id}`,
+          //       filename: `${value}`,
+          //     })
+          //   );
+          //   formdata.append("imagefile", data.photo);
+          //   fetch(
+          //     `https://mydreamcommittee.com/v1/committeeimage/${id}/committeeImages`,
+          //     {
+          //       method: "POST",
+          //       body: formdata,
+          //     }
+          //   )
+          //     .then((res) => res.json())
+          //     .then((result) => {
+          //       if (result.statusCode === 201) {
+          //         console.log(result);
+          //         setLoading(false);
+          //         setCommittees((committees) => [
+          //           ...committees,
+          //           result.data.committees[0],
+          //         ]);
+          //         setBackdrop(false);
+          //         setResponse(result.messages);
+          //         setOpen(true);
+          //       } else {
+          //         setLoading(false);
+          //         setResponse("Unsuccessfull. Please try again latter.");
+          //         setOpen(true);
+          //         setBackdrop(false);
+          //       }
+          //     })
+          //     .catch((err) => console.log(err));
           setLoading(false);
           setCommittees((committees) => [
             ...committees,
@@ -210,6 +263,7 @@ function AddCommittee(props) {
             label: "",
             value: "",
             members: "",
+            photo: "",
           }}
           validationSchema={validationSchema}
           onSubmit={(data, { setSubmitting, resetForm }) => {
@@ -219,7 +273,7 @@ function AddCommittee(props) {
             resetForm("");
           }}
         >
-          {({ errors, isSubmitting }) => (
+          {({ errors, isSubmitting, setFieldValue }) => (
             <Form>
               <Row>
                 <Col className={classes.root}>
@@ -252,6 +306,22 @@ function AddCommittee(props) {
                   />
                   {errors.members}
                 </Col>
+                {/* <Col className={`coll ${classes.root}`}>
+                  <label>Upload picture of Draw Background:</label>
+                  <br />
+                  <input
+                    type="file"
+                    name="photo"
+                    onChange={(e) => {
+                      setFieldValue("photo", e.target.files[0]);
+                    }}
+                  />
+                  {
+                    <div style={{ color: "red" }}>
+                      <small>{errors.photo}</small>
+                    </div>
+                  }
+                </Col> */}
               </Row>
               <Row className="btnRoww">
                 <Button

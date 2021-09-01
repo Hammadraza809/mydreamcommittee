@@ -9,6 +9,8 @@ import Admin from './components/pages/admin/login/Index';
 import AdminDashboard from './components/pages/admin/dashboard/Index';
 import Requests from './components/pages/admin/pages/Requests';
 import Draw from './components/pages/admin/pages/Draw';
+import Car2Draw from './components/pages/admin/pages/Car2Draw';
+import TractorDraw from './components/pages/admin/pages/TractorDraw';
 import Restricted from './components/pages/admin/pages/common/Restricted';
 import Expired from './components/pages/admin/pages/common/Expired';
 import CustomWinner from './components/pages/admin/pages/CustomWinner';
@@ -28,6 +30,8 @@ function App() {
       <Route exact path="/dashboard" component={AdminDashboard} />
       <Route exact path="/requests" component={Requests} />
       <Route exact path="/draw/:data" component={Draw} />
+      <Route exact path="/car2draw/:data" component={Car2Draw} />
+      <Route exact path="/tractordraw/:data" component={TractorDraw} />
       <Route exact path="/customwinner" component={CustomWinner} />
       <Route exact path="/restricted" component={Restricted} />
       <Route exact path="/expired" component={Expired} />
