@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import "./Content.css";
-import Slider1 from '../../../../assets/images/slider1.jpg';
+import Slider1 from '../../../../assets/images/slider1.png';
 import youtube from '../../../../assets/images/youtube.png';
 import Button from '@material-ui/core/Button';
 
@@ -45,14 +45,14 @@ class Main extends Component {
                                 A Dream Car Committee has been started for friends with a total duration of 20 Months.
                                 Members will be given a car every month through a lottery.</p>
 
-                                To be a member of this committee, the amount of PKR 615,000 needs to be submitted. <br />
+                                To be a member of this committee, the amount of PKR 850,000 needs to be submitted. <br />
                                 Each member will get his own car every month. <br />
                                 The total value of the car will be approx Rs 17 to 18 lakh <br />
                                 The car will be delivered within one to two weeks of being named in the lottery <br />
                                 The car will be on the company's open letter <br />
                                 Tax and documentation cost will be on the member. <br />
                                 In addition, car is free to use <br />
-                                15,000 PKR will be taken in the form of booking, confirmation and registration and car registration form will be issued after receiving 600,000 PKR. <br />
+                                50,000 PKR will be taken in the form of booking, confirmation and registration and car registration form will be issued after receiving 850,000 PKR. <br />
                                 All the accounts will be processed by 15 March. <br />
                                 This system will be formally launched on 15 April. <br />
                                 First car will be given to the winner of the lucky draw take place from 1st to 5th May. <br />

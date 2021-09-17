@@ -6,7 +6,7 @@ import youtube from '../../../../assets/images/youtube.png';
 import Button from '@material-ui/core/Button';
 import TractorTitle from '../../../../assets/images/tractortitle.jpeg';
 import TractorDetails from '../../../../assets/images/tractordetails.jpeg';
-import TractorSlider from '../../../../assets/images/tractorslider.jpg';
+import TractorSlider from '../../../../assets/images/tractorslider.png';
 
 class Main extends Component {
     render() {
