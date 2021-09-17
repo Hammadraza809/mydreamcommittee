@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Carousel from 'react-bootstrap/Carousel'
-import HomeSlider from '../../../assets/images/homeSlider.png';
+import HomeSlider from '../../../assets/images/homeSlider.jpg';
 import Slider2 from '../../../assets/images/slider2.jpg';
 
 class Slide extends Component{
