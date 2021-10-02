@@ -43,7 +43,7 @@ function Model(props) {
 
   useEffect(() => {
     async function getData() {
-      const res = await fetch("https://mydreamcommittee.com/v1/committees");
+      const res = await fetch("http://amazingpak.com/mydreamcommittee/v1/controller/committee.php");
       const body = await res.json();
       setCommittee(body.data.committees);
     }

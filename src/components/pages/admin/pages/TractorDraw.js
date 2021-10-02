@@ -46,7 +46,7 @@ class App extends Component {
   }
   async getUsers() {
     await fetch(
-      `https://mydreamcommittee.com/v1/controller/user.php?committee=${this.props.match.params.data}&status=approved`,
+      `https://amazingpak.com/mydreamcommittee/v1/controller/user.php?committee=${this.props.match.params.data}&status=approved`,
       {
         method: "GET",
         headers: {

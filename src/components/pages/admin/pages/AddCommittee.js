@@ -97,7 +97,7 @@ function AddCommittee(props) {
   //fetching all committees
   const getAllCommittees = () => {
     setBackdrop(true);
-    fetch(`https://mydreamcommittee.com/v1/committees`, {
+    fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/committee.php`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -129,7 +129,7 @@ function AddCommittee(props) {
   const updateCommittee = (value, id) => {
     setLoading(true);
     setBackdrop(true);
-    fetch(`https://mydreamcommittee.com/v1/committees/${id}`, {
+    fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/committee.php?id=${id}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
@@ -169,7 +169,7 @@ function AddCommittee(props) {
   const addCommitte = (data) => {
     setLoading(true);
     setBackdrop(true);
-    fetch(`https://mydreamcommittee.com/v1/committees`, {
+    fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/committee.php`, {
       method: "POST",
       headers: {
         Accept: "application/json",

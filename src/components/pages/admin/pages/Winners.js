@@ -80,7 +80,7 @@ function Winners() {
   //fetching committees for dropdown
   useEffect(() => {
     async function getData() {
-      fetch(`https://mydreamcommittee.com/v1/committees`, {
+      fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/committee.php`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -105,7 +105,7 @@ function Winners() {
   //fetching winner
   useEffect(() => {
     async function getData() {
-      fetch(`https://mydreamcommittee.com/v1/winners`, {
+      fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/winner.php`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -132,7 +132,7 @@ function Winners() {
   const getMembers = (data) => {
     setLoading(true);
     setBackdrop(true);
-    fetch(`https://mydreamcommittee.com/v1/winners/${data}`, {
+    fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/winner.php?committee=${data}`, {
       method: "GET",
       headers: {
         Accept: "application/json",

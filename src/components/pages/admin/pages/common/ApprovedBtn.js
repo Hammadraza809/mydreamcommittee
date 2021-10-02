@@ -32,7 +32,7 @@ function ApprovedBtn(props) {
 
   const getCommitteeMembers = (data) => {
     return new Promise((resolve, reject) => {
-      fetch(`https://mydreamcommittee.com/v1/committees/${data}`, {
+      fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/committee.php?value=${data}`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -65,7 +65,7 @@ function ApprovedBtn(props) {
     setLoading(true);
     await fetch(
       //fetching all approved members for specific committee
-      `https://mydreamcommittee.com/v1/controller/user.php?committee=${props.request.committee}&status=approved`,
+      `http://amazingpak.com/mydreamcommittee/v1/controller/user.php?committee=${props.request.committee}&status=approved`,
       {
         method: "GET",
         headers: {
@@ -97,7 +97,7 @@ function ApprovedBtn(props) {
               status: "approved",
             };
             //updating the status of the selected member.
-            fetch(`https://mydreamcommittee.com/v1/users/${props.request.id}`, {
+            fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/user.php?id=${props.request.id}`, {
               method: "PATCH",
               headers: {
                 Accept: "application/json",
