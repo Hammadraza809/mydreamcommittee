@@ -67,7 +67,7 @@ function CustomWinner(props) {
     const obj = {
       customwinner: data.customwinner,
     };
-    fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/user.php?membershipId=${data.membershipId}`, {
+    fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/user.php?membershipId=${data.membershipId}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",

@@ -196,7 +196,7 @@ export default function ClippedDrawer(props) {
             <ListItem
               button
               onClick={() => {
-                fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/sessions.php?sessionid=${userid}`, {
+                fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/sessions.php?sessionid=${userid}`, {
                   method: "DELETE",
                   headers: {
                     Accept: "application/json",

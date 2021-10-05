@@ -128,7 +128,7 @@ function EditRecordModal(props) {
       refrenceId: data.refrenceId,
     };
     setLoading(true);
-    fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/user.php?id=${props.res.id}`, {
+    fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/user.php?id=${props.res.id}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",

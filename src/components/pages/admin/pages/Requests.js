@@ -80,7 +80,7 @@ function Requests() {
 
   //Fetching committees for dropdown.
   const getAllCommittees = () => {
-    fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/committee.php`, {
+    fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/committee.php`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -106,7 +106,7 @@ function Requests() {
   //Fetching all pending members
   const getPendingMembers = () => {
     setBackdrop(true);
-    fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/user.php?status=pending`, {
+    fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/user.php?status=pending`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -139,7 +139,7 @@ function Requests() {
   //Remaining pending members
   const getRemainingPendMem = () => {
     setBackdrop(true);
-    fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/user.php?status=pending`, {
+    fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/user.php?status=pending`, {
       method: "GET",
       headers: {
         Accept: "application/json",

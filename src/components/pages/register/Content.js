@@ -99,7 +99,7 @@ export default function Main(props) {
   useEffect(() => {
     async function getData() {
       const res = await fetch(
-        `http://amazingpak.com/mydreamcommittee/v1/controller/committee.php?value=${commt}`
+        `https://amazingpak.com/mydreamcommittee/v1/controller/committee.php?value=${commt}`
       );
       const body = await res.json();
       setMyCommittee(body.data.Committees[0].label);
@@ -140,7 +140,7 @@ export default function Main(props) {
       customwinner: "false",
     };
     setLoading(true);
-    fetch(`http://amazingpak.com/mydreamcommittee/v1/controller/user.php`, {
+    fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/user.php`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -163,7 +163,7 @@ export default function Main(props) {
         );
         formdata.append("imagefile", data.photo);
         fetch(
-          `http://amazingpak.com/mydreamcommittee/v1/controller/image.php?memberid=${id}`,
+          `https://amazingpak.com/mydreamcommittee/v1/controller/image.php?memberid=${id}`,
           {
             method: "POST",
             body: formdata,
