@@ -59,7 +59,7 @@ function Main(props) {
 
   const loginFunc = (data) => {
     setLoading(true);
-    fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/sessions.php`, {
+    fetch(`https://mydreamcommittee.com/v1/controller/sessions.php`, {
       method: "POST",
       headers: {
         Accept: "application/json",

@@ -88,7 +88,7 @@ function Members() {
   //getting committees for dropdown.
   useEffect(() => {
     async function getData() {
-      fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/committee.php`, {
+      fetch(`https://mydreamcommittee.com/v1/controller/committee.php`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -116,7 +116,7 @@ function Members() {
   //fetching all approved members
   const getAllAprovedMem = async () => {
     setBackdrop(true);
-    await fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/user.php?status=approved`, {
+    await fetch(`https://mydreamcommittee.com/v1/controller/user.php?status=approved`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -149,7 +149,7 @@ function Members() {
     setLoading(true);
     setBackdrop(true);
     fetch(
-      `https://amazingpak.com/mydreamcommittee/v1/controller/user.php?committee=${data}&status=approved`,
+      `https://mydreamcommittee.com/v1/controller/user.php?committee=${data}&status=approved`,
       {
         method: "GET",
         headers: {

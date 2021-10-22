@@ -39,7 +39,7 @@ function RejectBtn(props) {
     //rejected status button
     const changeStatus = () => {
         setLoading(true);
-        fetch(`https://amazingpak.com/mydreamcommittee/v1/controller//user.php?id=${props.request.id}`, {
+        fetch(`https://mydreamcommittee.com/v1/controller//user.php?id=${props.request.id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',

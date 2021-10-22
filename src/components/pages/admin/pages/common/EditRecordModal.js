@@ -118,7 +118,7 @@ function EditRecordModal(props) {
   //on update button click
   const onUpdate = (data) => {
     const obj = {
-      name: data.name,
+      name: data.fullName,
       cnic: data.cnic,
       email: data.email,
       mobileNo: data.mobileNo,
@@ -128,13 +128,14 @@ function EditRecordModal(props) {
       refrenceId: data.refrenceId,
     };
     setLoading(true);
-    fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/user.php?id=${props.res.id}`, {
+    fetch(`https://mydreamcommittee.com/v1/controller/user.php?id=${props.res.id}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(obj),
+      
     })
       .then((res) => res.json())
       .then((result) => {

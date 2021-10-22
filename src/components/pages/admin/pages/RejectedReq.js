@@ -79,7 +79,7 @@ function Requests() {
 
   //Fetching committees for dropdown.
   const getAllCommittees = () => {
-    fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/committee.php`, {
+    fetch(`https://mydreamcommittee.com/v1/controller/committee.php`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -105,7 +105,7 @@ function Requests() {
   //Fetching all rejected members
   const getRejectedMembers = () => {
     setBackdrop(true);
-    fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/user.php?status=rejected`, {
+    fetch(`https://mydreamcommittee.com/v1/controller/user.php?status=rejected`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -138,7 +138,7 @@ function Requests() {
   //Remaining rejected members
   const getRemainingRejectMem = () => {
     setBackdrop(true);
-    fetch(`https://amazingpak.com/mydreamcommittee/v1/controller/user.php?status=rejected`, {
+    fetch(`https://mydreamcommittee.com/v1/controller/user.php?status=rejected`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -168,7 +168,7 @@ function Requests() {
     setLoading(true);
     setBackdrop(true);
     fetch(
-      `https://amazingpak.com/mydreamcommittee/v1/controller/user.php?committee=${data}&status=rejected`,
+      `https://mydreamcommittee.com/v1/controller/user.php?committee=${data}&status=rejected`,
       {
         method: "GET",
         headers: {

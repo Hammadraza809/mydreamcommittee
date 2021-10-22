@@ -29,7 +29,7 @@ class ShowPassModal extends React.Component {
   getUser() {
     const membershipId = this.props.user;
     fetch(
-      `https://amazingpak.com/mydreamcommittee/v1/controller/user.php?membershipId=${membershipId}`,
+      `https://mydreamcommittee.com/v1/controller/user.php?membershipId=${membershipId}`,
       {
         method: "GET",
       }
@@ -52,7 +52,7 @@ class ShowPassModal extends React.Component {
   setWinner = () => {
     const membershipId = this.props.user;
     fetch(
-      `https://amazingpak.com/mydreamcommittee/v1/controller/user.php?membershipId=${membershipId}`,
+      `https://mydreamcommittee.com/v1/controller/user.php?membershipId=${membershipId}`,
       {
         method: "DELETE",
       }
